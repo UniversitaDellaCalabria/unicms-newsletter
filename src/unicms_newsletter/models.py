@@ -138,6 +138,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                                on_delete=models.SET_NULL,
                                blank=True,
                                null=True)
+    banner_url = models.URLField(max_length=200, default='', blank=True)
     intro_text = models.TextField(default='', blank=True)
     content = models.TextField(default='', blank=True)
     footer_text = models.TextField(default='', blank=True)
@@ -229,6 +230,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                                      [0:NEWSLETTER_MAX_FREE_ITEMS]
 
         data = {'banner': self.banner,
+                'banner_url': self.banner_url,
                 'content': self.content,
                 'intro_text': self.intro_text,
                 'footer_text': self.footer_text,
