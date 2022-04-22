@@ -143,8 +143,8 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
     footer_text = models.TextField(default='', blank=True)
     template = models.CharField(max_length=254,
                                 blank=True,
-                                default='newsletter/body.html',
-                                help_text="Default: newsletter/body.html")
+                                default='',
+                                help_text=DEFAULT_TEMPLATE)
 
     def get_last_sending(self):
         return MessageSending.objects.filter(message=self).first()
@@ -247,8 +247,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
 
     def prepare_html(self, test=False, data={}):
         data = data or self.prepare_data()
-
-        html_content = get_template(self.template)
+        html_content = get_template(self.template or DEFAULT_TEMPLATE)
         return html_content.render(data)
 
     def send(self, test=False):
