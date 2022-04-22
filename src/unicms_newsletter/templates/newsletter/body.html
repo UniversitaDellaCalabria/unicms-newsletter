@@ -20,7 +20,7 @@
 
             {% if banner %}
                 {% if banner_url %}
-                <a href="{{ banner_url }}">
+                <a target="_blank" href="{{ banner_url }}">
                 {% endif %}
                     <img src="https://{{ main_domain }}{{ banner.get_media_path }}" style="width: 100%; margin-bottom: 10px;"/>
                 {% if banner_url %}
@@ -79,7 +79,7 @@
                                     {% else %}
                                     <div>
                                     {% endif %}
-                                        <a style="color: #383838; cursor: pointer;" href="//{{ single_new.webpath.site.domain }}{{ single_new.url }}">
+                                        <a target="_blank" style="color: #383838; cursor: pointer;" href="https://{{ single_new.webpath.site.domain }}{{ single_new.url }}">
                                             <b>{{ single_new.publication.title }}</b>
                                         </a>
 
@@ -106,7 +106,7 @@
                             {% for single_new in single_news %}
                                 <li style="margin-left: 0;">
                                     -
-                                    <a style="color: #383838; cursor: pointer;" href="//{{ single_new.webpath.site.domain }}{{ single_new.url }}">
+                                    <a target="_blank" style="color: #383838; cursor: pointer;" href="https://{{ single_new.webpath.site.domain }}{{ single_new.url }}">
                                         {{ single_new.publication.title }}
                                     </a>
                                 </li>
@@ -128,7 +128,7 @@
                                 {% for new in news %}
                                     <li style="margin-left: 0;">
                                         -
-                                        <a style="color: #383838; cursor: pointer;" href="//{{ new.webpath.site.domain }}{{ new.url }}">
+                                        <a target="_blank" style="color: #383838; cursor: pointer;" href="https://{{ new.webpath.site.domain }}{{ new.url }}">
                                             {{ new.publication.title }}
                                         </a>
                                     </li>
@@ -140,7 +140,7 @@
                             {% for new in webpath_news %}
                                 <li style="margin-left: 0;">
                                     -
-                                    <a style="color: #383838; cursor: pointer;" href="//{{ new.webpath.site.domain }}{{ new.url }}">
+                                    <a target="_blank" style="color: #383838; cursor: pointer;" href="https://{{ new.webpath.site.domain }}{{ new.url }}">
                                         {{ new.publication.title }}
                                     </a>
                                 </li>
@@ -158,7 +158,7 @@
                             {% if footer_text %}
                             {{ footer_text|safe }}
                             {% endif %}
-                            <a style="color: #fff" href="//{{ newsletter.site.domain }}/{{ cms_prefix }}{{ cms_newsletter_view_prefix }}/{{ newsletter.slug }}">
+                            <a target="_blank" style="color: #fff" href="https://{{ newsletter.site.domain }}/{{ cms_prefix }}{{ cms_newsletter_view_prefix }}/{{ newsletter.slug }}">
                                 <b>Cancella/Iscriviti alla newsletter</b>
                             </a>
                         </div>
