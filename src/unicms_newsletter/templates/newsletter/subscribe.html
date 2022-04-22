@@ -1,0 +1,7 @@
+<form method="post" action="{% url 'unicms_newsletter:newsletter_subscription' %}">
+    {{ form }}
+    {% csrf_token %}
+    <p>
+        <button class="btn btn-primary" type="submit">Invia</button>
+    </p>
+</form>

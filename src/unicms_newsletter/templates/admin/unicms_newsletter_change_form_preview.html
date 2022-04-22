@@ -1,0 +1,13 @@
+{% extends 'admin/change_form.html' %}
+
+{% load i18n %}
+
+{% block submit_buttons_bottom %}
+    {{ block.super }}
+    <div class="submit-row">
+        <input style="background: #c8c679;"
+               type="submit" value="{% trans 'Preview' %}" name="_preview" formtarget="_blank">
+        <input style="background: #79c8ab;"
+               type="submit" value="{% trans 'Test send' %}" name="_send_test">
+    </div>
+{% endblock %}

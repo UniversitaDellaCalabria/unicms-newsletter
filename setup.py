@@ -48,6 +48,7 @@ setup(
     ],
     install_requires=[
         'django>=3.2,<4.0',
-        'unicms'
+        'unicms',
+        'cryptojwt',
     ],
 )

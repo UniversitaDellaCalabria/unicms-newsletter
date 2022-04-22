@@ -1,0 +1,40 @@
+{% extends this_string_will_be_replaced %}
+
+{% load i18n %}
+{% load static %}
+
+<!-- load custom template tags -->
+{% load unicms_carousels %}
+{% load unicms_contexts %}
+{% load unicms_menus %}
+{% load unicms_templates %}
+{% load unicms_pages %}
+{% load unicms_publications %}
+
+
+{% block container %}
+
+{% get_current_language as LANGUAGE_CODE %}
+{% settings_value "CMS_PATH_PREFIX" as cms_prefix %}
+{% settings_value "CMS_NEWSLETTER_VIEW_PREFIX_PATH" as cms_newsletter_view_prefix %}
+
+{% breadcrumbs webpath=webpath leaf=handler %}
+
+<div class="container py-5">
+
+    <div class="row">
+        <div class="col">
+            <h1 class="mb-4 lighter">{% trans "Newsletter" %}</h1>
+        </div>
+    </div>
+
+    <div class="row" id="newsletters">
+        <ul>
+            {% for newsletter in newsletters %}
+            <li><a href="/{{ cms_prefix }}{{ cms_newsletter_view_prefix }}/{{ newsletter.slug }}/">{{ newsletter }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock container %}
+

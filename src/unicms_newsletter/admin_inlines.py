@@ -3,14 +3,20 @@ from django.contrib import admin
 from . models import *
 
 
+class NewsletterTestSubscriptionAdminInline(admin.TabularInline):
+    model = NewsletterTestSubscription
+    extra = 0
+    classes = ['collapse']
+    list_display = ('first_name', 'last_name', 'email', 'is_active')
+    search_fields = ('first_name', 'last_name', 'email')
+
+
 class NewsletterSubscriptionAdminInline(admin.TabularInline):
     model = NewsletterSubscription
     extra = 0
     classes = ['collapse']
     list_display = ('first_name', 'last_name', 'email', 'is_active')
     search_fields = ('first_name', 'last_name', 'email')
-    list_filter = ('created', 'modified', 'is_active')
-    readonly_fields = ('created_by', 'modified_by')
 
 
 class MessageAdminInline(admin.TabularInline):
@@ -27,7 +33,7 @@ class MessageCategoryAdminInline(admin.TabularInline):
     model = MessagePublicationCategories
     extra = 0
     # classes = ['collapse']
-    list_display = ('name', 'category', 'is_active')
+    list_display = ('name', 'category', 'order', 'is_active')
     search_fields = ('name')
     list_filter = ('created', 'modified', 'is_active')
     readonly_fields = ('created_by', 'modified_by')
@@ -61,8 +67,9 @@ class MessageAttachmentAdminInline(admin.TabularInline):
 class MessageSendingAdminInline(admin.TabularInline):
     model = MessageSending
     extra = 0
-    # classes = ['collapse']
-    # readonly_fields = ('created_by', 'modified_by')
+    classes = ['collapse']
+    readonly_fields = ('date', 'html_file',
+                       'recipients', 'failed', 'success')
 
     def has_add_permission(self, request, obj=None):
         return False

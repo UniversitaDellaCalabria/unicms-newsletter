@@ -1,0 +1,45 @@
+{% extends this_string_will_be_replaced %}
+
+{% load i18n %}
+{% load static %}
+
+<!-- load custom template tags -->
+{% load unicms_contexts %}
+{% load unicms_pages %}
+{% load unicms_templates %}
+
+<!-- SEO  -->
+{% block page_title %}{{ newsletter.name }}{% endblock page_title %}
+{% block page_meta_description %}{{ newsletter.name }}{% endblock page_meta_description %}
+
+{% block container %}
+
+{% settings_value "CMS_PATH_PREFIX" as cms_prefix %}
+{% settings_value "CMS_NEWSLETTER_VIEW_PREFIX_PATH" as cms_newsletter_view_prefix %}
+{% settings_value "CMS_NEWSLETTER_MESSAGE_SUB_PATH" as cms_newsletter_message_path %}
+
+{% breadcrumbs webpath=webpath leaf=handler %}
+
+<div class="py-5">
+    <div class="container" id="calendar">
+        <h1 class="mb-4 lighter">{{ newsletter.name }}</h1>
+        {% if newsletter_messages %}
+        <ul>
+            {% for message in newsletter_messages %}
+            <li>{{ message.message.name }} - {{ message.date|date:"d/m/Y H:i" }}
+                -
+                <a target="_blank"
+                   href="/media/{{ message.html_file }}">
+                    html
+                </a>
+                /
+                <a href="#">text</a></li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        {% trans "This newsletter has never been sent" %}
+        {% endif %}
+    </div>
+</div>
+
+{% endblock container %}

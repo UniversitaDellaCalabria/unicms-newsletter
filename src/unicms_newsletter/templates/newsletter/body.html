@@ -1,0 +1,165 @@
+{% load static %}
+{% load unicms_templates %}
+
+{% settings_value "CMS_PATH_PREFIX" as cms_prefix %}
+{% settings_value "MAIN_DOMAIN" as main_domain %}
+{% settings_value "CMS_NEWSLETTER_VIEW_PREFIX_PATH" as cms_newsletter_view_prefix %}
+
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <meta charset="utf-8" />
+    </head>
+    <body style="font-family: Arial; font-size: 14px; line-height: 14px; color: #383838; background: #f7f7f7;padding: 20px 0; display: flex;">
+        <div style="width:700px; margin: auto;">
+            {% if test %}
+            <div style="background: #aaa; margin-bottom: 20px; color: #fff; padding: 20px">
+                <b>Test mode</b>
+            </div>
+            {% endif %}
+
+            {% if banner %}
+            <img src="//{{ main_domain }}{{ banner.get_media_path }}" style="width: 100%; margin-bottom: 10px;"/>
+            {% endif %}
+
+            <table border="0" cellpadding="0" cellspacing="0" width="960" align="left" style="width: 100%;" >
+
+                {% if intro_text or content %}
+                <tr>
+                    <td>
+                        <div style="padding: 20px; border: 1px solid #ccc; background: #fff; margin-bottom: 10px;">
+                            {{ intro_text|safe }}
+
+                            {% if content and intro_text %}
+                            <hr style="box-sizing: content-box; height: 0; overflow: visible; margin-top: 16px; margin-bottom: 16px; border: 0; border-top: 1px solid #eee;" />
+                            {% endif %}
+
+                            {{ content|safe }}
+                        </div>
+                    </td>
+                </tr>
+                {% endif %}
+
+                {% if news_in_evidence %}
+                <tr>
+                    <td>
+                        <div style="padding: 20px; border: 1px solid #ccc; background: #fff; margin-bottom: 10px;">
+                            <h2 style="margin-top: 0; margin-bottom: 25px;">
+                                In evidenza
+                            </h2>
+                            <ul style="list-style: none; padding-left: 0; line-height: 20px; margin-bottom: 0;">
+                            {% for single_new in news_in_evidence %}
+
+                                {% if forloop.counter0 %}
+                                <hr style="box-sizing: content-box; height: 0; overflow: visible; margin-top: 16px; margin-bottom: 16px; border: 0; border-top: 1px solid #eee;" />
+                                {% endif %}
+
+                                <li style="display: flex; margin-left: 0;">
+                                    {% if single_new.publication.image_url %}
+                                    <div style="width: 25%; float: left;">
+                                        {% if single_new.publication.preview_image %}
+                                        <img src="//{{ main_domain }}{{ single_new.publication.image_url }}"
+                                             title="{{ single_new.publication.preview_image.title }}"
+                                             alt="{{ single_new.publication.preview_image.description }}"
+                                             style="width: 100%"/>
+                                        {% elif single_new.publication.presentation_image %}
+                                        <img src="//{{ main_domain }}{{ single_new.publication.image_url }}"
+                                             title="{{ single_new.publication.presentation_image.title }}"
+                                             alt="{{ single_new.publication.presentation_image.description }}"
+                                             style="width: 100%"/>
+                                        {% endif %}
+                                    </div>
+                                    <div style="width: auto; float: right; margin-left: 10px; vertical-align: top;">
+                                    {% else %}
+                                    <div>
+                                    {% endif %}
+                                        <a style="color: #383838; cursor: pointer;" href="//{{ single_new.webpath.site.domain }}{{ single_new.url }}">
+                                            <b>{{ single_new.publication.title }}</b>
+                                        </a>
+
+                                        {% if single_new.publication.subheading %}
+                                        <p style="margin-bottom: 0">
+                                            {{ single_new.publication.subheading }}
+                                        </p>
+                                        {% endif %}
+                                    </div>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                {% endif %}
+
+                {% if single_news %}
+                <tr>
+                    <td>
+                        <div style="padding: 20px; border: 1px solid #ccc; background: #fff; margin-bottom: 10px;">
+                            <h2 style="margin-top: 0">News</h2>
+                            <ul style="list-style: none; padding-left: 0; line-height: 20px; margin-bottom: 0;">
+                            {% for single_new in single_news %}
+                                <li style="margin-left: 0;">
+                                    -
+                                    <a style="color: #383838; cursor: pointer;" href="//{{ single_new.webpath.site.domain }}{{ single_new.url }}">
+                                        {{ single_new.publication.title }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                {% endif %}
+
+                {% if webpath_news %}
+                <tr>
+                    <td>
+                        <div style="padding: 20px; border: 1px solid #ccc; background: #fff; margin-bottom: 10px;">
+                        {% if group_by_categories %}
+                            {% for cat,news in webpath_news.items %}
+                                <h2 {% if not forloop.counter0 %}style="margin-top: 0;"{% else %}style="margin-top: 25px;"{% endif %}>{{ cat.name }}</h2>
+                                <ul style="list-style: none; padding-left: 0; line-height: 20px; margin-bottom: 0;">
+                                {% for new in news %}
+                                    <li style="margin-left: 0;">
+                                        -
+                                        <a style="color: #383838; cursor: pointer;" href="//{{ new.webpath.site.domain }}{{ new.url }}">
+                                            {{ new.publication.title }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                                </ul>
+                            {% endfor %}
+                        {% else %}
+                            <ul style="list-style: none; padding-left: 0; line-height: 20px; margin-bottom: 0;">
+                            {% for new in webpath_news %}
+                                <li style="margin-left: 0;">
+                                    -
+                                    <a style="color: #383838; cursor: pointer;" href="//{{ new.webpath.site.domain }}{{ new.url }}">
+                                        {{ new.publication.title }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                {% endif %}
+
+                <tr>
+                    <td>
+                        <div style="padding: 20px; background: #b71918; color: #fff;">
+                            {% if footer_text %}
+                            {{ footer_text|safe }}
+                            {% endif %}
+                            <a style="color: #fff" href="//{{ newsletter.site.domain }}/{{ cms_prefix }}{{ cms_newsletter_view_prefix }}/{{ newsletter.slug }}">
+                                <b>Cancella/Iscriviti alla newsletter</b>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>
+
