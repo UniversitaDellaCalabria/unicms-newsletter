@@ -46,6 +46,26 @@
                 </tr>
                 {% endif %}
 
+                {% for publication in publications %}
+                <tr>
+                    <td>
+                        <div style="padding: 20px; border: 1px solid #ccc; background: #fff; margin-bottom: 10px;">
+                            <h2 style="margin-top: 0; margin-bottom: 25px;">
+                                {{ publication.title }}
+                            </h2>
+                            {% if publication.subheading %}
+                                <i>{{ publication.subheading }}</i>
+                                <hr style="box-sizing: content-box; height: 0; overflow: visible; margin-top: 16px; margin-bottom: 16px; border: 0; border-top: 1px solid #eee;" />
+                            {% endif %}
+
+                            {% if publication.content %}
+                                {{ publication.content|safe }}
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+
                 {% if news_in_evidence %}
                 <tr>
                     <td>
