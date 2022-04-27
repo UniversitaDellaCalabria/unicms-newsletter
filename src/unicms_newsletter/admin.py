@@ -25,6 +25,7 @@ class MessageAdmin(AbstractPreviewableAdmin):
     inlines = (MessageWebpathAdminInline,
                MessageCategoryAdminInline,
                MessagePublicationAdminInline,
+               MessagePublicationContextAdminInline,
                MessageAttachmentAdminInline,
                MessageSendingAdminInline
                )

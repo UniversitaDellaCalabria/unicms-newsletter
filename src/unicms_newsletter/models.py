@@ -178,19 +178,29 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                              .filter(message=self, is_active=True)\
                              .values_list('webpath__pk', flat=True)
 
-    def get_publications(self, in_evidence=False):
+    def get_publications(self):
         mpub = MessagePublication.objects\
                                  .filter(message=self,
-                                         is_active=True,
-                                         in_evidence=in_evidence)\
+                                         is_active=True)\
                                  .select_related('publication')
         publications = []
         for item in mpub:
             publications.append(item.publication)
         return publications
 
-    def get_publications_in_evidence(self):
-        return self.get_publications(in_evidence=True)
+    def get_publicationcontexts(self, in_evidence=False):
+        mpub = MessagePublicationContext.objects\
+                                        .filter(message=self,
+                                                is_active=True,
+                                                in_evidence=in_evidence)\
+                                        .select_related('publication')
+        publications = []
+        for item in mpub:
+            publications.append(item.publication)
+        return publications
+
+    def get_publicationcontexts_in_evidence(self):
+        return self.get_publicationcontexts(in_evidence=True)
 
     def get_attachments(self):
         return MessageAttachment.objects.filter(message=self, is_active=True)
@@ -200,8 +210,9 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
 
         categories = self.get_categories()
         webpaths = self.get_webpaths()
-        single_news = self.get_publications()
-        news_in_evidence = self.get_publications_in_evidence()
+        publications = self.get_publications()
+        single_news = self.get_publicationcontexts()
+        news_in_evidence = self.get_publicationcontexts_in_evidence()
 
         # list of single publications id, to exclude from webpath news
         publications_id = list(map(lambda pub: pub.pk, single_news))
@@ -237,6 +248,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                 'group_by_categories': self.group_by_categories,
                 'news_in_evidence': news_in_evidence,
                 'newsletter': self.newsletter,
+                'publications': publications,
                 'single_news': single_news,
                 'test': test,
                 'webpath_news': news,
@@ -366,8 +378,8 @@ class MessagePublicationCategories(ActivableModel, TimeStampedModel,
         return f'{self.message} - {self.category}'
 
 
-class MessagePublication(ActivableModel, TimeStampedModel,
-                         CreatedModifiedBy, SortableModel):
+class MessagePublicationContext(ActivableModel, TimeStampedModel,
+                                CreatedModifiedBy, SortableModel):
     message = models.ForeignKey(Message, on_delete=models.CASCADE)
     publication = models.ForeignKey(PublicationContext, on_delete=models.CASCADE)
     in_evidence = models.BooleanField(default=False)
@@ -375,6 +387,19 @@ class MessagePublication(ActivableModel, TimeStampedModel,
     class Meta:
         unique_together = ('message', 'publication')
         ordering = ('order', 'publication__publication__title')
+
+    def __str__(self):
+        return f'{self.message} - {self.publication}'
+
+
+class MessagePublication(ActivableModel, TimeStampedModel,
+                         CreatedModifiedBy, SortableModel):
+    message = models.ForeignKey(Message, on_delete=models.CASCADE)
+    publication = models.ForeignKey(Publication, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('message', 'publication')
+        ordering = ('order', 'publication__title')
 
     def __str__(self):
         return f'{self.message} - {self.publication}'

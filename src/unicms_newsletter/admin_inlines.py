@@ -57,6 +57,14 @@ class MessagePublicationAdminInline(admin.TabularInline):
     raw_id_fields = ('publication',)
 
 
+class MessagePublicationContextAdminInline(admin.TabularInline):
+    model = MessagePublicationContext
+    extra = 0
+    # classes = ['collapse']
+    readonly_fields = ('created_by', 'modified_by')
+    raw_id_fields = ('publication',)
+
+
 class MessageAttachmentAdminInline(admin.TabularInline):
     model = MessageAttachment
     extra = 0
