@@ -168,7 +168,6 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         return self.date_start <= now and self.date_end > now
 
     def is_ready(self):
-        if not self.newsletter.is_active: return False
         if not self.is_active: return False
         if not self.is_in_progress(): return False
         last_sending = self.get_last_sending()
