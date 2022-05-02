@@ -7,7 +7,8 @@ import time
 from django import template
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.core.mail import EmailMessage, send_mail
+from django.core import mail
+# from django.core.mail import EmailMessage, send_mail
 from django.db import models
 from django.db.models import Q
 from django.template.loader import get_template
@@ -19,6 +20,7 @@ from cms.contexts.models import WebPath, WebSite
 from cms.contexts.models_abstract import AbstractLockable
 from cms.contexts.utils import sanitize_path
 from cms.medias.models import Media
+from cms.medias.validators import *
 from cms.publications.models import Category, Publication, PublicationContext
 from cms.templates.models import (ActivableModel,
                                   CreatedModifiedBy,
@@ -55,7 +57,8 @@ def message_html_path(newsletter_slug, message_pk): # pragma: no cover
                                                  message_pk)
 
 
-class Newsletter(ActivableModel, TimeStampedModel, CreatedModifiedBy):
+class Newsletter(ActivableModel, TimeStampedModel, CreatedModifiedBy,
+                 AbstractLockable):
     name = models.CharField(max_length=254)
     slug = models.SlugField()
     description = models.TextField(max_length=2048,
@@ -94,7 +97,7 @@ class Newsletter(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         return self.name
 
 
-class AbstractNewsletterSubscription(ActivableModel):
+class AbstractNewsletterSubscription(ActivableModel, CreatedModifiedBy):
     newsletter = models.ForeignKey(Newsletter, on_delete=models.CASCADE)
     first_name = models.CharField(default='', blank=True, max_length=254)
     last_name = models.CharField(default='', blank=True, max_length=254)
@@ -105,6 +108,11 @@ class AbstractNewsletterSubscription(ActivableModel):
         abstract = True
         ordering = ['last_name', 'first_name']
         unique_together = ('newsletter', 'email')
+
+    def is_lockable_by(self, user):
+        item = self.newsletter
+        permission = check_user_permission_on_object(user=user, obj=item)
+        return permission['granted']
 
     def __str__(self):
         return f'{self.newsletter} - {self.email}'
@@ -133,7 +141,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
     group_by_categories = models.BooleanField(default=True)
     date_start = models.DateTimeField()
     date_end = models.DateTimeField()
-    repeat_each = models.IntegerField(default=0, help_text=_("in days"))
+    repeat_each = models.PositiveIntegerField(default=0, help_text=_("in days"))
     banner = models.ForeignKey(Media,
                                on_delete=models.SET_NULL,
                                blank=True,
@@ -147,6 +155,11 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                                 default='',
                                 help_text=DEFAULT_TEMPLATE)
 
+    def is_lockable_by(self, user):
+        item = self.newsletter
+        permission = check_user_permission_on_object(user=user, obj=item)
+        return permission['granted']
+
     def get_last_sending(self):
         return MessageSending.objects.filter(message=self).first()
 
@@ -155,6 +168,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         return self.date_start <= now and self.date_end > now
 
     def is_ready(self):
+        if not self.newsletter.is_active: return False
         if not self.is_active: return False
         if not self.is_in_progress(): return False
         last_sending = self.get_last_sending()
@@ -165,9 +179,9 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         return now >= next_sending
 
     def get_categories(self):
-        mcat = MessagePublicationCategories.objects\
-                                           .filter(message=self, is_active=True)\
-                                           .select_related('category')
+        mcat = MessagePublicationCategory.objects\
+                                          .filter(message=self, is_active=True)\
+                                          .select_related('category')
         categories = []
         for item in mcat:
             categories.append(item.category)
@@ -276,48 +290,34 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         plain_text = self.prepare_plain_text(test=test, data=data)
 
         recipients = self.newsletter.get_valid_subscribers(test=test)
-        success = 0
-        failed = 0
 
-        for index, recipient in enumerate(recipients):
-            mail = EmailMessage(
-                self.name,
-                html_text if recipient.html else plain_text,
-                settings.DEFAULT_FROM_EMAIL,
-                [recipient.email],
-            )
+        messages = []
+        recipients_email = []
 
-            attachments = self.get_attachments()
-            for attachment in attachments:
-                file_path = attachment.attachment.path
-                if os.path.exists(file_path):
-                    mail.attach_file(file_path)
-                else:
-                    logger.info('[{}] newsletter attachment "{}"'
-                                'not found'.format(timezone.localtime(),
-                                                   file_path))
+        # for index, recipient in enumerate(recipients):
+        for recipient in recipients:
+            recipients_email.append(recipient.email)
 
-            if recipient.html:
-                mail.content_subtype = "html"
+        message = mail.EmailMessage(
+            self.name,
+            # html_text if recipient.html else plain_text,
+            html_text,
+            settings.DEFAULT_FROM_EMAIL,
+            recipients_email,
+        )
+        message.content_subtype = "html"
 
-            if NEWSLETTER_SEND_EMAIL_DELAY and not index % NEWSLETTER_SEND_EMAIL_GROUP:
-                time.sleep(NEWSLETTER_SEND_EMAIL_DELAY)
+        attachments = self.get_attachments()
+        for attachment in attachments:
+            file_path = attachment.attachment.path
+            if os.path.exists(file_path):
+                message.attach_file(file_path)
+            else:
+                logger.info('[{}] newsletter attachment "{}"'
+                            'not found'.format(timezone.localtime(),
+                                               file_path))
 
-            try:
-                mail.send(fail_silently=False)
-                success += 1
-                logger.info('[{}] sent email to {} '
-                            'for newsletter {}'.format(timezone.localtime(),
-                                                       recipient.email,
-                                                       self.newsletter))
-            except Exception as e:
-                failed += 1
-                logger.info('[{}] send email '
-                            'to recipient {} '
-                            'failed: {}'.format(timezone.localtime(),
-                                                recipient.email,
-                                                e))
-
+        message.send()
 
         logger.info('[{}] sent {}message {} '
                     'for newsletter {}'.format(timezone.localtime(),
@@ -343,9 +343,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
             MessageSending.objects.create(message=self,
                                           date=now,
                                           html_file=f'{relative_path}/{file_name}',
-                                          recipients=recipients.count(),
-                                          success=success,
-                                          failed=failed)
+                                          recipients=recipients.count())
 
         return True
 
@@ -361,11 +359,16 @@ class MessageWebpath(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         unique_together = ('message', 'webpath')
         ordering = ('webpath__name',)
 
+    def is_lockable_by(self, user):
+        item = self.message.newsletter
+        permission = check_user_permission_on_object(user=user, obj=item)
+        return permission['granted']
+
     def __str__(self):
         return f'{self.message} - {self.webpath}'
 
 
-class MessagePublicationCategories(ActivableModel, TimeStampedModel,
+class MessagePublicationCategory(ActivableModel, TimeStampedModel,
                                    CreatedModifiedBy, SortableModel):
     message = models.ForeignKey(Message, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
@@ -373,6 +376,11 @@ class MessagePublicationCategories(ActivableModel, TimeStampedModel,
     class Meta:
         unique_together = ('message', 'category')
         ordering = ('order', 'category__name')
+
+    def is_lockable_by(self, user):
+        item = self.message.newsletter
+        permission = check_user_permission_on_object(user=user, obj=item)
+        return permission['granted']
 
     def __str__(self):
         return f'{self.message} - {self.category}'
@@ -388,6 +396,11 @@ class MessagePublicationContext(ActivableModel, TimeStampedModel,
         unique_together = ('message', 'publication')
         ordering = ('order', 'publication__publication__title')
 
+    def is_lockable_by(self, user):
+        item = self.message.newsletter
+        permission = check_user_permission_on_object(user=user, obj=item)
+        return permission['granted']
+
     def __str__(self):
         return f'{self.message} - {self.publication}'
 
@@ -401,6 +414,11 @@ class MessagePublication(ActivableModel, TimeStampedModel,
         unique_together = ('message', 'publication')
         ordering = ('order', 'publication__title')
 
+    def is_lockable_by(self, user):
+        item = self.message.newsletter
+        permission = check_user_permission_on_object(user=user, obj=item)
+        return permission['granted']
+
     def __str__(self):
         return f'{self.message} - {self.publication}'
 
@@ -408,10 +426,17 @@ class MessagePublication(ActivableModel, TimeStampedModel,
 class MessageAttachment(ActivableModel, TimeStampedModel,
                         CreatedModifiedBy, SortableModel):
     message = models.ForeignKey(Message, on_delete=models.CASCADE)
-    attachment = models.FileField(upload_to=message_attachment_path)
+    attachment = models.FileField(upload_to=message_attachment_path,
+                                  validators=[validate_file_extension,
+                                              validate_file_size])
 
     class Meta:
         ordering = ('order',)
+
+    def is_lockable_by(self, user):
+        item = self.message.newsletter
+        permission = check_user_permission_on_object(user=user, obj=item)
+        return permission['granted']
 
     def __str__(self):
         return f'{self.message} - {self.attachment}'
@@ -422,8 +447,8 @@ class MessageSending(TimeStampedModel):
     date = models.DateTimeField()
     html_file = models.FileField(blank=True, null=True)
     recipients = models.IntegerField(default=0)
-    success = models.IntegerField(default=0)
-    failed = models.IntegerField(default=0)
+    # success = models.IntegerField(default=0)
+    # failed = models.IntegerField(default=0)
 
     class Meta:
         ordering = ['-date',]

@@ -1,10 +1,11 @@
 from django.conf import settings
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, HttpResponseForbidden, Http404
 from django.shortcuts import get_object_or_404, render
 from django.template import Template, Context
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
+from cms.api.utils import check_user_permission_on_object
 from cms.contexts.handlers import BaseContentHandler
 from cms.contexts.utils import contextualize_template, sanitize_path
 from cms.pages.models import Page
@@ -141,4 +142,9 @@ class NewsletterMessageViewHandler(BaseContentHandler):
         # if lang:
             # self.cal_context.translate_as(lang=lang)
 
-        return HttpResponse(self.message.prepare_html())
+        permission = check_user_permission_on_object(self.request.user,
+                                                     self.message.newsletter)
+
+        if permission:
+            return HttpResponse(self.message.prepare_html())
+        return HttpResponseForbidden('Permission denied')

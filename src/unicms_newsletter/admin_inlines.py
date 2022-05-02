@@ -30,7 +30,7 @@ class MessageAdminInline(admin.TabularInline):
 
 
 class MessageCategoryAdminInline(admin.TabularInline):
-    model = MessagePublicationCategories
+    model = MessagePublicationCategory
     extra = 0
     # classes = ['collapse']
     list_display = ('name', 'category', 'order', 'is_active')
@@ -76,8 +76,7 @@ class MessageSendingAdminInline(admin.TabularInline):
     model = MessageSending
     extra = 0
     classes = ['collapse']
-    readonly_fields = ('date', 'html_file',
-                       'recipients', 'failed', 'success')
+    readonly_fields = ('date', 'html_file', 'recipients')
 
     def has_add_permission(self, request, obj=None):
         return False
