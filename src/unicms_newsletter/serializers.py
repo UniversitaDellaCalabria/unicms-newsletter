@@ -144,6 +144,11 @@ class MessageWebpathSerializer(UniCMSCreateUpdateSerializer,
 class MessageSendingSerializer(UniCMSCreateUpdateSerializer,
                                UniCMSContentTypeClass):
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['message_name'] = instance.message.name
+        return data
+
     class Meta:
         model = MessageSending
         fields = '__all__'

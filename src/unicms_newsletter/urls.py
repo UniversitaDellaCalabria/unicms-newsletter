@@ -39,6 +39,7 @@ ntsub = f'{newsletter_prefix}/<int:newsletter_id>/test-subscriptions'
 urlpatterns += path(f'{ntsub}/', newsletter.NewsletterTestSubscriptionList.as_view(), name='newsletter-test-subscriptions'),
 urlpatterns += path(f'{ntsub}/<int:pk>/', newsletter.NewsletterTestSubscriptionView.as_view(), name='newsletter-test-subscription'),
 urlpatterns += path(f'{ntsub}/form/', newsletter.NewsletterTestSubscriptionFormView.as_view(), name='newsletter-test-subscription-form'),
+urlpatterns += path(f'api/newsletters/<int:newsletter_id>/sendings', newsletter.NewsletterSendingList.as_view(), name='newsletter-sendings'),
 
 # messages
 nmes = f'{newsletter_prefix}/<int:newsletter_id>/messages'

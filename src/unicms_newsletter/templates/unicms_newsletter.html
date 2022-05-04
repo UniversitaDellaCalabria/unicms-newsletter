@@ -14,32 +14,138 @@
 
 {% block container %}
 
+{% get_current_language as LANGUAGE_CODE %}
 {% settings_value "CMS_PATH_PREFIX" as cms_prefix %}
 {% settings_value "CMS_NEWSLETTER_VIEW_PREFIX_PATH" as cms_newsletter_view_prefix %}
 {% settings_value "CMS_NEWSLETTER_MESSAGE_SUB_PATH" as cms_newsletter_message_path %}
 
 {% breadcrumbs webpath=webpath leaf=handler %}
 
-<div class="py-5">
-    <div class="container" id="calendar">
-        <h1 class="mb-4 lighter">{{ newsletter.name }}</h1>
-        {% if newsletter_messages %}
-        <ul>
-            {% for message in newsletter_messages %}
-            <li>{{ message.message.name }} - {{ message.date|date:"d/m/Y H:i" }}
-                -
-                <a target="_blank"
-                   href="/media/{{ message.html_file }}">
-                    html
-                </a>
-                /
-                <a href="#">text</a></li>
-            {% endfor %}
-        </ul>
-        {% else %}
-        {% trans "This newsletter has never been sent" %}
-        {% endif %}
-    </div>
-</div>
+<div class="container py-5">
 
+    <div class="row">
+        <div class="col">
+            <h1 class="mb-4 lighter">
+                {{ newsletter.name }}
+            </h1>
+        </div>
+    </div>
+
+    <div class="row" id="sendings"></div>
+</div>
+<script>
+Vue.component('list-panel', {
+    props: {
+        data: Array,
+    },
+    template: `
+
+        <div class="card-wrapper card-space">
+            <div class="card card-bg no-after">
+              <div class="card-body py-1">
+
+                <div class="row">
+                    <div class="col w-50" v-if="data.total_pages > 1">
+                        <span style="color:#050b12;">
+                            <b>[[ data.count || 0]] {% trans "results" %}</b> in <b>[[ data.total_pages || 0 ]] {% trans "pages" %}</b>
+                        </span>
+                    </div>
+                    <div class="col w-50" v-else>
+                        <span style="color:#050b12;">
+                            <b>[[ data.count || 0]] {% trans "results" %}
+                        </span>
+                    </div>
+
+                    <div class="col w-50" v-if="data.total_pages > 1">
+                        <div class="float-right">
+                            <span>
+                                <a style="color:#050b12;" @click="news.callURL( [[ data.previous]] )" v-if="data.previous">
+                                    <span class="sr-only"> {% trans "Page" %} </span> &lt; {% trans "Previous" %}
+                                </a>
+                            </span>
+
+                            <span class="mr-2 ml-2" >[[ data.page ]] / <b>[[ data.total_pages ]]</b></span>
+                            <a style="color:#050b12;" @click="news.callURL( [[ data.next ]] )"  v-if="data.next">
+                                <span class="sr-only">{% trans "Page" %} </span>{% trans "Next" %} &gt;
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+              </div>
+            </div>
+        </div>
+    `
+})
+
+
+var news = new Vue({
+  el: '#sendings',
+  template: `
+    <div v-if="!sendingsLoaded">
+        <div>
+            <div class="progress progress-indeterminate my-3">
+                <span class="sr-only">{% trans "Loading data" %}</span>
+                <div class="progress-bar" role="progressbar"></div>
+            </div>
+        </div>
+    </div>
+    <div v-else>
+
+        <list-panel v-bind:data="items"></list-panel>
+
+        <div v-if="items">
+            <div class="row">
+                <ul>
+                    <li v-for="item in items.results">
+                        <a target="_blank" :href="item.html_file">
+                            [[ item.message_name ]]
+                        </a>
+                         - [[ new Date(item.date).toLocaleString("{{ LANGUAGE_CODE }}",
+                                                                {day: '2-digit',
+                                                                 month: '2-digit',
+                                                                 year: 'numeric',
+                                                                 hour: '2-digit',
+                                                                 minute:'2-digit'}) ]]
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <list-panel v-bind:data="items"></list-panel>
+    </div>
+    `,
+    data () {
+        return {
+            items: [],
+            sendingsLoaded: false,
+            selected_search: '',
+            url: '{{ url|safe }}'
+        }
+    },
+    mounted(){
+        this.callURL(this.url)
+    },
+    methods: {
+        callURL (url) {
+            axios
+                .get( url )
+                .then(response => {
+                    this.items = response.data
+                    this.sendingsLoaded = true
+                    this.scrollToTop()
+                })
+        },
+        search() {
+            this.parameters = '&search=' + this.selected_search
+            this.newsLoaded = false
+            this.callURL(this.url + this.parameters);
+        },
+        scrollToTop () {
+            // faulty on mobile ...
+            window.scrollTo({top:100, left:0, behavior: 'smooth'});
+        }
+    }
+})
+</script>
 {% endblock container %}

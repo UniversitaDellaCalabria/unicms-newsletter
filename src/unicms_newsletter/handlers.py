@@ -79,6 +79,9 @@ class NewsletterViewHandler(BaseContentHandler):
         # if lang:
             # self.cal_context.translate_as(lang=lang)
 
+        url = reverse('unicms_newsletter:newsletter-sendings',
+                      kwargs = {'newsletter_id': self.newsletter.pk })
+
         data = {'request': self.request,
                 # 'lang': lang,
                 'webpath': self.page.webpath,
@@ -87,7 +90,8 @@ class NewsletterViewHandler(BaseContentHandler):
                 'path': self.match_dict.get('webpath', '/'),
                 'newsletter': self.newsletter,
                 'handler': self,
-                'newsletter_messages': self.messages}
+                'newsletter_messages': self.messages,
+                'url': url}
 
         ext_template_sources = contextualize_template(self.template,
                                                       self.page)

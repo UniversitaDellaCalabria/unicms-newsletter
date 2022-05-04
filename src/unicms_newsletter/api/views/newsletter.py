@@ -240,3 +240,22 @@ class NewsletterLogsView(ObjectLogEntriesList):
         item = get_object_or_404(Newsletter, pk=object_id)
         content_type_id = ContentType.objects.get_for_model(item).pk
         return super().get_queryset(object_id, content_type_id)
+
+
+class NewsletterSendingList(generics.ListAPIView):
+    """
+    """
+    description = ""
+    ordering = ['-date']
+    pagination_class = UniCmsApiPagination
+    permission_classes = []
+    serializer_class = MessageSendingSerializer
+
+    def get_queryset(self):
+        """
+        """
+        newsletter_id = self.kwargs.get('newsletter_id')
+        if newsletter_id:
+            return MessageSending.objects.filter(message__newsletter__pk=newsletter_id,
+                                                 message__newsletter__is_active=True)
+        return MessageSending.objects.none()  # pragma: no cover
