@@ -33,7 +33,12 @@ def _check_subscription(request, subscription, unsubscribe=False):
         messages.add_message(request, messages.WARNING,
                              (_("You're already unsubscripted to this newsletter")))
         return False
-    if not unsubscribe and subscription.date_unsubscription and subscription.date_subscription > subscription.date_unsubscription:
+    if not unsubscribe and subscription.date_unsubscription:
+        if subscription.date_subscription > subscription.date_unsubscription:
+            messages.add_message(request, messages.WARNING,
+                                 (_("You're already subscripted to this newsletter")))
+            return False
+    if not unsubscribe:
         messages.add_message(request, messages.WARNING,
                              (_("You're already subscripted to this newsletter")))
         return False
