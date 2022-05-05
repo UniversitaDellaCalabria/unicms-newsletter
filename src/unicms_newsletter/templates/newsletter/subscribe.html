@@ -1,7 +1,16 @@
-<form method="post" action="{% url 'unicms_newsletter:newsletter_subscription' %}">
+{% load i18n %}
+
+
+{% block conditions %}{% endblock conditions %}
+
+<form method="post" action="{% url 'unicms_newsletter:newsletter_subscribe_unsubscribe' %}">
     {{ form }}
+    {% if csrfmiddlewaretoken %}
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{csrfmiddlewaretoken}}" />
+    {% else %}
     {% csrf_token %}
-    <p>
-        <button class="btn btn-primary" type="submit">Invia</button>
-    </p>
+    {% endif %}
+    <button class="btn btn-primary mt-4 mr-2" type="submit">{% trans "Subscribe" %}</button>
+    {% block unsubscribe_button %}
+    {% endblock unsubscribe_button %}
 </form>

@@ -16,110 +16,91 @@ from django.utils.translation import gettext_lazy as _
 from . forms import *
 from . jwts import *
 from . models import *
-
+from . settings import DEFAULT_TEMPLATE
 
 logger = logging.getLogger(__name__)
 register = template.Library()
 
 
-def subscription(request):
+def _check_subscription(request, subscription, unsubscribe=False):
+    if not subscription: return True
+    if not subscription.is_active:
+        messages.add_message(request, messages.ERROR,
+                             (_("This subscription is invalid. Contact our support")))
+        return False
+    if unsubscribe and not subscription.date_unsubscription: return True
+    if unsubscribe and subscription.date_unsubscription > subscription.date_subscription:
+        messages.add_message(request, messages.WARNING,
+                             (_("You're already unsubscripted to this newsletter")))
+        return False
+    if not unsubscribe and subscription.date_unsubscription and subscription.date_subscription > subscription.date_unsubscription:
+        messages.add_message(request, messages.WARNING,
+                             (_("You're already subscripted to this newsletter")))
+        return False
+
+
+def subscribe_unsubscribe(request):
     """
     """
     if request.method == 'POST':
         form = SubscribeForm(request.POST)
         if form.is_valid():
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
+            first_name = form.cleaned_data.get('first_name', '')
+            last_name = form.cleaned_data.get('last_name', '')
             email = form.cleaned_data['email']
-            html = form.cleaned_data['html']
+            html = form.cleaned_data.get('html', True)
             newsletter_slug = form.cleaned_data['newsletter']
 
+            # get newsletter
             newsletter = get_object_or_404(Newsletter,
                                            is_active=True,
                                            slug=newsletter_slug)
 
-            data = {'first_name': first_name,
-                    'last_name': last_name,
-                    'email': email,
-                    'html': html,
-                    'newsletter': newsletter.pk,
-                    'timestamp': timezone.now().timestamp() }
-            encrypted_data = encrypt_to_jwe(json.dumps(data).encode())
+            # get action (subscription or unsubscription?)
+            unsubscribe = request.POST.get('unsubscribe', False)
 
-            sub_url = reverse('unicms_newsletter:newsletter_subscription_confirm')
-            url =  request.build_absolute_uri(f'{sub_url}?d={encrypted_data}')
+            # get existent user subscription
+            subscription = NewsletterSubscription.objects.filter(newsletter=newsletter,
+                                                                 email=email).first()
+            # check
+            check = _check_subscription(request, subscription, unsubscribe)
 
-            newsl_mess = Message.objects.filter(newsletter=newsletter).first()
+            if check:
+                if unsubscribe:
+                    sub_url = reverse('unicms_newsletter:newsletter_unsubscription_confirm')
+                    mail_message = 'Unsubscription to newsletter {}'.format(newsletter)
+                    log_message = '[{}] {} unsubscription request for {}'
+                else:
+                    sub_url = reverse('unicms_newsletter:newsletter_subscription_confirm')
+                    mail_message = 'Subscription to newsletter {}'.format(newsletter)
+                    log_message = '[{}] {} subscription request for {}'
 
-            message = get_template(newsl_mess.template).render()
+                data = {'first_name': first_name,
+                        'last_name': last_name,
+                        'email': email,
+                        'html': html,
+                        'newsletter': newsletter.pk,
+                        'timestamp': timezone.now().timestamp() }
+                encrypted_data = encrypt_to_jwe(json.dumps(data).encode())
 
-            mail = EmailMessage(
-                'Subscription to newsletter {}'.format(newsletter),
-                url,
-                settings.DEFAULT_FROM_EMAIL,
-                [email],
-            )
-            mail.content_subtype = "html"
-            mail.send()
+                url =  request.build_absolute_uri(f'{sub_url}?d={encrypted_data}')
 
-            # log action
-            logger.info('[{}] {} subscription '
-                        'request for {}'.format(timezone.localtime(),
-                                                email,
-                                                newsletter))
+                # send email with token to confirm action
+                mail = EmailMessage(
+                    mail_message,
+                    url,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [email],
+                )
+                mail.send(fail_silently=True)
 
-            messages.add_message(request, messages.SUCCESS,
-                                 _("Email sent to {}!").format(email))
+                # log action
+                logger.info(log_message.format(timezone.localtime(),
+                                               email,
+                                               newsletter))
 
-        else: # pragma: no cover
-            for k,v in form.errors.items():
-                messages.add_message(request, messages.ERROR,
-                                     "{}: {}".format(k, v))
-        return redirect(request.headers['Referer'])
-    raise Exception(_("Can't access to this URL"))
-
-
-def unsubscription(request):
-    """
-    """
-    if request.method == 'POST':
-        form = UnsubscribeForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data['email']
-            newsletter_slug = form.cleaned_data['newsletter']
-
-            newsletter = get_object_or_404(Newsletter,
-                                           is_active=True,
-                                           slug=newsletter_slug)
-
-            data = {'email': email,
-                    'newsletter': newsletter.pk,
-                    'timestamp': timezone.now().timestamp() }
-            encrypted_data = encrypt_to_jwe(json.dumps(data).encode())
-
-            sub_url = reverse('unicms_newsletter:newsletter_unsubscription_confirm')
-            url =  request.build_absolute_uri(f'{sub_url}?d={encrypted_data}')
-
-            newsl_mess = Message.objects.filter(newsletter=newsletter).first()
-
-            message = get_template(newsl_mess.template).render()
-
-            send_mail(
-                'Unsubscription to newsletter {}'.format(newsletter),
-                message,
-                settings.DEFAULT_FROM_EMAIL,
-                [email],
-                fail_silently=True,
-            )
-
-            # log action
-            logger.info('[{}] {} unsubscription '
-                        'request for {}'.format(timezone.localtime(),
-                                                email,
-                                                newsletter))
-
-            messages.add_message(request, messages.SUCCESS,
-                                 _("Email sent to {}!").format(email))
+                messages.add_message(request, messages.SUCCESS,
+                                     _("Email sent to {}!").format(email))
 
         else: # pragma: no cover
             for k,v in form.errors.items():
@@ -146,41 +127,44 @@ def subscription_confirm(request):
                                          .filter(newsletter=newsletter,
                                                  email=data_dict['email'])\
                                          .first()
+    # check
+    check = _check_subscription(subscription)
 
-    # if there is an existent email subscription for the newsletter
-    if subscription:
+    if check:
+        # if there is an existent email subscription for the newsletter
+        if subscription:
 
-        # if the token is old
-        if not subscription.token_is_valid(data_dict['timestamp']):
-            logger.info('[{}] {} tried to use '
-                        'an old token for '
-                        'newsletter {}'.format(timezone.localtime(),
-                                               data_dict['email'],
-                                               data_dict['newsletter']))
-            raise Exception(_("Token is expired"))
+            # if the token is old
+            if not subscription.token_is_valid(data_dict['timestamp']):
+                logger.info('[{}] {} tried to use '
+                            'an old token for '
+                            'newsletter {}'.format(timezone.localtime(),
+                                                   data_dict['email'],
+                                                   data_dict['newsletter']))
+                raise Exception(_("Token is expired"))
 
-        subscription.first_name = data_dict['first_name']
-        subscription.last_name = data_dict['last_name']
-        subscription.email = data_dict['email']
-        subscription.html = data_dict['html']
-        subscription.date_subscription = timezone.localtime()
-        subscription.save()
+            subscription.first_name = data_dict['first_name']
+            subscription.last_name = data_dict['last_name']
+            subscription.email = data_dict['email']
+            subscription.html = data_dict['html']
+            subscription.date_subscription = timezone.localtime()
+            subscription.save()
 
-    else:
-        subscription = NewsletterSubscription.objects\
-                                             .create(newsletter=newsletter,
-                                                     first_name=data_dict['first_name'],
-                                                     last_name=data_dict['last_name'],
-                                                     email=data_dict['email'],
-                                                     html=data_dict['html'],
-                                                     is_active=True,
-                                                     date_subscription=timezone.localtime())
+        else:
+            subscription = NewsletterSubscription.objects\
+                                                 .create(newsletter=newsletter,
+                                                         first_name=data_dict['first_name'],
+                                                         last_name=data_dict['last_name'],
+                                                         email=data_dict['email'],
+                                                         html=data_dict['html'],
+                                                         is_active=True,
+                                                         date_subscription=timezone.localtime())
 
-    # log action
-    logger.info('[{}] {} subscription confirmed/edited'
-                'for {}'.format(timezone.localtime(),
-                                data_dict['email'],
-                                newsletter))
+        # log action
+        logger.info('[{}] {} subscription confirmed/edited'
+                    'for {}'.format(timezone.localtime(),
+                                    data_dict['email'],
+                                    newsletter))
 
     redirect = f'/{settings.CMS_PATH_PREFIX}{settings.CMS_NEWSLETTER_VIEW_PREFIX_PATH}/{newsletter.slug}/'
     return HttpResponseRedirect(redirect)
@@ -208,21 +192,26 @@ def unsubscription_confirm(request):
     if not subscription:
         raise Exception(_("No subscription for this email"))
 
-    # if the token is old
-    if not subscription.token_is_valid(data_dict['timestamp']):
-        logger.info('[{}] {} tried to use '
-                    'an old token for '
-                    'newsletter {}'.format(timezone.localtime(),
-                                           data_dict['email'],
-                                           data_dict['newsletter']))
-        raise Exception(_("Token is expired"))
+    # check
+    check = _check_subscription(subscription, True)
 
-    subscription.date_unsubscription = timezone.localtime()
-    subscription.save()
+    if check:
 
-    # log action
-    logger.info('[{}] {} unsubscription confirmed'
-                'for {}'.format(timezone.localtime(),
-                                data_dict['email'],
-                                newsletter))
-    return redirect('/')
+        # if the token is old
+        if not subscription.token_is_valid(data_dict['timestamp']):
+            logger.info('[{}] {} tried to use '
+                        'an old token for '
+                        'newsletter {}'.format(timezone.localtime(),
+                                               data_dict['email'],
+                                               data_dict['newsletter']))
+            raise Exception(_("Token is expired"))
+
+        subscription.date_unsubscription = timezone.localtime()
+        subscription.save()
+
+        # log action
+        logger.info('[{}] {} unsubscription confirmed'
+                    'for {}'.format(timezone.localtime(),
+                                    data_dict['email'],
+                                    newsletter))
+    redirect = f'/{settings.CMS_PATH_PREFIX}{settings.CMS_NEWSLETTER_VIEW_PREFIX_PATH}/{newsletter.slug}/'

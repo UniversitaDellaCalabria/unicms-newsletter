@@ -13,7 +13,8 @@ class NewsletterForm(forms.ModelForm):
 
     class Meta:
         model = Newsletter
-        fields = ['name', 'slug', 'description', 'site', 'is_active']
+        fields = ['name', 'slug', 'description', 'conditions',
+                  'site', 'is_active']
 
 
 class NewsletterSubscriptionForm(forms.ModelForm):
@@ -142,10 +143,10 @@ class MessagePublicationContextForm(forms.ModelForm):
 class SubscribeForm(forms.Form):
     """
     """
-    first_name = forms.CharField(label=_('Name'), required=True)
-    last_name = forms.CharField(label=_('Surname'), required=True)
+    # first_name = forms.CharField(label=_('Name'), required=True)
+    # last_name = forms.CharField(label=_('Surname'), required=True)
     email = forms.EmailField(label=_('Email'), required=True)
-    html = forms.BooleanField(initial=True, required=False)
+    # html = forms.BooleanField(initial=True, required=False)
     newsletter = forms.SlugField(label=_('HTML version'),
                                  widget=HiddenInput,
                                  required=True)

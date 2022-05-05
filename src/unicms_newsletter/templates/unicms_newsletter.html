@@ -9,7 +9,7 @@
 {% load unicms_templates %}
 
 <!-- SEO  -->
-{% block page_title %}{{ newsletter.name }}{% endblock page_title %}
+{% block page_title %}Newsletter {{ newsletter.name }}{% endblock page_title %}
 {% block page_meta_description %}{{ newsletter.name }}{% endblock page_meta_description %}
 
 {% block container %}
@@ -23,15 +23,51 @@
 
 <div class="container py-5">
 
+    {% if custom_messages %}
+    <!-- Messaggi di sistema-->
+    <div class="messaggi mb-4">
+        {% for message in custom_messages %}
+        <div class="mb-0 alert alert-{{ message.tags }}
+                   {% if 'error' in message.tags%} alert-danger{% endif %}
+                   {% if not forloop.first %}mt-1{% endif %}"
+             role="alert">
+                {{ message|safe }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
     <div class="row">
         <div class="col">
             <h1 class="mb-4 lighter">
                 {{ newsletter.name }}
             </h1>
+            {% if newsletter.description %}
+            <p>{{ newsletter.description }}</p>
+            {% endif %}
         </div>
     </div>
 
-    <div class="row" id="sendings"></div>
+    <div class="row">
+        <div class="col">
+            <div class="card-wrapper card-space">
+                <div class="card card-bg no-after">
+                    <div class="card-body">
+                        <div class="row" id="sendings"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card-wrapper card-space">
+                <div class="card card-bg no-after">
+                    <div class="card-body">
+                        {% include "newsletter/subscribe_unsubscribe.html" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
 Vue.component('list-panel', {
@@ -40,39 +76,31 @@ Vue.component('list-panel', {
     },
     template: `
 
-        <div class="card-wrapper card-space">
-            <div class="card card-bg no-after">
-              <div class="card-body py-1">
+        <div class="row">
+            <div class="col w-50" v-if="data.total_pages > 1">
+                <span style="color:#050b12;">
+                    <b>[[ data.count || 0]] {% trans "results" %}</b> in <b>[[ data.total_pages || 0 ]] {% trans "pages" %}</b>
+                </span>
+            </div>
+            <div class="col w-50" v-else>
+                <span style="color:#050b12;">
+                    <b>[[ data.count || 0]] {% trans "results" %}
+                </span>
+            </div>
 
-                <div class="row">
-                    <div class="col w-50" v-if="data.total_pages > 1">
-                        <span style="color:#050b12;">
-                            <b>[[ data.count || 0]] {% trans "results" %}</b> in <b>[[ data.total_pages || 0 ]] {% trans "pages" %}</b>
-                        </span>
-                    </div>
-                    <div class="col w-50" v-else>
-                        <span style="color:#050b12;">
-                            <b>[[ data.count || 0]] {% trans "results" %}
-                        </span>
-                    </div>
+            <div class="col w-50" v-if="data.total_pages > 1">
+                <div class="float-right">
+                    <span>
+                        <a style="color:#050b12;" @click="news.callURL( [[ data.previous]] )" v-if="data.previous">
+                            <span class="sr-only"> {% trans "Page" %} </span> &lt; {% trans "Previous" %}
+                        </a>
+                    </span>
 
-                    <div class="col w-50" v-if="data.total_pages > 1">
-                        <div class="float-right">
-                            <span>
-                                <a style="color:#050b12;" @click="news.callURL( [[ data.previous]] )" v-if="data.previous">
-                                    <span class="sr-only"> {% trans "Page" %} </span> &lt; {% trans "Previous" %}
-                                </a>
-                            </span>
-
-                            <span class="mr-2 ml-2" >[[ data.page ]] / <b>[[ data.total_pages ]]</b></span>
-                            <a style="color:#050b12;" @click="news.callURL( [[ data.next ]] )"  v-if="data.next">
-                                <span class="sr-only">{% trans "Page" %} </span>{% trans "Next" %} &gt;
-                            </a>
-                        </div>
-                    </div>
+                    <span class="mr-2 ml-2" >[[ data.page ]] / <b>[[ data.total_pages ]]</b></span>
+                    <a style="color:#050b12;" @click="news.callURL( [[ data.next ]] )"  v-if="data.next">
+                        <span class="sr-only">{% trans "Page" %} </span>{% trans "Next" %} &gt;
+                    </a>
                 </div>
-
-              </div>
             </div>
         </div>
     `
@@ -93,10 +121,10 @@ var news = new Vue({
     <div v-else>
 
         <list-panel v-bind:data="items"></list-panel>
-
+        <hr>
         <div v-if="items">
             <div class="row">
-                <ul>
+                <ul class="mb-0">
                     <li v-for="item in items.results">
                         <a target="_blank" :href="item.html_file">
                             [[ item.message_name ]]
@@ -111,7 +139,7 @@ var news = new Vue({
                 </ul>
             </div>
         </div>
-
+        <hr>
         <list-panel v-bind:data="items"></list-panel>
     </div>
     `,

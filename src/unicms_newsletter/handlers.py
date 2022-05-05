@@ -1,5 +1,7 @@
 from django.conf import settings
+from django.contrib import messages
 from django.http import HttpResponse, HttpResponseForbidden, Http404
+from django.middleware import csrf
 from django.shortcuts import get_object_or_404, render
 from django.template import Template, Context
 from django.urls import reverse
@@ -10,6 +12,7 @@ from cms.contexts.handlers import BaseContentHandler
 from cms.contexts.utils import contextualize_template, sanitize_path
 from cms.pages.models import Page
 
+from . forms import *
 from . models import *
 from . settings import *
 
@@ -71,7 +74,7 @@ class NewsletterViewHandler(BaseContentHandler):
                                             slug=self.match_dict.get('slug', ''),
                                             is_active=True)
 
-        self.messages = MessageSending.objects.filter(message__newsletter=self.newsletter)
+        # self.messages = MessageSending.objects.filter(message__newsletter=self.newsletter)
 
     def as_view(self):
         # i18n
@@ -82,22 +85,31 @@ class NewsletterViewHandler(BaseContentHandler):
         url = reverse('unicms_newsletter:newsletter-sendings',
                       kwargs = {'newsletter_id': self.newsletter.pk })
 
+        form = SubscribeForm(newsletter=self.newsletter)
+
+        csrft = csrf.get_token(self.request)
+
         data = {'request': self.request,
                 # 'lang': lang,
+                'csrfmiddlewaretoken': csrft,
                 'webpath': self.page.webpath,
                 'website': self.website,
                 'page': self.page,
                 'path': self.match_dict.get('webpath', '/'),
+                'custom_messages': messages.get_messages(self.request),
                 'newsletter': self.newsletter,
                 'handler': self,
-                'newsletter_messages': self.messages,
+                'form': form,
+                # 'newsletter_messages': self.messages,
                 'url': url}
 
         ext_template_sources = contextualize_template(self.template,
                                                       self.page)
         template = Template(ext_template_sources)
         context = Context(data)
+
         return HttpResponse(template.render(context), status=200)
+        # return render(self.request, template)
 
     @property
     def parent_path_prefix(self):

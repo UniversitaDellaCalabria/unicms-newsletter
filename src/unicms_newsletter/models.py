@@ -43,6 +43,7 @@ NEWSLETTER_SEND_EMAIL_DELAY = getattr(settings, 'NEWSLETTER_SEND_EMAIL_DELAY',
                                       NEWSLETTER_SEND_EMAIL_DELAY)
 NEWSLETTER_SEND_EMAIL_GROUP = getattr(settings, 'NEWSLETTER_SEND_EMAIL_GROUP',
                                       NEWSLETTER_SEND_EMAIL_GROUP)
+TOKEN_EXPIRATION = getattr(settings, 'TOKEN_EXPIRATION', TOKEN_EXPIRATION)
 
 
 def message_attachment_path(instance, filename): # pragma: no cover
@@ -64,6 +65,9 @@ class Newsletter(ActivableModel, TimeStampedModel, CreatedModifiedBy,
     description = models.TextField(max_length=2048,
                                    blank=True,
                                    default='')
+    conditions = models.TextField(max_length=2048,
+                                  blank=True,
+                                  default='')
     site = models.ForeignKey(WebSite, on_delete=models.CASCADE)
 
     class Meta:
@@ -124,6 +128,14 @@ class NewsletterSubscription(AbstractNewsletterSubscription):
 
     def token_is_valid(self, token):
         if not token: return False
+
+        # check token expiration
+        token_date = datetime.datetime.fromtimestamp(token)
+        now = datetime.datetime.now()
+        expiration = token_date + datetime.timedelta(TOKEN_EXPIRATION)
+        if now > expiration: return False
+
+        # check if token has never been used
         last_timestamp = self.date_subscription.timestamp()
         if self.date_unsubscription:
             if self.date_unsubscription > self.date_subscription:
