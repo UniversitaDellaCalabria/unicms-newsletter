@@ -43,6 +43,8 @@ NEWSLETTER_SEND_EMAIL_DELAY = getattr(settings, 'NEWSLETTER_SEND_EMAIL_DELAY',
                                       NEWSLETTER_SEND_EMAIL_DELAY)
 NEWSLETTER_SEND_EMAIL_GROUP = getattr(settings, 'NEWSLETTER_SEND_EMAIL_GROUP',
                                       NEWSLETTER_SEND_EMAIL_GROUP)
+NEWSLETTER_SEND_EMAIL_GROUP_DELAY = getattr(settings, 'NEWSLETTER_SEND_EMAIL_GROUP_DELAY',
+                                            NEWSLETTER_SEND_EMAIL_GROUP_DELAY)
 TOKEN_EXPIRATION = getattr(settings, 'TOKEN_EXPIRATION', TOKEN_EXPIRATION)
 
 
@@ -166,6 +168,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                                 blank=True,
                                 default='',
                                 help_text=DEFAULT_TEMPLATE)
+    sending = models.BooleanField(default=False)
 
     def is_lockable_by(self, user):
         item = self.newsletter
@@ -302,40 +305,57 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
 
         recipients = self.newsletter.get_valid_subscribers(test=test)
 
-        messages = []
-        recipients_email = []
+        self.sending = True
+        self.save()
 
-        # for index, recipient in enumerate(recipients):
-        for recipient in recipients:
-            recipients_email.append(recipient.email)
+        try:
+            connection = mail.get_connection()
+            connection.open()
 
-        message = mail.EmailMessage(
-            self.name,
-            # html_text if recipient.html else plain_text,
-            html_text,
-            settings.DEFAULT_FROM_EMAIL,
-            recipients_email,
-        )
-        message.content_subtype = "html"
+            # build message
+            message = mail.EmailMessage(
+                self.name,
+                # html_text if recipient.html else plain_text,
+                html_text,
+                settings.DEFAULT_FROM_EMAIL,
+                connection=connection
+            )
+            message.content_subtype = "html"
+            attachments = self.get_attachments()
+            for attachment in attachments:
+                file_path = attachment.attachment.path
+                if os.path.exists(file_path):
+                    message.attach_file(file_path)
+                else:
+                    logger.info('[{}] newsletter attachment "{}"'
+                                'not found'.format(timezone.localtime(),
+                                                   file_path))
+            # end build message
 
-        attachments = self.get_attachments()
-        for attachment in attachments:
-            file_path = attachment.attachment.path
-            if os.path.exists(file_path):
-                message.attach_file(file_path)
-            else:
-                logger.info('[{}] newsletter attachment "{}"'
-                            'not found'.format(timezone.localtime(),
-                                               file_path))
+            # send message to recipients
+            for index, recipient in enumerate(recipients):
+                message.to = [recipient.email]
+                if NEWSLETTER_SEND_EMAIL_DELAY:
+                    time.sleep(NEWSLETTER_SEND_EMAIL_DELAY)
+                if NEWSLETTER_SEND_EMAIL_GROUP:
+                    if index % NEWSLETTER_SEND_EMAIL_GROUP == 0:
+                        time.sleep(NEWSLETTER_SEND_EMAIL_GROUP_DELAY)
+                message.send()
 
-        message.send()
+            connection.close()
 
-        logger.info('[{}] sent {}message {} '
+        finally:
+            self.sending = False
+            self.save()
+
+
+        logger.info('[{}] sent {} message {} '
                     'for newsletter {}'.format(timezone.localtime(),
                                                'test-' if test else '',
                                                self.name,
                                                self.newsletter))
 
+        # create newsletter sending html file
         if not test:
             relative_path = message_html_path(self.newsletter.slug,
                                               self.pk)
