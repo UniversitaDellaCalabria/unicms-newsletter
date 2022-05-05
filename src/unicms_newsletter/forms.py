@@ -152,7 +152,8 @@ class SubscribeForm(forms.Form):
                                  required=True)
 
     def __init__(self, *args, **kwargs):
-        newsletter_slug = kwargs.pop('newsletter', None)
+        newsletter = kwargs.pop('newsletter', None)
+        newsletter_slug = newsletter.slug if newsletter else ''
         super().__init__(*args, **kwargs)
         self.fields['newsletter'].initial = newsletter_slug
 
