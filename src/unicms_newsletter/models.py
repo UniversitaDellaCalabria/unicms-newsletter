@@ -292,23 +292,48 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         html_content = get_template(self.template or DEFAULT_TEMPLATE)
         return html_content.render(data)
 
+    def register_sending(self, recipients, html_text):
+        # create newsletter sending html file
+        relative_path = message_html_path(self.newsletter.slug,
+                                          self.pk)
+
+        now = timezone.localtime()
+        file_name = f'newsletter_{self.newsletter.slug}_{now.strftime("%Y-%m-%d_%H-%M")}.html'
+        esistent = os.path.exists(f'{settings.MEDIA_ROOT}/{relative_path}')
+        if not esistent:
+          # Create a new directory because it does not exist
+          os.makedirs(f'{settings.MEDIA_ROOT}/{relative_path}')
+
+        html_file = open(f'{settings.MEDIA_ROOT}/{relative_path}/{file_name}', "w", encoding='utf-8')
+        html_file.write(html_text)
+        html_file.close()
+
+        MessageSending.objects.create(message=self,
+                                      date=now,
+                                      html_file=f'{relative_path}/{file_name}',
+                                      recipients=recipients.count())
+
     def send(self, test=False):
-        logger.info('[{}] sending message {} '
-                    'for newsletter {}'.format(timezone.localtime(),
-                                               self.name,
-                                               self.newsletter))
-
-        data = self.prepare_data(test=test)
-
-        html_text = self.prepare_html(test=test, data=data)
-        plain_text = self.prepare_plain_text(test=test, data=data)
-
-        recipients = self.newsletter.get_valid_subscribers(test=test)
+        # the message is being sent
+        if self.sending:
+            raise Exception('The message is being sent, try later')
 
         self.sending = True
         self.save()
 
         try:
+            logger.info('[{}] sending message {} '
+                    'for newsletter {}'.format(timezone.localtime(),
+                                               self.name,
+                                               self.newsletter))
+
+            data = self.prepare_data(test=test)
+
+            html_text = self.prepare_html(test=test, data=data)
+            plain_text = self.prepare_plain_text(test=test, data=data)
+
+            recipients = self.newsletter.get_valid_subscribers(test=test)
+
             connection = mail.get_connection()
             connection.open()
 
@@ -333,7 +358,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
             # end build message
 
             # send message to recipients
-            for index, recipient in enumerate(recipients):
+            for index, recipient in enumerate(recipients, start=1):
                 message.to = [recipient.email]
                 if NEWSLETTER_SEND_EMAIL_DELAY:
                     time.sleep(NEWSLETTER_SEND_EMAIL_DELAY)
@@ -344,39 +369,17 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
 
             connection.close()
 
-        finally:
-            self.sending = False
-            self.save()
-
-
-        logger.info('[{}] sent {} message {} '
+            logger.info('[{}] sent {} message {} '
                     'for newsletter {}'.format(timezone.localtime(),
                                                'test-' if test else '',
                                                self.name,
                                                self.newsletter))
 
-        # create newsletter sending html file
-        if not test:
-            relative_path = message_html_path(self.newsletter.slug,
-                                              self.pk)
+            if not test: self.register_sending(recipients, html_text)
 
-            now = timezone.localtime()
-            file_name = f'newsletter_{self.newsletter.slug}_{now.strftime("%Y-%m-%d_%H-%M")}.html'
-            isExist = os.path.exists(f'{settings.MEDIA_ROOT}/{relative_path}')
-            if not isExist:
-              # Create a new directory because it does not exist
-              os.makedirs(f'{settings.MEDIA_ROOT}/{relative_path}')
-
-            html_file = open(f'{settings.MEDIA_ROOT}/{relative_path}/{file_name}', "w", encoding='utf-8')
-            html_file.write(html_text)
-            html_file.close()
-
-            MessageSending.objects.create(message=self,
-                                          date=now,
-                                          html_file=f'{relative_path}/{file_name}',
-                                          recipients=recipients.count())
-
-        return True
+        finally:
+            self.sending = False
+            self.save()
 
     def __str__(self):
         return f'{self.newsletter} - {self.name}'

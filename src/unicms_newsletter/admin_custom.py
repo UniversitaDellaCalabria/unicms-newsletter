@@ -17,19 +17,21 @@ class AbstractPreviewableAdmin(AbstractCreatedModifiedBy):
             return HttpResponseRedirect(url)
 
         elif "_send_test" in request.POST:
-            if obj.send(test=True):
+            try:
+                obj.send(test=True)
                 self.message_user(request, ("Test message '{}' sent.").format(obj))
-            else:
-                self.message_user(request, ("Test message '{}' failed.").format(obj))
+            except Exception as e:
+                self.message_user(request, e)
             url = reverse('admin:unicms_newsletter_message_change',
                           kwargs={'object_id': obj.pk})
             return HttpResponseRedirect(url)
 
         elif "_send" in request.POST:
-            if obj.send():
+            try:
+                obj.send()
                 self.message_user(request, ("Message '{}' sent.").format(obj))
-            else:
-                self.message_user(request, ("Message '{}' failed.").format(obj))
+            except Exception as e:
+                self.message_user(request, e)
             url = reverse('admin:unicms_newsletter_message_change',
                           kwargs={'object_id': obj.pk})
             return HttpResponseRedirect(url)
