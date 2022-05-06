@@ -342,7 +342,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                 self.name,
                 # html_text if recipient.html else plain_text,
                 html_text,
-                settings.DEFAULT_FROM_EMAIL,
+                f'{self.newsletter.name} <{settings.DEFAULT_FROM_EMAIL}>',
                 connection=connection
             )
             message.content_subtype = "html"
