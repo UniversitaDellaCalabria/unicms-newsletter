@@ -316,7 +316,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
     def send(self, test=False):
         # the message is being sent
         if self.sending:
-            raise Exception('The message is being sent, try later')
+            raise Exception(_('The message is being sent, try later'))
 
         self.sending = True
         self.save()

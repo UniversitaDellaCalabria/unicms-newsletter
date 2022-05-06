@@ -10,7 +10,7 @@ from django.utils.translation import gettext_lazy as _
 # from cms.contexts.decorators import detect_language
 
 from rest_framework import generics
-from rest_framework.exceptions import ValidationError
+from rest_framework.exceptions import APIException, ValidationError
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.schemas.openapi import AutoSchema
@@ -36,7 +36,7 @@ class MessageList(UniCMSListCreateAPIView):
     """
     """
     description = ""
-    search_fields = ['name', 'description']
+    search_fields = ['name']
     serializer_class = MessageSerializer
 
     def get_queryset(self):
@@ -177,6 +177,11 @@ class MessageSendView(APIView):
         test = request.data.get('test', None)
         if test is None:
             raise ValidationError(_("'test' (true/false) param must be passed"))
-        result = item.send(test=test)
+
+        try:
+            result = item.send(test=test)
+        except Exception as e:
+            raise APIException(detail=e)
+
         message = _("Test message sent") if test else _("Message sent")
         return Response(message)
