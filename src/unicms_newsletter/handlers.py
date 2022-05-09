@@ -36,7 +36,8 @@ class NewsletterListHandler(BaseContentHandler):
             raise Http404('Unknown Web Page')
 
         newsletters = Newsletter.objects.filter(site=self.website,
-                                                is_active=True)
+                                                is_active=True,
+                                                is_public=True)
 
         if not newsletters:
             raise Http404('Unknown Web Page')
@@ -72,7 +73,8 @@ class NewsletterViewHandler(BaseContentHandler):
         self.newsletter = get_object_or_404(Newsletter,
                                             site=self.website,
                                             slug=self.match_dict.get('slug', ''),
-                                            is_active=True)
+                                            is_active=True,
+                                            is_public=True)
 
         # self.messages = MessageSending.objects.filter(message__newsletter=self.newsletter)
 

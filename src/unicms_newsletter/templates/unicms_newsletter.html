@@ -49,7 +49,7 @@
     </div>
 
     <div class="row">
-        <div class="col-12 col-lg-6">
+        <div class="col">
             <div class="card-wrapper card-space">
                 <div class="card card-bg no-after">
                     <div class="card-body">
@@ -58,6 +58,7 @@
                 </div>
             </div>
         </div>
+        {% if newsletter.is_subscriptable %}
         <div class="col-12 col-lg-6">
             <div class="card-wrapper card-space">
                 <div class="card card-bg no-after">
@@ -67,6 +68,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}
     </div>
 </div>
 <script>

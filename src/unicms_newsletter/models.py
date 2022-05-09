@@ -71,6 +71,8 @@ class Newsletter(ActivableModel, TimeStampedModel, CreatedModifiedBy,
                                   blank=True,
                                   default='')
     site = models.ForeignKey(WebSite, on_delete=models.CASCADE)
+    is_subscriptable = models.BooleanField(default=True)
+    is_public = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['name']

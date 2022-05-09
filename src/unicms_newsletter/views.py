@@ -69,6 +69,12 @@ def subscribe_unsubscribe(request):
                                            is_active=True,
                                            slug=newsletter_slug)
 
+            # check if newsletter is subscriptable
+            if not newsletter.is_subscriptable:
+                # log action
+                logger.info(_("This newsletter isn't subscriptable"))
+                raise Exception(_("This newsletter isn't subscriptable"))
+
             # get action (subscription or unsubscription?)
             unsubscribe = request.POST.get('unsubscribe', False)
 
@@ -138,6 +144,13 @@ def subscription_confirm(request):
     newsletter = get_object_or_404(Newsletter,
                                    is_active=True,
                                    pk=data_dict['newsletter'])
+
+    # check if newsletter is subscriptable
+    if not newsletter.is_subscriptable:
+        # log action
+        logger.info(_("This newsletter isn't subscriptable"))
+        raise Exception(_("This newsletter isn't subscriptable"))
+
     subscription = NewsletterSubscription.objects\
                                          .filter(newsletter=newsletter,
                                                  email=data_dict['email'])\
@@ -200,6 +213,13 @@ def unsubscription_confirm(request):
     newsletter = get_object_or_404(Newsletter,
                                    is_active=True,
                                    pk=data_dict['newsletter'])
+
+    # check if newsletter is subscriptable
+    if not newsletter.is_subscriptable:
+        # log action
+        logger.info(_("This newsletter isn't subscriptable"))
+        raise Exception(_("This newsletter isn't subscriptable"))
+
     subscription = NewsletterSubscription.objects\
                                          .filter(newsletter=newsletter,
                                                  email=data_dict['email'])\

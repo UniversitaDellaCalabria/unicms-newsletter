@@ -13,8 +13,8 @@ class NewsletterForm(forms.ModelForm):
 
     class Meta:
         model = Newsletter
-        fields = ['name', 'slug', 'description', 'conditions',
-                  'site', 'is_active']
+        fields = ['site', 'name', 'slug', 'description', 'conditions',
+                  'is_subscriptable', 'is_public', 'is_active']
 
 
 class NewsletterSubscriptionForm(forms.ModelForm):
