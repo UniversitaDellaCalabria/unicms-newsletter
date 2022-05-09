@@ -59,7 +59,7 @@ class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
         fields = ['newsletter', 'name', 'group_by_categories', 'date_start',
-                  'date_end', 'repeat_each', 'banner', 'banner_url',
+                  'date_end', 'repeat_each', 'hour', 'banner', 'banner_url',
                   'intro_text', 'content', 'footer_text',
                   'template', 'is_active',]
 

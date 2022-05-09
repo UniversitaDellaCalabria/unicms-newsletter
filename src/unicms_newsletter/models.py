@@ -8,7 +8,7 @@ from django import template
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core import mail
-# from django.core.mail import EmailMessage, send_mail
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import Q
 from django.template.loader import get_template
@@ -156,6 +156,12 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
     date_start = models.DateTimeField()
     date_end = models.DateTimeField()
     repeat_each = models.PositiveIntegerField(default=0, help_text=_("in days"))
+    hour = models.IntegerField(null=True, blank=True,
+                               validators=[
+                                    MaxValueValidator(23),
+                                    MinValueValidator(0)
+                               ],
+                               help_text=_("The minimum sending time value (depends on the cronjob setting)"))
     banner = models.ForeignKey(Media,
                                on_delete=models.SET_NULL,
                                blank=True,
@@ -185,10 +191,11 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
     def is_ready(self):
         if not self.is_active: return False
         if not self.is_in_progress(): return False
+        now = timezone.localtime()
+        if self.hour is not None and self.hour < now.hour: return False
         last_sending = self.get_last_sending()
         if not last_sending: return True
         if not self.repeat_each: return False
-        now = timezone.localtime()
         next_sending = last_sending.date + datetime.timedelta(self.repeat_each)
         return now >= next_sending
 
