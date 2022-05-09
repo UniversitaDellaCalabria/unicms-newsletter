@@ -192,6 +192,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         if not self.is_active: return False
         if not self.is_in_progress(): return False
         now = timezone.localtime()
+        # requires sending cronjob to be executed every hour
         if self.hour is not None and self.hour < now.hour: return False
         last_sending = self.get_last_sending()
         if not last_sending: return True

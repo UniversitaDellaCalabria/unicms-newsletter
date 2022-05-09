@@ -68,7 +68,9 @@ def subscribe_unsubscribe(request):
             subscription = NewsletterSubscription.objects.filter(newsletter=newsletter,
                                                                  email=email).first()
             # check
-            check = _check_subscription(request, subscription, unsubscribe)
+            check = _check_subscription(request=request,
+                                        subscription=subscription,
+                                        unsubscribe=unsubscribe)
 
             if check:
                 if unsubscribe:
@@ -133,7 +135,7 @@ def subscription_confirm(request):
                                                  email=data_dict['email'])\
                                          .first()
     # check
-    check = _check_subscription(subscription)
+    check = _check_subscription(request=request, subscription=subscription)
 
     if check:
         # if there is an existent email subscription for the newsletter
@@ -198,7 +200,9 @@ def unsubscription_confirm(request):
         raise Exception(_("No subscription for this email"))
 
     # check
-    check = _check_subscription(subscription, True)
+    check = _check_subscription(request=request,
+                                subscription=subscription,
+                                unsubscribe=True)
 
     if check:
 
