@@ -229,3 +229,4 @@ def unsubscription_confirm(request):
     messages.add_message(request, messages.SUCCESS,
                          _("{} unsubscription confirmed").format(data_dict['email']))
     redirect = f'/{settings.CMS_PATH_PREFIX}{settings.CMS_NEWSLETTER_VIEW_PREFIX_PATH}/{newsletter.slug}/'
+    return HttpResponseRedirect(redirect)
