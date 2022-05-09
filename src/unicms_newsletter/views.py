@@ -23,26 +23,34 @@ register = template.Library()
 
 
 def _check_subscription(request, subscription, unsubscribe=False):
-    if not subscription: return True
+    # no existent subscription
+    if not subscription:
+        if not unsubscribe: return True
+        messages.add_message(request, messages.ERROR,
+                             (_("This email address is not registered")))
+        return False
+
+    # subscription has been disabled from admin
     if not subscription.is_active:
         messages.add_message(request, messages.ERROR,
                              (_("This subscription is invalid. Contact our support")))
         return False
-    if unsubscribe and not subscription.date_unsubscription: return True
-    if unsubscribe and subscription.date_unsubscription > subscription.date_subscription:
+
+    # unsubscription request
+    if unsubscribe:
+        if not subscription.date_unsubscription: return True
+        if subscription.date_unsubscription < subscription.date_subscription:
+            return True
         messages.add_message(request, messages.WARNING,
                              (_("You're already unsubscripted to this newsletter")))
         return False
-    if not unsubscribe and subscription.date_unsubscription:
-        if subscription.date_subscription > subscription.date_unsubscription:
-            messages.add_message(request, messages.WARNING,
-                                 (_("You're already subscripted to this newsletter")))
-            return False
-    if not unsubscribe:
-        messages.add_message(request, messages.WARNING,
-                             (_("You're already subscripted to this newsletter")))
-        return False
 
+    # subscription request
+    if subscription.date_unsubscription and subscription.date_subscription < subscription.date_unsubscription:
+        return True
+    messages.add_message(request, messages.WARNING,
+                         (_("You're already subscripted to this newsletter")))
+    return False
 
 def subscribe_unsubscribe(request):
     """
