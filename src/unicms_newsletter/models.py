@@ -161,7 +161,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                                     MaxValueValidator(23),
                                     MinValueValidator(0)
                                ],
-                               help_text=_("The minimum sending time value (depends on the cronjob setting)"))
+                               help_text=_("The sending time value, 0-23 (depends on the cronjob setting)"))
     banner = models.ForeignKey(Media,
                                on_delete=models.SET_NULL,
                                blank=True,
