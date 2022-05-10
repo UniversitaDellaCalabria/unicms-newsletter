@@ -48,6 +48,8 @@ class MessageList(UniCMSListCreateAPIView):
         return Message.objects.none()  # pragma: no cover
 
     def post(self, request, *args, **kwargs):
+        week_day = _format_week_day(request.data['week_day'])
+        request.data['week_day'] = week_day
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             # get newsletter
@@ -58,7 +60,6 @@ class MessageList(UniCMSListCreateAPIView):
             if not permission['granted']:
                 raise LoggedPermissionDenied(classname=self.__class__.__name__,
                                              resource=request.method)
-
             return super().post(request, *args, **kwargs)
 
 
