@@ -187,7 +187,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                                 default='',
                                 help_text=DEFAULT_TEMPLATE)
     sending = models.BooleanField(default=False)
-    week_day = models.CharField(max_length=20, default='0,1,2,3,4,5,6')
+    week_day = models.CharField(max_length=20)
 
     def save(self, *args, **kwargs):
         if '[' in self.week_day:
