@@ -8,7 +8,7 @@ from django import template
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core import mail
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator,validate_comma_separated_integer_list
 from django.db import models
 from django.db.models import Q
 from django.template.loader import get_template
@@ -151,6 +151,16 @@ class NewsletterTestSubscription(AbstractNewsletterSubscription):
     pass
 
 
+WEEK_DAYS = (
+        ('0', _('Monday')),
+        ('1', _('Tuesday')),
+        ('2', _('Wednesday')),
+        ('3', _('Thursday')),
+        ('4', _('Friday')),
+        ('5', _('Saturday')),
+        ('6', _('Sunday')),
+    )
+
 class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
     name = models.CharField(max_length=254)
     newsletter = models.ForeignKey(Newsletter, on_delete=models.CASCADE)
@@ -177,6 +187,12 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                                 default='',
                                 help_text=DEFAULT_TEMPLATE)
     sending = models.BooleanField(default=False)
+    week_day = models.CharField(max_length=20)
+
+    def save(self, *args, **kwargs):
+        if '[' in self.week_day:
+            self.week_day = self.week_day[1:-1].replace("'","").replace(" ","")
+        super(Message, self).save(*args, **kwargs)
 
     def is_lockable_by(self, user):
         item = self.newsletter
@@ -194,7 +210,9 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         if not self.is_active: return False
         if not self.is_in_progress(): return False
         now = timezone.localtime()
-        # requires sending cronjob to be executed every hour
+        # check week day
+        if str(now.weekday()) not in self.week_day.split(','): return False
+        # check hour: to work properly cronjob must be executed every hour
         if self.hour is not None and self.hour < now.hour: return False
         last_sending = self.get_last_sending()
         if not last_sending: return True

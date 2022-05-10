@@ -62,6 +62,14 @@ class MessageList(UniCMSListCreateAPIView):
             return super().post(request, *args, **kwargs)
 
 
+def _format_week_day(value):
+    week_day = ''
+    for index, day in enumerate(value):
+        week_day+=day
+        if index + 1 < len(value): week_day+=','
+    return week_day
+
+
 class MessageView(UniCMSCachedRetrieveUpdateDestroyAPIView):
     """
     """
@@ -88,6 +96,8 @@ class MessageView(UniCMSCachedRetrieveUpdateDestroyAPIView):
         if not permission['granted']:
             raise LoggedPermissionDenied(classname=self.__class__.__name__,
                                          resource=request.method)
+        week_day = _format_week_day(request.data['week_day'])
+        request.data['week_day'] = week_day
         return super().patch(request, *args, **kwargs)
 
     def put(self, request, *args, **kwargs):
@@ -100,6 +110,8 @@ class MessageView(UniCMSCachedRetrieveUpdateDestroyAPIView):
         if not permission['granted']:
             raise LoggedPermissionDenied(classname=self.__class__.__name__,
                                          resource=request.method)
+        week_day = _format_week_day(request.data['week_day'])
+        request.data['week_day'] = week_day
         return super().put(request, *args, **kwargs)
 
     def delete(self, request, *args, **kwargs):

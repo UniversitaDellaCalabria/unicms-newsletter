@@ -5,6 +5,7 @@ from cms.publications.models import PublicationContext
 
 from . admin_inlines import *
 from . admin_custom import AbstractPreviewableAdmin
+from . forms import MessageForm
 from . models import *
 
 
@@ -22,6 +23,7 @@ class NewsletterAdmin(AbstractCreatedModifiedBy):
 @admin.register(Message)
 class MessageAdmin(AbstractPreviewableAdmin):
     model = Message
+    form = MessageForm
     inlines = (MessageWebpathAdminInline,
                MessageCategoryAdminInline,
                MessagePublicationAdminInline,

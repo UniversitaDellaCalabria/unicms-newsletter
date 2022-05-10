@@ -46,8 +46,17 @@ class NewsletterTestSubscriptionForm(forms.ModelForm):
 
 class MessageForm(forms.ModelForm):
 
+    week_day = forms.MultipleChoiceField(label='Week day', choices=WEEK_DAYS)
+
     def __init__(self, *args, **kwargs):
         newsletter_id = kwargs.pop('newsletter_id', None)
+
+        instance = kwargs.get('instance', None)
+        if instance:
+            kwargs.update(initial={
+                'week_day': instance.week_day.split(',')
+            })
+
         super().__init__(*args, **kwargs)
         if newsletter_id:
             self.fields['newsletter'].queryset = Newsletter.objects.filter(pk=newsletter_id)
@@ -56,12 +65,17 @@ class MessageForm(forms.ModelForm):
                 # only images
                 reverse('unicms_api:media-options') + '?file_type=image%2Fwebp')
 
+        # self.fields['week_day'].widget = forms.SelectMultiple()
+        # self.fields['week_day'].choices = WEEK_DAYS
+
     class Meta:
         model = Message
-        fields = ['newsletter', 'name', 'group_by_categories', 'date_start',
-                  'date_end', 'repeat_each', 'hour', 'banner', 'banner_url',
+        fields = ['newsletter', 'name', 'template', 'date_start',
+                  'date_end', 'repeat_each', 'week_day', 'hour',
+                  'group_by_categories',
+                  'banner', 'banner_url',
                   'intro_text', 'content', 'footer_text',
-                  'template', 'is_active',]
+                  'is_active',]
 
 
 class MessageAttachmentForm(forms.ModelForm):
