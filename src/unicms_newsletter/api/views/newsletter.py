@@ -257,5 +257,7 @@ class NewsletterSendingList(generics.ListAPIView):
         newsletter_id = self.kwargs.get('newsletter_id')
         if newsletter_id:
             return MessageSending.objects.filter(message__newsletter__pk=newsletter_id,
-                                                 message__newsletter__is_active=True)
+                                                 message__newsletter__is_active=True,
+                                                 message__newsletter__is_public=True,
+                                                 message__is_active=True)
         return MessageSending.objects.none()  # pragma: no cover
