@@ -143,7 +143,7 @@ class NewsletterMessageViewHandler(BaseContentHandler):
             raise Http404('Unknown Web Page')
 
         self.newsletter = Newsletter.objects.filter(site=self.website,
-                                                    slug=self.match_dict.get('slug', ''),
+                                                    slug=self.match_dict.get('newsletter_id', ''),
                                                     is_active=True).first()
         if not self.newsletter:
             raise Http404('Unknown newsletter')
@@ -151,18 +151,51 @@ class NewsletterMessageViewHandler(BaseContentHandler):
         self.message = Message.objects.filter(newsletter=self.newsletter,
                                               is_active=True,
                                               pk=self.match_dict.get('code', '')).first()
-        if not self.newsletter:
+        if not self.message:
             raise Http404('Unknown message')
 
     def as_view(self):
-        # i18n
-        # lang = getattr(self.request, 'LANGUAGE_CODE', None)
-        # if lang:
-            # self.cal_context.translate_as(lang=lang)
-
         permission = check_user_permission_on_object(self.request.user,
-                                                     self.message.newsletter)
+                                                     self.newsletter)
 
         if permission:
             return HttpResponse(self.message.prepare_html())
         return HttpResponseForbidden('Permission denied')
+
+
+class NewsletterMessageSendingViewHandler(BaseContentHandler):
+
+    def __init__(self, **kwargs):
+        super(NewsletterMessageSendingViewHandler, self).__init__(**kwargs)
+        self.match_dict = self.match.groupdict()
+        self.page = Page.objects.filter(is_active=True,
+                                        webpath__site=self.website,
+                                        webpath__fullpath='/').first()
+
+        if not self.page:  # pragma: no cover
+            raise Http404('Unknown Web Page')
+
+        self.newsletter = Newsletter.objects.filter(site=self.website,
+                                                    slug=self.match_dict.get('newsletter_id', ''),
+                                                    is_active=True).first()
+        if not self.newsletter:
+            raise Http404('Unknown newsletter')
+
+        message = Message.objects.filter(newsletter=self.newsletter,
+                                         is_active=True,
+                                         pk=self.match_dict.get('message_id', '')).first()
+        if not message:
+            raise Http404('Unknown message')
+
+        self.message_sending = MessageSending.objects.filter(message=message,
+                                                             pk=self.match_dict.get('code', '')).first()
+        if not self.message_sending:
+            raise Http404('Unknown message sending')
+
+    def as_view(self):
+        permission = check_user_permission_on_object(self.request.user,
+                                                     self.newsletter)
+
+        if permission or self.newsletter.is_public:
+            return HttpResponse(self.message_sending.html_file)
+        raise Http404('Permission denied')

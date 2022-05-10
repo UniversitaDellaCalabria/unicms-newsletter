@@ -47,6 +47,12 @@ NEWSLETTER_SEND_EMAIL_GROUP_DELAY = getattr(settings, 'NEWSLETTER_SEND_EMAIL_GRO
                                             NEWSLETTER_SEND_EMAIL_GROUP_DELAY)
 TOKEN_EXPIRATION = getattr(settings, 'TOKEN_EXPIRATION', TOKEN_EXPIRATION)
 
+CMS_NEWSLETTER_LIST_PREFIX_PATH =  getattr(settings, 'CMS_NEWSLETTER_VIEW_PREFIX_PATH',
+                                           CMS_NEWSLETTER_VIEW_PREFIX_PATH)
+CMS_NEWSLETTER_MESSAGE_SUB_PATH =  getattr(settings, 'CMS_NEWSLETTER_MESSAGE_SUB_PATH',
+                                           CMS_NEWSLETTER_MESSAGE_SUB_PATH)
+CMS_NEWSLETTER_MESSAGE_SENDING_SUB_PATH =  getattr(settings, 'CMS_NEWSLETTER_MESSAGE_SENDING_SUB_PATH',
+                                                   CMS_NEWSLETTER_MESSAGE_SENDING_SUB_PATH)
 
 def message_attachment_path(instance, filename): # pragma: no cover
     # file will be uploaded to MEDIA_ROOT
@@ -514,6 +520,11 @@ class MessageSending(TimeStampedModel):
 
     class Meta:
         ordering = ['-date',]
+
+    def view_html(self):
+        newsletter = self.message.newsletter
+        path = f'//{newsletter.site.domain}/{CMS_NEWSLETTER_VIEW_PREFIX_PATH}/{newsletter.slug}/{CMS_NEWSLETTER_MESSAGE_SUB_PATH}/{self.message.pk}/{CMS_NEWSLETTER_MESSAGE_SENDING_SUB_PATH}/{self.pk}/'
+        return path
 
     def __str__(self):
         return f'{self.message} - {self.date}'

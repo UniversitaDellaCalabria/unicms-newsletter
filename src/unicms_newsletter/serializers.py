@@ -147,6 +147,7 @@ class MessageSendingSerializer(UniCMSCreateUpdateSerializer,
     def to_representation(self, instance):
         data = super().to_representation(instance)
         data['message_name'] = instance.message.name
+        data['html_file'] = instance.view_html()
         return data
 
     class Meta:
