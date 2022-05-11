@@ -247,10 +247,13 @@
                             {% endif %}
 
                             {% if newsletter.is_subscriptable %}
-                            <a target="_blank" style="color: #fff" href="https://{{ newsletter.site.domain }}/{{ cms_prefix }}{{ cms_newsletter_view_prefix }}/{{ newsletter.slug }}">
+                            <a target="_blank" style="color: #fff; margin-bottom: 20px;" href="https://{{ newsletter.site.domain }}/{{ cms_prefix }}{{ cms_newsletter_view_prefix }}/{{ newsletter.slug }}">
                                 <b>Cancella/Iscriviti alla newsletter</b>
                             </a>
                             {% endif %}
+                            <span style="color: #fff">
+                                Università della Calabria - {% now "j F Y H:i" %}
+                            </span>
                         </div>
                     </td>
                 </tr>
