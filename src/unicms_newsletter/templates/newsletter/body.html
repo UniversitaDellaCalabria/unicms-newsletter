@@ -9,6 +9,33 @@
 <html lang="it">
     <head>
         <meta charset="utf-8" />
+        <style>
+            figure { margin: 0; }
+            .unicms_unical_hr {
+                box-sizing: content-box;
+                height: 0;
+                overflow: visible;
+                margin-top: 16px;
+                margin-bottom: 16px;
+                border: 0;
+                border-top: 1px solid #eee;
+            }
+            .unicms_unical_card_white {
+                padding: 20px;
+                border: 1px solid #ccc;
+                background: #fff;
+                margin-bottom: 10px;
+            }
+            .unicms_unical_h2 {
+                margin-top: 0;
+                margin-bottom: 25px;
+            }
+            table.unicms_unical_main_table table td,
+            table.unicms_unical_main_table table th {
+                padding: 10px;
+                border: 1px solid #ccc;
+            }
+        </style>
     </head>
     <body style="font-family: Arial; font-size: 14px; line-height: 14px; color: #383838; background: #f7f7f7; padding: 20px 0; display: flex;">
         <div style="width:700px; margin: auto;">
@@ -22,22 +49,22 @@
                 {% if banner_url %}
                 <a target="_blank" href="{{ banner_url }}">
                 {% endif %}
-                    <img src="https://{{ main_domain }}{{ banner.get_media_path }}" style="width: 100%; margin-bottom: 10px;"/>
+                    <img src="https://{{ main_domain }}{{ banner.get_media_path }}" style="width: 100%; height: auto; margin-bottom: 10px;" alt="{{ newsletter.name }}"/>
                 {% if banner_url %}
                 </a>
                 {% endif %}
             {% endif %}
 
-            <table border="0" cellpadding="0" cellspacing="0" width="960" align="left" style="width: 100%;" >
+            <table class="unicms_unical_main_table" border="0" cellpadding="0" cellspacing="0" width="960" align="left" style="width: 100%;" >
 
                 {% if intro_text or content %}
                 <tr>
                     <td>
-                        <div style="padding: 20px; border: 1px solid #ccc; background: #fff; margin-bottom: 10px;">
+                        <div class="unicms_unical_card_white">
                             {{ intro_text|safe }}
 
                             {% if content and intro_text %}
-                            <hr style="box-sizing: content-box; height: 0; overflow: visible; margin-top: 16px; margin-bottom: 16px; border: 0; border-top: 1px solid #eee;" />
+                            <hr class="unicms_unical_hr" />
                             {% endif %}
 
                             {{ content|safe }}
@@ -49,13 +76,13 @@
                 {% for publication in publications %}
                 <tr>
                     <td>
-                        <div style="padding: 20px; border: 1px solid #ccc; background: #fff; margin-bottom: 10px;">
-                            <h2 style="margin-top: 0; margin-bottom: 25px;">
+                        <div class="unicms_unical_card_white">
+                            <h2 class="unicms_unical_h2">
                                 {{ publication.title }}
                             </h2>
                             {% if publication.subheading %}
                                 <i>{{ publication.subheading }}</i>
-                                <hr style="box-sizing: content-box; height: 0; overflow: visible; margin-top: 16px; margin-bottom: 16px; border: 0; border-top: 1px solid #eee;" />
+                                <hr class="unicms_unical_hr" />
                             {% endif %}
 
                             {% if publication.content %}
@@ -69,15 +96,15 @@
                 {% if news_in_evidence %}
                 <tr>
                     <td>
-                        <div style="padding: 20px; border: 1px solid #ccc; background: #fff; margin-bottom: 10px;">
-                            <h2 style="margin-top: 0; margin-bottom: 25px;">
+                        <div class="unicms_unical_card_white">
+                            <h2 class="unicms_unical_h2">
                                 In evidenza
                             </h2>
                             <ul style="list-style: none; padding-left: 0; line-height: 20px; margin-bottom: 0;">
                             {% for single_new in news_in_evidence %}
 
                                 {% if forloop.counter0 %}
-                                <hr style="box-sizing: content-box; height: 0; overflow: visible; margin-top: 16px; margin-bottom: 16px; border: 0; border-top: 1px solid #eee;" />
+                                <hr class="unicms_unical_hr" />
                                 {% endif %}
 
                                 <li>
@@ -88,12 +115,12 @@
                                             <img src="https://{{ main_domain }}{{ single_new.publication.image_url }}"
                                                  title="{{ single_new.publication.preview_image.title }}"
                                                  alt="{{ single_new.publication.preview_image.description }}"
-                                                 style="width: 90%"/>
+                                                 style="width: 90%; height: auto;"/>
                                             {% elif single_new.publication.presentation_image %}
                                             <img src="https://{{ main_domain }}{{ single_new.publication.image_url }}"
                                                  title="{{ single_new.publication.presentation_image.title }}"
                                                  alt="{{ single_new.publication.presentation_image.description }}"
-                                                 style="width: 90%"/>
+                                                 style="width: 90%; height: auto;"/>
                                             {% endif %}
                                         </div>
                                         <div style="width: 80%; display: inline-block; vertical-align: top;">
@@ -122,7 +149,7 @@
                 {% if single_news %}
                 <tr>
                     <td>
-                        <div style="padding: 20px; border: 1px solid #ccc; background: #fff; margin-bottom: 10px;">
+                        <div class="unicms_unical_card_white">
                             <h2 style="margin-top: 0">News</h2>
                             <ul style="list-style: none; padding-left: 0; line-height: 20px; margin-bottom: 0;">
                             {% for single_new in single_news %}
@@ -142,7 +169,7 @@
                 {% if webpath_news %}
                 <tr>
                     <td>
-                        <div style="padding: 20px; border: 1px solid #ccc; background: #fff; margin-bottom: 10px;">
+                        <div class="unicms_unical_card_white">
                         {% if group_by_categories %}
                             {% for cat,news in webpath_news.items %}
                                 <h2 style="margin-bottom: 25px;{% if not forloop.counter0 %}margin-top: 0;{% else %}margin-top: 25px;{% endif %}">
@@ -157,12 +184,12 @@
                                                 <img src="https://{{ main_domain }}{{ new.publication.image_url }}"
                                                      title="{{ new.publication.preview_image.title }}"
                                                      alt="{{ new.publication.preview_image.description }}"
-                                                     style="max-width: 85%;"/>
+                                                     style="max-width: 85%; height: auto;"/>
                                                 {% elif new.publication.presentation_image %}
                                                 <img src="https://{{ main_domain }}{{ new.publication.image_url }}"
                                                      title="{{ new.publication.presentation_image.title }}"
                                                      alt="{{ new.publication.presentation_image.description }}"
-                                                     style="max-width: 85%;"/>
+                                                     style="max-width: 85%; height: auto;"/>
                                                 {% else %}
                                                 -
                                                 {% endif %}
@@ -187,12 +214,12 @@
                                             <img src="https://{{ main_domain }}{{ new.publication.image_url }}"
                                                  title="{{ new.publication.preview_image.title }}"
                                                  alt="{{ new.publication.preview_image.description }}"
-                                                 style="max-width: 85%; max-height: 40px"/>
+                                                 style="max-width: 85%; height: auto;"/>
                                             {% elif new.publication.presentation_image %}
                                             <img src="https://{{ main_domain }}{{ new.publication.image_url }}"
                                                  title="{{ new.publication.presentation_image.title }}"
                                                  alt="{{ new.publication.presentation_image.description }}"
-                                                 style="max-width: 85%; max-height: 40px"/>
+                                                 style="max-width: 85%; height: auto;"/>
                                             {% else %}
                                             -
                                             {% endif %}
