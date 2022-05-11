@@ -26,10 +26,18 @@ from .. permissions import NewsletterGetCreatePermissions
 from ... forms import *
 from ... models import *
 from ... serializers import *
-# from ... utils import calendar_context_base_filter
 
 
 logger = logging.getLogger(__name__)
+
+
+def _format_week_day(value):
+    week_day = ''
+    if value:
+        for index, day in enumerate(value):
+            week_day+=day
+            if index + 1 < len(value): week_day+=','
+    return week_day
 
 
 class MessageList(UniCMSListCreateAPIView):
@@ -48,7 +56,7 @@ class MessageList(UniCMSListCreateAPIView):
         return Message.objects.none()  # pragma: no cover
 
     def post(self, request, *args, **kwargs):
-        week_day = _format_week_day(request.data['week_day'])
+        week_day = _format_week_day(request.data.get('week_day', ''))
         request.data['week_day'] = week_day
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -61,14 +69,6 @@ class MessageList(UniCMSListCreateAPIView):
                 raise LoggedPermissionDenied(classname=self.__class__.__name__,
                                              resource=request.method)
             return super().post(request, *args, **kwargs)
-
-
-def _format_week_day(value):
-    week_day = ''
-    for index, day in enumerate(value):
-        week_day+=day
-        if index + 1 < len(value): week_day+=','
-    return week_day
 
 
 class MessageView(UniCMSCachedRetrieveUpdateDestroyAPIView):
@@ -97,7 +97,7 @@ class MessageView(UniCMSCachedRetrieveUpdateDestroyAPIView):
         if not permission['granted']:
             raise LoggedPermissionDenied(classname=self.__class__.__name__,
                                          resource=request.method)
-        week_day = _format_week_day(request.data['week_day'])
+        week_day = _format_week_day(request.data.get('week_day', ''))
         request.data['week_day'] = week_day
         return super().patch(request, *args, **kwargs)
 
@@ -111,7 +111,7 @@ class MessageView(UniCMSCachedRetrieveUpdateDestroyAPIView):
         if not permission['granted']:
             raise LoggedPermissionDenied(classname=self.__class__.__name__,
                                          resource=request.method)
-        week_day = _format_week_day(request.data['week_day'])
+        week_day = _format_week_day(request.data.get('week_day', ''))
         request.data['week_day'] = week_day
         return super().put(request, *args, **kwargs)
 

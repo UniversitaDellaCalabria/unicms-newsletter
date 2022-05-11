@@ -55,6 +55,13 @@ class NewsletterTestSubscriptionSerializer(UniCMSCreateUpdateSerializer,
 class MessageSerializer(UniCMSCreateUpdateSerializer,
                         UniCMSContentTypeClass):
 
+    def to_internal_value(self, data):
+        if data.get('date_start') == '':
+            data['date_start'] = None
+        if data.get('date_end') == '':
+            data['date_end'] = None
+        return super().to_internal_value(data)
+
     def to_representation(self, instance):
         data = super().to_representation(instance)
         if instance.banner:

@@ -171,9 +171,11 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
     name = models.CharField(max_length=254)
     newsletter = models.ForeignKey(Newsletter, on_delete=models.CASCADE)
     group_by_categories = models.BooleanField(default=True)
-    date_start = models.DateTimeField()
-    date_end = models.DateTimeField()
-    repeat_each = models.PositiveIntegerField(default=0, help_text=_("in days"))
+    date_start = models.DateTimeField(null=True, blank=True)
+    date_end = models.DateTimeField(null=True, blank=True)
+    repeat_each = models.PositiveIntegerField(default=0,
+                                              blank=True,
+                                              help_text=_("in days"))
     hour = models.IntegerField(null=True, blank=True,
                                validators=[
                                     MaxValueValidator(23),
@@ -193,7 +195,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                                 default='',
                                 help_text=DEFAULT_TEMPLATE)
     sending = models.BooleanField(default=False)
-    week_day = models.CharField(max_length=20)
+    week_day = models.CharField(max_length=20, default='', blank=True)
 
     def save(self, *args, **kwargs):
         if '[' in self.week_day:
@@ -209,6 +211,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         return MessageSending.objects.filter(message=self).first()
 
     def is_in_progress(self):
+        if not self.date_start or not self.date_end: return False
         now = timezone.localtime()
         return self.date_start <= now and self.date_end > now
 
@@ -217,7 +220,8 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         if not self.is_in_progress(): return False
         now = timezone.localtime()
         # check week day
-        if str(now.weekday()) not in self.week_day.split(','): return False
+        if self.week_day and str(now.weekday()) not in self.week_day.split(','):
+            return False
         # check hour: to work properly cronjob must be executed every hour
         if self.hour is not None and self.hour < now.hour: return False
         last_sending = self.get_last_sending()

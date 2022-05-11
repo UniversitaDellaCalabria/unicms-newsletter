@@ -218,9 +218,12 @@
                             {% if footer_text %}
                             {{ footer_text|safe }}
                             {% endif %}
+
+                            {% if newsletter.is_subscriptable %}
                             <a target="_blank" style="color: #fff" href="https://{{ newsletter.site.domain }}/{{ cms_prefix }}{{ cms_newsletter_view_prefix }}/{{ newsletter.slug }}">
                                 <b>Cancella/Iscriviti alla newsletter</b>
                             </a>
+                            {% endif %}
                         </div>
                     </td>
                 </tr>

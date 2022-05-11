@@ -46,13 +46,15 @@ class NewsletterTestSubscriptionForm(forms.ModelForm):
 
 class MessageForm(forms.ModelForm):
 
-    week_day = forms.MultipleChoiceField(label='Week day', choices=WEEK_DAYS)
+    week_day = forms.MultipleChoiceField(label='Week day',
+                                         choices=WEEK_DAYS,
+                                         required=False)
 
     def __init__(self, *args, **kwargs):
         newsletter_id = kwargs.pop('newsletter_id', None)
 
         instance = kwargs.get('instance', None)
-        if instance:
+        if instance and instance.week_day:
             kwargs.update(initial={
                 'week_day': instance.week_day.split(',')
             })
@@ -70,11 +72,13 @@ class MessageForm(forms.ModelForm):
 
     class Meta:
         model = Message
-        fields = ['newsletter', 'name', 'template', 'date_start',
-                  'date_end', 'repeat_each', 'week_day', 'hour',
-                  'group_by_categories',
+        fields = ['newsletter', 'name',
                   'banner', 'banner_url',
                   'intro_text', 'content', 'footer_text',
+                  'date_start', 'date_end',
+                  'repeat_each', 'week_day', 'hour',
+                  'group_by_categories',
+                  'template',
                   'is_active',]
 
 
