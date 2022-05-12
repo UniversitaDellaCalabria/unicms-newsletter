@@ -42,7 +42,7 @@ class NewsletterTestSubscriptionForm(forms.ModelForm):
 
     class Meta:
         model = NewsletterSubscription
-        fields = ['newsletter', 'first_name', 'last_name', 'email', 'html']
+        fields = ['newsletter', 'first_name', 'last_name', 'email', 'is_active']#'html']
 
 
 class MessageForm(forms.ModelForm):
