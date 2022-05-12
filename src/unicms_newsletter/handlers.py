@@ -173,13 +173,11 @@ class NewsletterMessageSendingViewHandler(BaseContentHandler):
             raise Http404('Unknown Web Page')
 
         self.newsletter = Newsletter.objects.filter(site=self.website,
-                                                    slug=self.match_dict.get('newsletter_id', ''),
-                                                    is_active=True).first()
+                                                    slug=self.match_dict.get('newsletter_id', '')).first()
         if not self.newsletter:
             raise Http404('Unknown newsletter')
 
         message = Message.objects.filter(newsletter=self.newsletter,
-                                         is_active=True,
                                          pk=self.match_dict.get('message_id', '')).first()
         if not message:
             raise Http404('Unknown message')
@@ -192,7 +190,8 @@ class NewsletterMessageSendingViewHandler(BaseContentHandler):
     def as_view(self):
         permission = check_user_permission_on_object(self.request.user,
                                                      self.newsletter)
-
-        if permission['granted'] or self.newsletter.is_public:
+        if permission['granted']:
+            return HttpResponse(self.message_sending.html_file)
+        if self.newsletter.is_public and self.newsletter.is_active and self.message.is_active:
             return HttpResponse(self.message_sending.html_file)
         raise Http404('Permission denied')
