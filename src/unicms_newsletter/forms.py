@@ -28,7 +28,8 @@ class NewsletterSubscriptionForm(forms.ModelForm):
     class Meta:
         model = NewsletterSubscription
         fields = ['newsletter', 'first_name', 'last_name',
-                  'email', 'html', 'date_subscription']
+                  'email', #'html',
+                  'date_subscription', 'is_active']
 
 
 class NewsletterTestSubscriptionForm(forms.ModelForm):
