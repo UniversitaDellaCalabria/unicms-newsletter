@@ -5,8 +5,8 @@
 {% settings_value "MAIN_DOMAIN" as main_domain %}
 {% settings_value "CMS_NEWSLETTER_VIEW_PREFIX_PATH" as cms_newsletter_view_prefix %}
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<!DOCTYPE HTML PUBLIC "-https://W3Chttps://DTD XHTML 1.0 Transitional https://EN" "http:https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http:https://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
     <head>
         <!--[if gte mso 9]>
         <xml>
@@ -78,7 +78,7 @@
                                 {% if banner_url %}
                                 <a target="_blank" href="{{ banner_url }}">
                                 {% endif %}
-                                    <img src="{{ banner }}" style="width: 100%; height: auto;" alt="{{ newsletter.name }}"/>
+                                    <img src="https://{{ newsletter.site.domain }}{{ banner }}" style="width: 100%; height: auto;" alt="{{ newsletter.name }}"/>
                                 {% if banner_url %}
                                 </a>
                                 {% endif %}
@@ -140,12 +140,12 @@
                                             {% if single_new.publication.image_url %}
                                             <div style="width: 18%; display: inline-block; margin-top: 4px;">
                                                 {% if single_new.publication.preview_image %}
-                                                <img src="//{{ main_domain }}{{ single_new.publication.image_url }}"
+                                                <img src="https://{{ main_domain }}{{ single_new.publication.image_url }}"
                                                      title="{{ single_new.publication.preview_image.title }}"
                                                      alt="{{ single_new.publication.preview_image.description }}"
                                                      style="width: 90%; height: auto;"/>
                                                 {% elif single_new.publication.presentation_image %}
-                                                <img src="//{{ main_domain }}{{ single_new.publication.image_url }}"
+                                                <img src="https://{{ main_domain }}{{ single_new.publication.image_url }}"
                                                      title="{{ single_new.publication.presentation_image.title }}"
                                                      alt="{{ single_new.publication.presentation_image.description }}"
                                                      style="width: 90%; height: auto;"/>
@@ -155,7 +155,7 @@
                                             {% else %}
                                             <div>
                                             {% endif %}
-                                                <a target="_blank" style="color: #383838; cursor: pointer;" href="//{{ single_new.webpath.site.domain }}{{ single_new.url }}">
+                                                <a target="_blank" style="color: #383838; cursor: pointer;" href="https://{{ single_new.webpath.site.domain }}{{ single_new.url }}">
                                                     <b>{{ single_new.publication.title }}</b>
                                                 </a>
 
@@ -183,7 +183,7 @@
                                 {% for single_new in single_news %}
                                     <li style="margin-left: 0;">
                                         -
-                                        <a target="_blank" style="color: #383838; cursor: pointer;" href="//{{ single_new.webpath.site.domain }}{{ single_new.url }}">
+                                        <a target="_blank" style="color: #383838; cursor: pointer;" href="https://{{ single_new.webpath.site.domain }}{{ single_new.url }}">
                                             {{ single_new.publication.title }}
                                         </a>
                                     </li>
@@ -209,12 +209,12 @@
                                             <div style="display: inline-block; width: 100%">
                                                 <div style="display: inline-block; width: 8%; margin-top: 4px;">
                                                     {% if new.publication.preview_image %}
-                                                    <img src="//{{ main_domain }}{{ new.publication.image_url }}"
+                                                    <img src="https://{{ main_domain }}{{ new.publication.image_url }}"
                                                          title="{{ new.publication.preview_image.title }}"
                                                          alt="{{ new.publication.preview_image.description }}"
                                                          style="max-width: 85%; height: auto;"/>
                                                     {% elif new.publication.presentation_image %}
-                                                    <img src="//{{ main_domain }}{{ new.publication.image_url }}"
+                                                    <img src="https://{{ main_domain }}{{ new.publication.image_url }}"
                                                          title="{{ new.publication.presentation_image.title }}"
                                                          alt="{{ new.publication.presentation_image.description }}"
                                                          style="max-width: 85%; height: auto;"/>
@@ -223,7 +223,7 @@
                                                     {% endif %}
                                                 </div>
                                                 <div style="display: inline-block; vertical-align: top; width: 90%">
-                                                    <a target="_blank" style="color: #383838; cursor: pointer;" href="//{{ new.webpath.site.domain }}{{ new.url }}">
+                                                    <a target="_blank" style="color: #383838; cursor: pointer;" href="https://{{ new.webpath.site.domain }}{{ new.url }}">
                                                         {{ new.publication.title }}
                                                     </a>
                                                 </div>
@@ -239,12 +239,12 @@
                                         <div style="display: inline-block; width: 100%">
                                             <div style="display: inline-block; width: 8%; margin-top: 4px;">
                                                 {% if new.publication.preview_image %}
-                                                <img src="//{{ main_domain }}{{ new.publication.image_url }}"
+                                                <img src="https://{{ main_domain }}{{ new.publication.image_url }}"
                                                      title="{{ new.publication.preview_image.title }}"
                                                      alt="{{ new.publication.preview_image.description }}"
                                                      style="max-width: 85%; height: auto;"/>
                                                 {% elif new.publication.presentation_image %}
-                                                <img src="//{{ main_domain }}{{ new.publication.image_url }}"
+                                                <img src="https://{{ main_domain }}{{ new.publication.image_url }}"
                                                      title="{{ new.publication.presentation_image.title }}"
                                                      alt="{{ new.publication.presentation_image.description }}"
                                                      style="max-width: 85%; height: auto;"/>
@@ -253,7 +253,7 @@
                                                 {% endif %}
                                             </div>
                                             <div style="display: inline-block; vertical-align: top; width: 90%">
-                                                <a target="_blank" style="color: #383838; cursor: pointer;" href="//{{ new.webpath.site.domain }}{{ new.url }}">
+                                                <a target="_blank" style="color: #383838; cursor: pointer;" href="https://{{ new.webpath.site.domain }}{{ new.url }}">
                                                     {{ new.publication.title }}
                                                 </a>
                                             </div>
@@ -275,7 +275,7 @@
                                 {% endif %}
 
                                 {% if newsletter.is_subscriptable %}
-                                <a target="_blank" style="color: #fff; margin-bottom: 20px;" href="//{{ newsletter.site.domain }}/{{ cms_prefix }}{{ cms_newsletter_view_prefix }}/{{ newsletter.slug }}">
+                                <a target="_blank" style="color: #fff; margin-bottom: 20px;" href="https://{{ newsletter.site.domain }}/{{ cms_prefix }}{{ cms_newsletter_view_prefix }}/{{ newsletter.slug }}">
                                     <b>Cancella/Iscriviti alla newsletter</b>
                                 </a>
                                 {% endif %}
