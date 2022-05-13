@@ -32,7 +32,7 @@ class MessageAdmin(AbstractPreviewableAdmin):
                MessageSendingAdminInline
                )
     list_display = ('name', 'newsletter', 'is_active')
-    raw_id_fields = ('banner',)
+    # raw_id_fields = ('banner',)
     search_fields = ('name',)
     list_filter = ('newsletter__name', 'created', 'modified', 'is_active')
     readonly_fields = ('created_by', 'modified_by', 'sending')

@@ -56,14 +56,20 @@ CMS_NEWSLETTER_MESSAGE_SENDING_SUB_PATH =  getattr(settings, 'CMS_NEWSLETTER_MES
 
 def message_attachment_path(instance, filename): # pragma: no cover
     # file will be uploaded to MEDIA_ROOT
-    return 'newsletter/attachments/{}/{}/{}'.format(instance.message.newsletter.slug,
+    return 'newsletter/{}/{}/attachments/{}'.format(instance.message.newsletter.slug,
                                                     instance.message.pk,
                                                     filename)
 
 def message_html_path(newsletter_slug, message_pk): # pragma: no cover
     # file will be uploaded to MEDIA_ROOT
-    return 'newsletter/sendings/{}/{}'.format(newsletter_slug,
-                                                 message_pk)
+    return 'newsletter/{}/{}/sendings'.format(newsletter_slug,
+                                              message_pk)
+
+def message_banner_path(instance, filename): # pragma: no cover
+    # file will be uploaded to MEDIA_ROOT
+    return 'newsletter/{}/{}/banners/{}'.format(instance.newsletter.slug,
+                                                instance.pk,
+                                                filename)
 
 
 class Newsletter(ActivableModel, TimeStampedModel, CreatedModifiedBy,
@@ -182,10 +188,13 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                                     MinValueValidator(0)
                                ],
                                help_text=_("The sending time value, 0-23 (depends on the cronjob setting)"))
-    banner = models.ForeignKey(Media,
-                               on_delete=models.SET_NULL,
-                               blank=True,
-                               null=True)
+    # banner = models.ForeignKey(Media,
+                               # on_delete=models.SET_NULL,
+                               # blank=True,
+                               # null=True)
+    banner = models.ImageField(upload_to=message_banner_path,
+                               validators=[validate_file_size],
+                               blank=True, null=True)
     banner_url = models.URLField(max_length=200, default='', blank=True)
     intro_text = models.TextField(default='', blank=True)
     content = models.TextField(default='', blank=True)
@@ -195,7 +204,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                                 default='',
                                 help_text=DEFAULT_TEMPLATE)
     sending = models.BooleanField(default=False)
-    week_day = models.CharField(max_length=20, default='', blank=True)
+    week_day = models.CharField(max_length=254, default='', blank=True)
 
     def save(self, *args, **kwargs):
         if '[' in self.week_day:
@@ -306,7 +315,8 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                                      .exclude(pk__in=publications_id)\
                                      [0:NEWSLETTER_MAX_FREE_ITEMS]
 
-        data = {'banner': self.banner,
+        data = {#'banner': self.banner,
+                'banner': self.banner.url,
                 'banner_url': self.banner_url,
                 'content': self.content,
                 'intro_text': self.intro_text,

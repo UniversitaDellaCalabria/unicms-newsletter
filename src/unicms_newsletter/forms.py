@@ -63,10 +63,9 @@ class MessageForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if newsletter_id:
             self.fields['newsletter'].queryset = Newsletter.objects.filter(pk=newsletter_id)
-        setattr(self.fields['banner'],
-                FORM_SOURCE_LABEL,
-                # only images
-                reverse('unicms_api:media-options') + '?file_type=image%2Fwebp')
+        # setattr(self.fields['banner'],
+                # FORM_SOURCE_LABEL,
+                # reverse('unicms_api:media-options') + '?file_type=image%2Fwebp')
 
         # self.fields['week_day'].widget = forms.SelectMultiple()
         # self.fields['week_day'].choices = WEEK_DAYS
