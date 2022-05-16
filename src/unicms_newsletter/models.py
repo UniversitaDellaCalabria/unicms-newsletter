@@ -83,6 +83,8 @@ class Newsletter(ActivableModel, TimeStampedModel, CreatedModifiedBy,
                                   blank=True,
                                   default='')
     site = models.ForeignKey(WebSite, on_delete=models.CASCADE)
+    sender_address = models.EmailField(blank=True, null=True,
+                                       help_text=_("Default: ") + settings.DEFAULT_FROM_EMAIL)
     is_subscriptable = models.BooleanField(default=True)
     is_public = models.BooleanField(default=True)
 
@@ -390,7 +392,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                 subject=self.name,
                 # html_text if recipient.html else plain_text,
                 body=html_text,
-                from_email=f'{self.newsletter.name} <ciao@unical.it>',
+                from_email=f'{self.newsletter.name} <{self.newsletter.sender_address or settings.DEFAULT_FROM_EMAIL}>',
                 connection=connection
             )
             message.content_subtype = "html"
