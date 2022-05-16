@@ -387,10 +387,10 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
 
             # build message
             message = mail.EmailMessage(
-                self.name,
+                subject=self.name,
                 # html_text if recipient.html else plain_text,
-                html_text,
-                f'{self.newsletter.name} <{settings.DEFAULT_FROM_EMAIL}>',
+                body=html_text,
+                from_email=f'{self.newsletter.name} <ciao@unical.it>',
                 connection=connection
             )
             message.content_subtype = "html"
