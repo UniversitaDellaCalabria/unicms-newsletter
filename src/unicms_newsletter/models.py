@@ -316,7 +316,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                                      [0:NEWSLETTER_MAX_FREE_ITEMS]
 
         data = {#'banner': self.banner,
-                'banner': self.banner.url,
+                'banner': self.banner.url if self.banner else '',
                 'banner_url': self.banner_url,
                 'content': self.content,
                 'intro_text': self.intro_text,
