@@ -181,7 +181,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
     group_by_categories = models.BooleanField(default=True)
     date_start = models.DateTimeField(null=True, blank=True)
     date_end = models.DateTimeField(null=True, blank=True)
-    repeat_each = models.PositiveIntegerField(default=0,
+    repeat_each = models.PositiveIntegerField(null=True,
                                               blank=True,
                                               help_text=_("in days"))
     hour = models.IntegerField(null=True, blank=True,
