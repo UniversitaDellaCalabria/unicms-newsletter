@@ -251,9 +251,32 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         return categories
 
     def get_webpaths(self):
-        return MessageWebpath.objects\
-                             .filter(message=self, is_active=True)\
-                             .values_list('webpath__pk', flat=True)
+        # return MessageWebpath.objects\
+                             # .filter(message=self, is_active=True)\
+                             # .values_list('webpath__pk', flat=True)
+        return MessageWebpath.objects.filter(message=self,
+                                             is_active=True)
+
+    def get_webpath_news(self, message_webpath):
+        if not message_webpath or not message_webpath.webpath.is_active:
+            return PublicationContext.objects.none()
+        now = timezone.localtime()
+        news_from = message_webpath.news_from
+        news_to = message_webpath.news_to
+        news_from_query = Q()
+        news_to_query = Q()
+        webpath_news_query = Q(webpath=message_webpath.webpath,
+                               date_start__lte=now,
+                               date_end__gt=now,
+                               is_active=True,
+                               publication__is_active=True)
+        if news_from:
+            news_from_query = Q(date_start__gte=news_from)
+        if news_to:
+            news_to_query = Q(date_start__lte=news_to)
+        return PublicationContext.objects.filter(webpath_news_query,
+                                                 news_from_query,
+                                                 news_to_query)
 
     def get_publications(self):
         mpub = MessagePublication.objects\
@@ -286,7 +309,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         now = timezone.localtime()
 
         categories = self.get_categories()
-        webpaths = self.get_webpaths()
+        message_webpaths = self.get_webpaths()
         publications = self.get_publications()
         single_news = self.get_publicationcontexts()
         news_in_evidence = self.get_publicationcontexts_in_evidence()
@@ -295,27 +318,43 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         publications_id = list(map(lambda pub: pub.pk, single_news))
 
         news = {}
+        webpath_news = PublicationContext.objects.none()
 
-        webpath_news_query = Q(webpath__pk__in=webpaths,
-                               date_start__lte=now,
-                               date_end__gt=now,
-                               is_active=True,
-                               publication__is_active=True)
+        for message_webpath in message_webpaths:
+            webpath_news = webpath_news.union(self.get_webpath_news(message_webpath))
 
-        if self.group_by_categories:
-            for category in categories:
-                pubs = PublicationContext.objects\
-                                         .filter(webpath_news_query,
-                                                 publication__category=category)\
-                                         .exclude(pk__in=publications_id)\
-                                         [0:NEWSLETTER_MAX_ITEMS_IN_CATEGORY]
-                if pubs: news[category] = pubs
+        # webpath_news_query = Q(webpath__pk__in=webpaths,
+                               # webpath__is_active=True,
+                               # date_start__lte=now,
+                               # date_end__gt=now,
+                               # is_active=True,
+                               # publication__is_active=True)
+
+        if not categories:
+            news = webpath_news.exclude(pk__in=publications_id)\
+                               [0:NEWSLETTER_MAX_FREE_ITEMS]
         else:
-            news = PublicationContext.objects\
-                                     .filter(webpath_news_query,
-                                             publication__category__in=categories)\
-                                     .exclude(pk__in=publications_id)\
-                                     [0:NEWSLETTER_MAX_FREE_ITEMS]
+            if self.group_by_categories:
+                for category in categories:
+                    # pubs = PublicationContext.objects\
+                                             # .filter(webpath_news_query,
+                                                     # publication__category=category)\
+                                             # .exclude(pk__in=publications_id)\
+                                             # [0:NEWSLETTER_MAX_ITEMS_IN_CATEGORY]
+                    # if pubs: news[category] = pubs
+                    pubs = webpath_news.filter(publication__category=category)\
+                                       .exclude(pk__in=publications_id)\
+                                       [0:NEWSLETTER_MAX_ITEMS_IN_CATEGORY]
+                    if pubs: news[category] = pubs
+            else:
+                # news = PublicationContext.objects\
+                                         # .filter(webpath_news_query,
+                                                 # publication__category__in=categories)\
+                                         # .exclude(pk__in=publications_id)\
+                                         # [0:NEWSLETTER_MAX_FREE_ITEMS]
+                news = webpath_news.filter(publication__category__in=categories)\
+                                   .exclude(pk__in=publications_id)\
+                                   [0:NEWSLETTER_MAX_FREE_ITEMS]
 
         data = {#'banner': self.banner,
                 'banner': self.banner.url if self.banner else '',
@@ -438,6 +477,8 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
 class MessageWebpath(ActivableModel, TimeStampedModel, CreatedModifiedBy):
     message = models.ForeignKey(Message, on_delete=models.CASCADE)
     webpath = models.ForeignKey(WebPath, on_delete=models.CASCADE)
+    news_from = models.DateTimeField(blank=True, null=True)
+    news_to = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         unique_together = ('message', 'webpath')

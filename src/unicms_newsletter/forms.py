@@ -139,7 +139,8 @@ class MessageWebpathForm(forms.ModelForm):
 
     class Meta:
         model = MessageWebpath
-        fields = ['message', 'webpath', 'is_active'] #'order', 'is_active']
+        fields = ['message', 'webpath',
+                  'news_from', 'news_to', 'is_active'] #'order', 'is_active']
 
 
 class MessagePublicationContextForm(forms.ModelForm):
