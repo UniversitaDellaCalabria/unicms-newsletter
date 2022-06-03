@@ -79,6 +79,7 @@ class MessageForm(forms.ModelForm):
                   'date_start', 'date_end',
                   'repeat_each', 'week_day', 'hour',
                   'group_by_categories',
+                  'discard_sent_news',
                   'template',
                   'is_active',]
 

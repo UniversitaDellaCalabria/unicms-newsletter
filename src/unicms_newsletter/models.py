@@ -207,6 +207,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                                 help_text=DEFAULT_TEMPLATE)
     sending = models.BooleanField(default=False)
     week_day = models.CharField(max_length=254, default='', blank=True)
+    discard_sent_news = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if '[' in self.week_day:
@@ -265,6 +266,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         news_to = message_webpath.news_to
         news_from_query = Q()
         news_to_query = Q()
+        discard_sent_news_query = Q()
         webpath_news_query = Q(webpath=message_webpath.webpath,
                                date_start__lte=now,
                                date_end__gt=now,
@@ -274,9 +276,15 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
             news_from_query = Q(date_start__gte=news_from)
         if news_to:
             news_to_query = Q(date_start__lte=news_to)
+        if self.discard_sent_news:
+            # get most recent sending
+            last_sending = MessageSending.objects.first()
+            if last_sending:
+                discard_sent_news_query = Q(date_start__gt=last_sending.date)
         return PublicationContext.objects.filter(webpath_news_query,
                                                  news_from_query,
-                                                 news_to_query)
+                                                 news_to_query,
+                                                 discard_sent_news_query)
 
     def get_publications(self):
         mpub = MessagePublication.objects\
