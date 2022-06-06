@@ -418,44 +418,44 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         self.sending = True
         self.save()
 
-        try:
-            logger.info('[{}] sending message {} '
-                    'for newsletter {}'.format(timezone.localtime(),
-                                               self.name,
-                                               self.newsletter))
+        logger.info('[{}] sending message {} '
+                'for newsletter {}'.format(timezone.localtime(),
+                                           self.name,
+                                           self.newsletter))
 
-            data = self.prepare_data(test=test)
+        data = self.prepare_data(test=test)
 
-            html_text = self.prepare_html(test=test, data=data)
-            plain_text = self.prepare_plain_text(test=test, data=data)
+        html_text = self.prepare_html(test=test, data=data)
+        plain_text = self.prepare_plain_text(test=test, data=data)
 
-            recipients = self.newsletter.get_valid_subscribers(test=test)
+        recipients = self.newsletter.get_valid_subscribers(test=test)
 
-            connection = mail.get_connection()
-            connection.open()
+        connection = mail.get_connection()
+        connection.open()
 
-            # build message
-            message = mail.EmailMessage(
-                subject=self.name,
-                # html_text if recipient.html else plain_text,
-                body=html_text,
-                from_email=f'{self.newsletter.name} <{self.newsletter.sender_address or settings.DEFAULT_FROM_EMAIL}>',
-                connection=connection
-            )
-            message.content_subtype = "html"
-            attachments = self.get_attachments()
-            for attachment in attachments:
-                file_path = attachment.attachment.path
-                if os.path.exists(file_path):
-                    message.attach_file(file_path)
-                else:
-                    logger.info('[{}] newsletter attachment "{}"'
-                                'not found'.format(timezone.localtime(),
-                                                   file_path))
-            # end build message
+        # build message
+        message = mail.EmailMessage(
+            subject=self.name,
+            # html_text if recipient.html else plain_text,
+            body=html_text,
+            from_email=f'{self.newsletter.name} <{self.newsletter.sender_address or settings.DEFAULT_FROM_EMAIL}>',
+            connection=connection
+        )
+        message.content_subtype = "html"
+        attachments = self.get_attachments()
+        for attachment in attachments:
+            file_path = attachment.attachment.path
+            if os.path.exists(file_path):
+                message.attach_file(file_path)
+            else:
+                logger.info('[{}] newsletter attachment "{}"'
+                            'not found'.format(timezone.localtime(),
+                                               file_path))
+        # end build message
 
-            # send message to recipients
-            for index, recipient in enumerate(recipients, start=1):
+        # send message to recipients
+        for index, recipient in enumerate(recipients, start=1):
+            try:
                 message.to = [recipient.email]
                 if NEWSLETTER_SEND_EMAIL_DELAY:
                     time.sleep(NEWSLETTER_SEND_EMAIL_DELAY)
@@ -463,20 +463,21 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                     if index % NEWSLETTER_SEND_EMAIL_GROUP == 0:
                         time.sleep(NEWSLETTER_SEND_EMAIL_GROUP_DELAY)
                 message.send()
+            except Exception as e:
+                continue
 
-            connection.close()
+        connection.close()
 
-            logger.info('[{}] sent {} message {} '
-                    'for newsletter {}'.format(timezone.localtime(),
-                                               'test-' if test else '',
-                                               self.name,
-                                               self.newsletter))
+        logger.info('[{}] sent {} message {} '
+                'for newsletter {}'.format(timezone.localtime(),
+                                           'test-' if test else '',
+                                           self.name,
+                                           self.newsletter))
 
-            if not test: self.register_sending(recipients, html_text)
+        if not test: self.register_sending(recipients, html_text)
 
-        finally:
-            self.sending = False
-            self.save()
+        self.sending = False
+        self.save()
 
     def __str__(self):
         return f'{self.newsletter} - {self.name}'
