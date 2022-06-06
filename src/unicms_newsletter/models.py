@@ -410,6 +410,32 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                                       html_file=f'{relative_path}/{file_name}',
                                       recipients=recipients.count())
 
+    def send_message(self, recipient,
+                     html_text='', plain_text='',
+                     attachments=[],
+                     test=False):
+        # build message
+        message = mail.EmailMessage(
+            subject=self.name,
+            # html_text if recipient.html else plain_text,
+            body=html_text,
+            to=[recipient],
+            from_email=f'{self.newsletter.name} <{self.newsletter.sender_address or settings.DEFAULT_FROM_EMAIL}>',
+        )
+        message.content_subtype = "html"
+
+        for attachment in attachments:
+            file_path = attachment.attachment.path
+            if os.path.exists(file_path):
+                message.attach_file(file_path)
+            else:
+                logger.debug('[{}] newsletter attachment "{}"'
+                            'not found'.format(timezone.localtime(),
+                                               file_path))
+        # end build message
+        message.send()
+
+
     def send(self, test=False):
         # the message is being sent
         if self.sending:
@@ -424,41 +450,18 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                                            self.newsletter))
 
         data = self.prepare_data(test=test)
-
         html_text = self.prepare_html(test=test, data=data)
         plain_text = self.prepare_plain_text(test=test, data=data)
 
         recipients = self.newsletter.get_valid_subscribers(test=test)
-
-        connection = mail.get_connection()
-        connection.open()
-
-        # build message
-        message = mail.EmailMessage(
-            subject=self.name,
-            # html_text if recipient.html else plain_text,
-            body=html_text,
-            from_email=f'{self.newsletter.name} <{self.newsletter.sender_address or settings.DEFAULT_FROM_EMAIL}>',
-            connection=connection
-        )
-        message.content_subtype = "html"
         attachments = self.get_attachments()
-        for attachment in attachments:
-            file_path = attachment.attachment.path
-            if os.path.exists(file_path):
-                message.attach_file(file_path)
-            else:
-                logger.debug('[{}] newsletter attachment "{}"'
-                            'not found'.format(timezone.localtime(),
-                                               file_path))
-        # end build message
 
         # send message to recipients
         for index, recipient in enumerate(recipients, start=1):
 
             try:
                 logger.debug(f'Try to send newsletter {self.newsletter} email to {recipient.email}')
-                message.to = [recipient.email]
+
                 if NEWSLETTER_SEND_EMAIL_DELAY:
                     logger.debug(f'Start sleeping {self.newsletter} - SEND EMAIL DELAY')
                     time.sleep(NEWSLETTER_SEND_EMAIL_DELAY)
@@ -469,20 +472,16 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                         time.sleep(NEWSLETTER_SEND_EMAIL_GROUP_DELAY)
                         logger.debug(f'End sleeping {self.newsletter} - SEND EMAIL GROUP')
 
-                if not connection.connection:
-                    time.sleep(30)
-                    connection = mail.get_connection()
-                    connection.open()
-                    message.connection = connection
+                self.send_message(test=test,
+                                  recipient=recipient.email,
+                                  html_text=html_text,
+                                  plain_text=plain_text,
+                                  attachments=attachments)
 
-                message.send()
                 logger.debug(f'Sent newsletter {self.newsletter} email to {recipient.email}')
+
             except Exception as e:
                 logger.debug(f'Newsletter {self.newsletter} exception {e} while sending to {recipient.email}')
-
-        logger.debug(f'Newsletter {self.newsletter} - closing connection')
-        if connection.connection: connection.close()
-        logger.debug(f'Newsletter {self.newsletter} - connection closed')
 
         logger.debug('[{}] sent {} message {} '
                 'for newsletter {}'.format(timezone.localtime(),
