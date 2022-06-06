@@ -430,8 +430,8 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
 
         recipients = self.newsletter.get_valid_subscribers(test=test)
 
-        # connection = mail.get_connection()
-        # connection.open()
+        connection = mail.get_connection()
+        connection.open()
 
         # build message
         message = mail.EmailMessage(
@@ -439,7 +439,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
             # html_text if recipient.html else plain_text,
             body=html_text,
             from_email=f'{self.newsletter.name} <{self.newsletter.sender_address or settings.DEFAULT_FROM_EMAIL}>',
-            # connection=connection
+            connection=connection
         )
         message.content_subtype = "html"
         attachments = self.get_attachments()
@@ -455,6 +455,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
 
         # send message to recipients
         for index, recipient in enumerate(recipients, start=1):
+
             try:
                 logger.debug(f'Try to send newsletter {self.newsletter} email to {recipient.email}')
                 message.to = [recipient.email]
@@ -467,15 +468,21 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                         logger.debug(f'Start sleeping {self.newsletter} - SEND EMAIL GROUP')
                         time.sleep(NEWSLETTER_SEND_EMAIL_GROUP_DELAY)
                         logger.debug(f'End sleeping {self.newsletter} - SEND EMAIL GROUP')
+
+                if not connection.connection:
+                    time.sleep(30)
+                    connection = mail.get_connection()
+                    connection.open()
+                    message.connection = connection
+
                 message.send()
                 logger.debug(f'Sent newsletter {self.newsletter} email to {recipient.email}')
             except Exception as e:
-                logger.debug(f'Newsletter {self.newsletter} exception {e} while sendig to {recipient.email}')
-                continue
+                logger.debug(f'Newsletter {self.newsletter} exception {e} while sending to {recipient.email}')
 
-        # logger.debug(f'Newsletter {self.newsletter} - closing connection')
-        # connection.close()
-        # logger.debug(f'Newsletter {self.newsletter} - connection closed')
+        logger.debug(f'Newsletter {self.newsletter} - closing connection')
+        if connection.connection: connection.close()
+        logger.debug(f'Newsletter {self.newsletter} - connection closed')
 
         logger.debug('[{}] sent {} message {} '
                 'for newsletter {}'.format(timezone.localtime(),
