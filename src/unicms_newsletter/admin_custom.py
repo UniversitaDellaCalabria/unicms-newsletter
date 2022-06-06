@@ -13,7 +13,7 @@ class AbstractPreviewableAdmin(AbstractCreatedModifiedBy):
 
     def response_change(self, request, obj):
         if "_preview" in request.POST:
-            url = f'/{settings.CMS_PATH_PREFIX}{CMS_NEWSLETTER_VIEW_PREFIX_PATH}/{obj.newsletter.slug}/{CMS_NEWSLETTER_MESSAGE_SUB_PATH}/{obj.pk}/'
+            url = f'/{settings.CMS_PATH_PREFIX}{CMS_NEWSLETTER_VIEW_PREFIX_PATH}/{obj.newsletter.slug}/{CMS_NEWSLETTER_MESSAGE_SUB_PATH}/{obj.pk}/preview/'
             return HttpResponseRedirect(url)
 
         elif "_send_test" in request.POST:
