@@ -177,12 +177,12 @@ class NewsletterMessageSendingViewHandler(BaseContentHandler):
         if not self.newsletter:
             raise Http404('Unknown newsletter')
 
-        message = Message.objects.filter(newsletter=self.newsletter,
+        self.message = Message.objects.filter(newsletter=self.newsletter,
                                          pk=self.match_dict.get('message_id', '')).first()
-        if not message:
+        if not self.message:
             raise Http404('Unknown message')
 
-        self.message_sending = MessageSending.objects.filter(message=message,
+        self.message_sending = MessageSending.objects.filter(message=self.message,
                                                              pk=self.match_dict.get('code', '')).first()
         if not self.message_sending:
             raise Http404('Unknown message sending')
