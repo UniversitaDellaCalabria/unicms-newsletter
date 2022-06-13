@@ -205,6 +205,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                                 blank=True,
                                 default='',
                                 help_text=DEFAULT_TEMPLATE)
+    queued = models.BooleanField(default=False)
     sending = models.BooleanField(default=False)
     week_day = models.CharField(max_length=254, default='', blank=True)
     discard_sent_news = models.BooleanField(default=False)
@@ -228,6 +229,10 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         return self.date_start <= now and self.date_end > now
 
     def is_ready(self):
+        # the message is being sent
+        if self.sending: return False
+        # manual sending
+        if self.queued: return True
         if not self.is_active: return False
         if not self.is_in_progress(): return False
         now = timezone.localtime()
@@ -236,9 +241,14 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
             return False
         # check hour: to work properly cronjob must be executed every hour
         if self.hour is not None and now.hour < self.hour: return False
+        # repeat_each rule
+        # None: ignore it
+        # 0: only 1 send
+        # n: every n days
+        if self.repeat_each is None: return True
         last_sending = self.get_last_sending()
         if not last_sending: return True
-        if not self.repeat_each: return False
+        if self.repeat_each == 0: return False
         next_sending = last_sending.date + datetime.timedelta(self.repeat_each)
         return now >= next_sending
 
@@ -408,7 +418,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         MessageSending.objects.create(message=self,
                                       date=now,
                                       html_file=f'{relative_path}/{file_name}',
-                                      recipients=recipients.count())
+                                      recipients=len(recipients))
 
     def send_message(self, recipient,
                      html_text='', plain_text='',
@@ -492,6 +502,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         if not test: self.register_sending(recipients, html_text)
 
         self.sending = False
+        self.queued = False
         self.save()
 
     def __str__(self):

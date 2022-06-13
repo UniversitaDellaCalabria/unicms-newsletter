@@ -31,11 +31,11 @@ class MessageAdmin(AbstractPreviewableAdmin):
                MessageAttachmentAdminInline,
                MessageSendingAdminInline
                )
-    list_display = ('name', 'newsletter', 'is_active')
+    list_display = ('name', 'newsletter', 'is_active', 'queued', 'sending')
     # raw_id_fields = ('banner',)
     search_fields = ('name',)
     list_filter = ('newsletter__name', 'created', 'modified', 'is_active')
-    readonly_fields = ('created_by', 'modified_by', 'sending')
+    readonly_fields = ('created_by', 'modified_by', 'queued', 'sending')
 
     class Media:
         js = ("js/ckeditor5/ckeditor.js",

@@ -1,5 +1,6 @@
 import logging
 
+from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.http import Http404
 from django.shortcuts import get_object_or_404
@@ -26,9 +27,13 @@ from .. permissions import NewsletterGetCreatePermissions
 from ... forms import *
 from ... models import *
 from ... serializers import *
+from ... settings import NEWSLETTER_MAX_ITEMS_FOR_MANUAL_SENDING
 
 
 logger = logging.getLogger(__name__)
+
+NEWSLETTER_MAX_ITEMS_FOR_MANUAL_SENDING = getattr(settings,'NEWSLETTER_MAX_ITEMS_FOR_MANUAL_SENDING',
+                                                  NEWSLETTER_MAX_ITEMS_FOR_MANUAL_SENDING)
 
 
 class MessageList(UniCMSListCreateAPIView):
@@ -177,9 +182,17 @@ class MessageSendView(APIView):
             raise ValidationError(_("'test' (true/false) param must be passed"))
 
         try:
-            result = item.send(test=test)
+            subscribers = item.newsletter.get_valid_subscribers(test=test)
+            if len(subscribers) <= NEWSLETTER_MAX_ITEMS_FOR_MANUAL_SENDING:
+                result = item.send(test=test)
+                message = _("Test message sent") if test else _("Message sent")
+            else:
+                item.queued = True
+                item.save()
+                message = _("Test message queued for the next submission") \
+                          if test \
+                          else _("Message queued for the next submission")
         except Exception as e:
             raise APIException(detail=e)
 
-        message = _("Test message sent") if test else _("Message sent")
         return Response(message)
