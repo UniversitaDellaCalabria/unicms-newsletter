@@ -184,7 +184,7 @@ class MessageSendView(APIView):
         try:
             subscribers = item.newsletter.get_valid_subscribers(test=test)
             if len(subscribers) <= NEWSLETTER_MAX_ITEMS_FOR_MANUAL_SENDING:
-                result = item.send(test=test)
+                item.send(test=test)
                 message = _("Test message sent") if test else _("Message sent")
             else:
                 item.queued = True
@@ -194,5 +194,4 @@ class MessageSendView(APIView):
                           else _("Message queued for the next submission")
         except Exception as e:
             raise APIException(detail=e)
-
         return Response(message)

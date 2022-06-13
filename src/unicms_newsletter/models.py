@@ -435,13 +435,8 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         message.content_subtype = "html"
 
         for attachment in attachments:
-            file_path = attachment.attachment.path
-            if os.path.exists(file_path):
-                message.attach_file(file_path)
-            else:
-                logger.debug('[{}] newsletter attachment "{}"'
-                            'not found'.format(timezone.localtime(),
-                                               file_path))
+            message.attach_file(attachment)
+
         # end build message
         message.send()
 
@@ -465,7 +460,15 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
 
         recipients = self.newsletter.get_valid_subscribers(test=test)
         attachments = self.get_attachments()
-
+        message_attachments = []
+        for attachment in attachments:
+            file_path = attachment.attachment.path
+            if os.path.exists(file_path):
+                message_attachments.append(file_path)
+            else:
+                logger.debug('[{}] newsletter attachment "{}"'
+                            'not found'.format(timezone.localtime(),
+                                               file_path))
         # send message to recipients
         for index, recipient in enumerate(recipients, start=1):
 
@@ -486,7 +489,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                                   recipient=recipient.email,
                                   html_text=html_text,
                                   plain_text=plain_text,
-                                  attachments=attachments)
+                                  attachments=message_attachments)
 
                 logger.debug(f'Sent newsletter {self.newsletter} email to {recipient.email}')
 
