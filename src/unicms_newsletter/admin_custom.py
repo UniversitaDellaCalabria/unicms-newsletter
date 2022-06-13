@@ -16,20 +16,10 @@ class AbstractPreviewableAdmin(AbstractCreatedModifiedBy):
             url = f'/{settings.CMS_PATH_PREFIX}{CMS_NEWSLETTER_VIEW_PREFIX_PATH}/{obj.newsletter.slug}/{CMS_NEWSLETTER_MESSAGE_SUB_PATH}/{obj.pk}/preview/'
             return HttpResponseRedirect(url)
 
-        elif "_send_test" in request.POST:
+        elif "_send_test" in request.POST or "_send" in request.POST:
             try:
-                obj.send(test=True)
-                self.message_user(request, ("Test message '{}' sent.").format(obj))
-            except Exception as e:
-                self.message_user(request, e)
-            url = reverse('admin:unicms_newsletter_message_change',
-                          kwargs={'object_id': obj.pk})
-            return HttpResponseRedirect(url)
-
-        elif "_send" in request.POST:
-            try:
-                obj.send()
-                self.message_user(request, ("Message '{}' sent.").format(obj))
+                message = obj.start_sending(test="_send_test" in request.POST)
+                self.message_user(request, message)
             except Exception as e:
                 self.message_user(request, e)
             url = reverse('admin:unicms_newsletter_message_change',

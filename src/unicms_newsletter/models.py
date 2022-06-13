@@ -45,6 +45,8 @@ NEWSLETTER_SEND_EMAIL_GROUP = getattr(settings, 'NEWSLETTER_SEND_EMAIL_GROUP',
                                       NEWSLETTER_SEND_EMAIL_GROUP)
 NEWSLETTER_SEND_EMAIL_GROUP_DELAY = getattr(settings, 'NEWSLETTER_SEND_EMAIL_GROUP_DELAY',
                                             NEWSLETTER_SEND_EMAIL_GROUP_DELAY)
+NEWSLETTER_MAX_ITEMS_FOR_MANUAL_SENDING = getattr(settings,'NEWSLETTER_MAX_ITEMS_FOR_MANUAL_SENDING',
+                                                  NEWSLETTER_MAX_ITEMS_FOR_MANUAL_SENDING)
 TOKEN_EXPIRATION = getattr(settings, 'TOKEN_EXPIRATION', TOKEN_EXPIRATION)
 
 CMS_NEWSLETTER_LIST_PREFIX_PATH =  getattr(settings, 'CMS_NEWSLETTER_VIEW_PREFIX_PATH',
@@ -205,6 +207,8 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                                 blank=True,
                                 default='',
                                 help_text=DEFAULT_TEMPLATE)
+    queued_test = models.BooleanField(default=False)
+    sending_test = models.BooleanField(default=False)
     queued = models.BooleanField(default=False)
     sending = models.BooleanField(default=False)
     week_day = models.CharField(max_length=254, default='', blank=True)
@@ -228,11 +232,18 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         now = timezone.localtime()
         return self.date_start <= now and self.date_end > now
 
-    def is_ready(self):
+    def is_ready(self, test=False):
+        # if test message, check only test params
+        if test:
+            if self.sending_test: return False
+            if self.queued_test: return True
+            return False
+
         # the message is being sent
         if self.sending: return False
         # manual sending
         if self.queued: return True
+        # check conditions
         if not self.is_active: return False
         if not self.is_in_progress(): return False
         now = timezone.localtime()
@@ -442,11 +453,17 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
 
 
     def send(self, test=False):
-        # the message is being sent
-        if self.sending:
-            raise Exception(_('The message is being sent, try later'))
+        if test:
+            # the message is being sent
+            if self.sending_test:
+                raise Exception(_('The test message is being sent, try later'))
+            self.sending_test = True
+        else:
+            # the message is being sent
+            if self.sending:
+                raise Exception(_('The message is being sent, try later'))
+            self.sending = True
 
-        self.sending = True
         self.save()
 
         logger.debug('[{}] sending message {} '
@@ -502,11 +519,30 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                                            self.name,
                                            self.newsletter))
 
-        if not test: self.register_sending(recipients, html_text)
-
-        self.sending = False
-        self.queued = False
+        if test:
+            self.sending_test = False
+            self.queued_test = False
+        else:
+            self.queued = False
+            self.sending = False
+            self.register_sending(recipients, html_text)
         self.save()
+
+    def start_sending(self, test=False):
+        # Start sending process
+        # It decides whether the message should be sent instantly
+        # or if it should be queued
+        subscribers = self.newsletter.get_valid_subscribers(test=test)
+        if len(subscribers) <= NEWSLETTER_MAX_ITEMS_FOR_MANUAL_SENDING:
+            self.send(test=test)
+            return _("Test message sent") if test else _("Message sent")
+        else:
+            if test: self.queued_test = True
+            else: self.queued = True
+            self.save()
+            return _("Test message queued for the next submission") \
+                     if test \
+                     else _("Message queued for the next submission")
 
     def __str__(self):
         return f'{self.newsletter} - {self.name}'

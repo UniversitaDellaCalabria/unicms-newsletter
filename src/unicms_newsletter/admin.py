@@ -35,7 +35,9 @@ class MessageAdmin(AbstractPreviewableAdmin):
     # raw_id_fields = ('banner',)
     search_fields = ('name',)
     list_filter = ('newsletter__name', 'created', 'modified', 'is_active')
-    readonly_fields = ('created_by', 'modified_by', 'queued', 'sending')
+    readonly_fields = ('created_by', 'modified_by',
+                       'queued', 'sending',
+                       'queued_test', 'sending_test')
 
     class Media:
         js = ("js/ckeditor5/ckeditor.js",
