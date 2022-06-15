@@ -251,7 +251,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         if self.week_day and str(now.weekday()) not in self.week_day.split(','):
             return False
         # check hour: to work properly cronjob must be executed every hour
-        if self.hour is not None and now.hour < self.hour: return False
+        if self.hour is not None and now.hour != self.hour: return False
         # repeat_each rule
         # None: ignore it
         # 0: only 1 send
