@@ -299,7 +299,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
             news_to_query = Q(date_start__lte=news_to)
         if self.discard_sent_news:
             # get most recent sending
-            last_sending = MessageSending.objects.first()
+            last_sending = MessageSending.objects.filter(message=self).first()
             if last_sending:
                 discard_sent_news_query = Q(date_start__gt=last_sending.date)
         return PublicationContext.objects.filter(webpath_news_query,
