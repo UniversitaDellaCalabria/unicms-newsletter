@@ -401,12 +401,20 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                 }
         return data
 
+    def check_data(self, test=False):
+        keys = ['content', 'intro_text', 'news_in_evidence',
+                'publications', 'single_news', 'webpath_news']
+        data = self.prepare_data(test=test)
+        for key in keys:
+            if data[key]: return data
+        return {}
+
     def prepare_plain_text(self, test=False, data={}):
-        data = data or self.prepare_data()
+        data = data or self.prepare_data(test=test)
         return 'plain text {}'.format(data)
 
     def prepare_html(self, test=False, data={}):
-        data = data or self.prepare_data()
+        data = data or self.prepare_data(test=test)
         html_content = get_template(self.template or DEFAULT_TEMPLATE)
         return html_content.render(data)
 
@@ -452,7 +460,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         message.send()
 
 
-    def send(self, test=False):
+    def send(self, test=False, data={}):
         if test:
             # the message is being sent
             if self.sending_test:
@@ -471,7 +479,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                                            self.name,
                                            self.newsletter))
 
-        data = self.prepare_data(test=test)
+        data = data or self.prepare_data(test=test)
         html_text = self.prepare_html(test=test, data=data)
         plain_text = self.prepare_plain_text(test=test, data=data)
 

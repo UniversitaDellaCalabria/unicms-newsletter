@@ -31,9 +31,13 @@ class Command(BaseCommand):
         if options['y'] or confirm():
             messages = Message.objects.filter(newsletter__is_active=True)
             for message in messages:
-                if message.is_ready(test=True):
-                    print(f'[{message.newsletter}] - Sending message {message.name}')
-                    message.send(test=True)
-                    print(f'[{message.newsletter}] - Sent message {message.name}')
-                else:
+                if not message.is_ready(test=True):
                     print(f'[{message.newsletter}] - Message {message.name} is not ready')
+                else:
+                    data = message.check_data(test=True)
+                    if not data:
+                        print(f'[{message.newsletter}] - {message.name} is empty')
+                    else:
+                        print(f'[{message.newsletter}] - Sending message {message.name}')
+                        message.send(test=True, data=data)
+                        print(f'[{message.newsletter}] - Sent message {message.name}')
