@@ -98,7 +98,7 @@ Vue.component('list-panel', {
                         </a>
                     </span>
 
-                    <span class="mr-2 ml-2" >[[ data.page ]] / <b>[[ data.total_pages ]]</b></span>
+                    <span class="me-2 ms-2" >[[ data.page ]] / <b>[[ data.total_pages ]]</b></span>
                     <a style="color:#050b12;" @click="news.callURL( [[ data.next ]] )"  v-if="data.next">
                         <span class="sr-only">{% trans "Page" %} </span>{% trans "Next" %} &gt;
                     </a>
