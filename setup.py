@@ -47,7 +47,7 @@ setup(
         'Programming Language :: Python :: 3',
     ],
     install_requires=[
-        'django>=3.2,<4.0',
+        'django>=3.2,<5.0',
         'unicms',
         'cryptojwt',
     ],
