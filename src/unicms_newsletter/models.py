@@ -58,18 +58,18 @@ CMS_NEWSLETTER_MESSAGE_SENDING_SUB_PATH =  getattr(settings, 'CMS_NEWSLETTER_MES
 
 def message_attachment_path(instance, filename): # pragma: no cover
     # file will be uploaded to MEDIA_ROOT
-    return 'newsletter/{}/{}/attachments/{}'.format(instance.message.newsletter.slug,
+    return 'newsletter/{}/{}/attachments/{}'.format(instance.message.newsletter.pk,
                                                     instance.message.pk,
                                                     filename)
 
-def message_html_path(newsletter_slug, message_pk): # pragma: no cover
+def message_html_path(newsletter_pk, message_pk): # pragma: no cover
     # file will be uploaded to MEDIA_ROOT
-    return 'newsletter/{}/{}/sendings'.format(newsletter_slug,
+    return 'newsletter/{}/{}/sendings'.format(newsletter_pk,
                                               message_pk)
 
 def message_banner_path(instance, filename): # pragma: no cover
     # file will be uploaded to MEDIA_ROOT
-    return 'newsletter/{}/{}/banners/{}'.format(instance.newsletter.slug,
+    return 'newsletter/{}/{}/banners/{}'.format(instance.newsletter.pk,
                                                 instance.pk,
                                                 filename)
 
@@ -428,7 +428,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
 
     def register_sending(self, recipients, html_text):
         # create newsletter sending html file
-        relative_path = message_html_path(self.newsletter.slug,
+        relative_path = message_html_path(self.newsletter.pk,
                                           self.pk)
 
         now = timezone.localtime()
