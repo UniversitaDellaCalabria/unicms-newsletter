@@ -57,7 +57,7 @@ class MessageSerializer(UniCMSCreateUpdateSerializer,
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data['preview'] = f'/{settings.CMS_PATH_PREFIX}{CMS_NEWSLETTER_VIEW_PREFIX_PATH}/{instance.newsletter.slug}/{CMS_NEWSLETTER_MESSAGE_SUB_PATH}/{instance.pk}/preview/'
+        data['preview'] = f'//{instance.newsletter.site.domain}/{settings.CMS_PATH_PREFIX}{CMS_NEWSLETTER_VIEW_PREFIX_PATH}/{instance.newsletter.slug}/{CMS_NEWSLETTER_MESSAGE_SUB_PATH}/{instance.pk}/preview/'
         return data
 
     class Meta:
