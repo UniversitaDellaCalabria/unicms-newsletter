@@ -217,7 +217,15 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
     def save(self, *args, **kwargs):
         if '[' in self.week_day:
             self.week_day = self.week_day[1:-1].replace("'","").replace(" ","")
-        super(Message, self).save(*args, **kwargs)
+
+        if self.pk is None and self.banner:
+            saved_banner = self.banner
+            self.banner = None
+            super(Message, self).save(*args, **kwargs)
+            self.banner = saved_banner
+            self.save(update_fields=['banner'])
+        else:
+            super(Message, self).save(*args, **kwargs)
 
     def is_lockable_by(self, user):
         item = self.newsletter
