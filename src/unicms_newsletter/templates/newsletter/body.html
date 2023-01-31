@@ -123,7 +123,7 @@ li {
 
 
 
-<!--[if !mso]><!--><link href="//fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet" type="text/css"><link href="//fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" rel="stylesheet" type="text/css"><!--<![endif]-->
+<!--[if !mso]><!--><link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" rel="stylesheet" type="text/css"><!--<![endif]-->
 
 </head>
 
@@ -189,7 +189,7 @@ li {
         {% if banner_url %}
         <a target="_blank" href="{{ banner_url }}">
         {% endif %}
-        <img align="center" border="0" src="//{{ newsletter.site.domain }}{{ banner }}" alt="{{ newsletter.name }}" title="{{ newsletter.name }}" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;" width="800" class="v-src-width v-src-max-width"/>
+        <img align="center" border="0" src="http://{{ newsletter.site.domain }}{{ banner }}" alt="{{ newsletter.name }}" title="{{ newsletter.name }}" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;" width="800" class="v-src-width v-src-max-width"/>
         {% if banner_url %}
         </a>
         {% endif %}
@@ -311,14 +311,14 @@ li {
                             {% if publication.image_url %}
                                 {% if publication.presentation_image %}
                                 <div style="padding-bottom: 16px">
-                                    <img src="//{{ main_domain }}{{ publication.image_url }}"
+                                    <img src="http://{{ main_domain }}{{ publication.image_url }}"
                                          title="{{ publication.presentation_image.title }}"
                                          alt="{{ publication.presentation_image.description }}"
                                          style="width: 100%">
                                 </div>
                                 {% elif publication.preview_image %}
                                 <div style="margin-bottom: 16px; padding-right: 16px; padding-top: 10px; float: left; width: 50%; max-width: 100%">
-                                    <img src="//{{ main_domain }}{{ publication.image_url }}"
+                                    <img src="http://{{ main_domain }}{{ publication.image_url }}"
                                          title="{{ publication.preview_image.title }}"
                                          alt="{{ publication.preview_image.description }}"
                                          style="width: 100%">
@@ -400,12 +400,12 @@ li {
                                             <!--[if (!mso)]><!-- -->
                                             <div style="width: 18%; display: inline-block; margin-top: 4px;">
                                                 {% if single_new.publication.preview_image %}
-                                                <img src="//{{ main_domain }}{{ single_new.publication.image_url }}"
+                                                <img src="http://{{ main_domain }}{{ single_new.publication.image_url }}"
                                                      title="{{ single_new.publication.preview_image.title }}"
                                                      alt="{{ single_new.publication.preview_image.description }}"
                                                      style="width: 90%; height: auto;"/>
                                                 {% elif single_new.publication.presentation_image %}
-                                                <img src="//{{ main_domain }}{{ single_new.publication.image_url }}"
+                                                <img src="http://{{ main_domain }}{{ single_new.publication.image_url }}"
                                                      title="{{ single_new.publication.presentation_image.title }}"
                                                      alt="{{ single_new.publication.presentation_image.description }}"
                                                      style="width: 90%; height: auto;"/>
@@ -419,7 +419,7 @@ li {
                                             {% else %}
                                             <div>
                                             {% endif %}
-                                                <a target="_blank" style="color: #383838; cursor: pointer;" href="//{{ single_new.webpath.site.domain }}{{ single_new.url }}">
+                                                <a target="_blank" style="color: #383838; cursor: pointer;" href="http://{{ single_new.webpath.site.domain }}{{ single_new.url }}">
                                                     <b>{{ single_new.publication.title }}</b>
                                                 </a>
 
@@ -486,7 +486,7 @@ li {
                                 {% for single_new in single_news %}
                                     <li style="margin-left: 0;">
                                         -
-                                        <a target="_blank" style="color: #383838; cursor: pointer;" href="//{{ single_new.webpath.site.domain }}{{ single_new.url }}">
+                                        <a target="_blank" style="color: #383838; cursor: pointer;" href="http://{{ single_new.webpath.site.domain }}{{ single_new.url }}">
                                             {{ single_new.publication.title }}
                                         </a>
                                     </li>
@@ -550,12 +550,12 @@ li {
                             <!--[if (!mso)]><!-- -->
                             <div style="display: inline-block; width: 8%; margin-top: 4px;">
                                 {% if new.publication.preview_image %}
-                                <img src="//{{ main_domain }}{{ new.publication.image_url }}"
+                                <img src="http://{{ main_domain }}{{ new.publication.image_url }}"
                                      title="{{ new.publication.preview_image.title }}"
                                      alt="{{ new.publication.preview_image.description }}"
                                      style="max-width: 85%; height: auto;"/>
                                 {% elif new.publication.presentation_image %}
-                                <img src="//{{ main_domain }}{{ new.publication.image_url }}"
+                                <img src="http://{{ main_domain }}{{ new.publication.image_url }}"
                                      title="{{ new.publication.presentation_image.title }}"
                                      alt="{{ new.publication.presentation_image.description }}"
                                      style="max-width: 85%; height: auto;"/>
@@ -568,7 +568,7 @@ li {
                             <!--[if (mso)]>
                             <div style="display: inline-block; vertical-align: top; width: 100%">
                             <![endif]-->
-                                <a target="_blank" style="color: #383838; cursor: pointer;" href="//{{ new.webpath.site.domain }}{{ new.url }}">
+                                <a target="_blank" style="color: #383838; cursor: pointer;" href="http://{{ new.webpath.site.domain }}{{ new.url }}">
                                     {{ new.publication.title }}
                                 </a>
                             </div>
@@ -585,12 +585,12 @@ li {
                         <!--[if (!mso)]><!-- -->
                         <div style="display: inline-block; width: 8%; margin-top: 4px;">
                             {% if new.publication.preview_image %}
-                            <img src="//{{ main_domain }}{{ new.publication.image_url }}"
+                            <img src="http://{{ main_domain }}{{ new.publication.image_url }}"
                                  title="{{ new.publication.preview_image.title }}"
                                  alt="{{ new.publication.preview_image.description }}"
                                  style="max-width: 85%; height: auto;"/>
                             {% elif new.publication.presentation_image %}
-                            <img src="//{{ main_domain }}{{ new.publication.image_url }}"
+                            <img src="http://{{ main_domain }}{{ new.publication.image_url }}"
                                  title="{{ new.publication.presentation_image.title }}"
                                  alt="{{ new.publication.presentation_image.description }}"
                                  style="max-width: 85%; height: auto;"/>
@@ -603,7 +603,7 @@ li {
                         <!--[if (mso)]>
                         <div style="display: inline-block; vertical-align: top; width: 100%">
                         <![endif]-->
-                            <a target="_blank" style="color: #383838; cursor: pointer;" href="//{{ new.webpath.site.domain }}{{ new.url }}">
+                            <a target="_blank" style="color: #383838; cursor: pointer;" href="http://{{ new.webpath.site.domain }}{{ new.url }}">
                                 {{ new.publication.title }}
                             </a>
                         </div>
@@ -670,7 +670,7 @@ li {
                                 {{ footer_text|safe }}
                                 {% endif %}
             {% if newsletter.is_subscriptable %}
-                                <a target="_blank" style="color: #fff; margin-bottom: 20px;" href="//{{ newsletter.site.domain }}/{{ cms_prefix }}{{ cms_newsletter_view_prefix }}/{{ newsletter.slug }}">
+                                <a target="_blank" style="color: #fff; margin-bottom: 20px;" href="http://{{ newsletter.site.domain }}/{{ cms_prefix }}{{ cms_newsletter_view_prefix }}/{{ newsletter.slug }}">
                                     <b>Annulla iscrizione alla newsletter</b>
                                 </a>
                                 <br>
