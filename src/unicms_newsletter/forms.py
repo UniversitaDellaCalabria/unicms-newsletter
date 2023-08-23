@@ -16,6 +16,7 @@ class NewsletterForm(forms.ModelForm):
         fields = ['site', 'name', 'slug', 'sender_address',
                   'description', 'conditions',
                   'is_subscriptable', 'is_public', 'is_active']
+        help_texts = {'sender_address': f'Default from {settings.DEFAULT_FROM_EMAIL}'}
 
 
 class NewsletterSubscriptionForm(forms.ModelForm):

@@ -2,6 +2,7 @@ import calendar
 import datetime
 import logging
 import os
+import sys
 import time
 
 from django import template
@@ -56,6 +57,7 @@ CMS_NEWSLETTER_MESSAGE_SUB_PATH =  getattr(settings, 'CMS_NEWSLETTER_MESSAGE_SUB
 CMS_NEWSLETTER_MESSAGE_SENDING_SUB_PATH =  getattr(settings, 'CMS_NEWSLETTER_MESSAGE_SENDING_SUB_PATH',
                                                    CMS_NEWSLETTER_MESSAGE_SENDING_SUB_PATH)
 
+
 def message_attachment_path(instance, filename): # pragma: no cover
     # file will be uploaded to MEDIA_ROOT
     return 'newsletter/{}/{}/attachments/{}'.format(instance.message.newsletter.pk,
@@ -85,8 +87,7 @@ class Newsletter(ActivableModel, TimeStampedModel, CreatedModifiedBy,
                                   blank=True,
                                   default='')
     site = models.ForeignKey(WebSite, on_delete=models.CASCADE)
-    sender_address = models.EmailField(blank=True, null=True,
-                                       help_text=_("Default: ") + settings.DEFAULT_FROM_EMAIL)
+    sender_address = models.EmailField(blank=True, null=True)
     is_subscriptable = models.BooleanField(default=True)
     is_public = models.BooleanField(default=True)
 
