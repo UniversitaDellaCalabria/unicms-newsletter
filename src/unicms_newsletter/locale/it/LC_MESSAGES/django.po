@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-08 10:14+0200\n"
-"PO-Revision-Date: 2023-09-08 10:23+0200\n"
+"POT-Creation-Date: 2023-09-08 10:32+0200\n"
+"PO-Revision-Date: 2023-09-08 10:32+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -110,6 +110,14 @@ msgstr ""
 #: templates/admin/unicms_newsletter_change_form_preview.html:13
 msgid "Send"
 msgstr "Inviato"
+
+#: templates/newsletter/body.html:675 templates/newsletter/body_hrs4r.html:694
+msgid "Unsubscribe from newsletter"
+msgstr "Disiscriviti dalla newsletter"
+
+#: templates/newsletter/body.html:680 templates/newsletter/body_hrs4r.html:699
+msgid "University of Calabria"
+msgstr ""
 
 #: templates/newsletter/subscribe.html:13
 msgid "Subscribe"
