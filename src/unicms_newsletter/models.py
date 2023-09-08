@@ -359,7 +359,8 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         webpath_news = PublicationContext.objects.none()
 
         for message_webpath in message_webpaths:
-            webpath_news = webpath_news.union(self.get_webpath_news(message_webpath))
+            # webpath_news = webpath_news.union(self.get_webpath_news(message_webpath))
+            webpath_news = webpath_news | self.get_webpath_news(message_webpath)
 
         # webpath_news_query = Q(webpath__pk__in=webpaths,
                                # webpath__is_active=True,
