@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load static %}
 {% load unicms_templates %}
 
@@ -671,12 +672,12 @@ li {
                                 {% endif %}
             {% if newsletter.is_subscriptable %}
                                 <a target="_blank" style="color: #fff; margin-bottom: 20px;" href="http://{{ newsletter.site.domain }}/{{ cms_prefix }}{{ cms_newsletter_view_prefix }}/{{ newsletter.slug }}">
-                                    <b>Annulla iscrizione alla newsletter</b>
+                                    <b>{% trans "Unsubscribe from newsletter" %}</b>
                                 </a>
                                 <br>
                                 {% endif %}
                                 <span style="color: #fff;">
-                                    Università della Calabria - {% now "j F Y, H:i" %}
+                                    {% trans "University of Calabria" %}- {% now "j F Y, H:i" %}
                                 </span>
             </div>
 

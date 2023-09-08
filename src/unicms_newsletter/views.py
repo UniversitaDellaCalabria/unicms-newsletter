@@ -42,7 +42,7 @@ def _check_subscription(request, subscription, unsubscribe=False):
         if subscription.date_unsubscription < subscription.date_subscription:
             return True
         messages.add_message(request, messages.WARNING,
-                             (_("You're already unsubscripted to this newsletter")))
+                             (_("You're already unsubscripted from this newsletter")))
         return False
 
     # subscription request
@@ -89,12 +89,12 @@ def subscribe_unsubscribe(request):
             if check:
                 if unsubscribe:
                     sub_url = reverse('unicms_newsletter:newsletter_unsubscription_confirm')
-                    mail_message = 'Unsubscription to newsletter {}'.format(newsletter)
-                    log_message = '[{}] {} unsubscription request for {}'
+                    email_subject = _('Unsubscription from newsletter {}').format(newsletter)
+                    log_message = _('[{}] {} unsubscription request for {}')
                 else:
                     sub_url = reverse('unicms_newsletter:newsletter_subscription_confirm')
-                    mail_message = 'Subscription to newsletter {}'.format(newsletter)
-                    log_message = '[{}] {} subscription request for {}'
+                    email_subject = _('Subscription to newsletter {}').format(newsletter)
+                    log_message = _('[{}] {} subscription request for {}')
 
                 data = {'first_name': first_name,
                         'last_name': last_name,
@@ -105,11 +105,12 @@ def subscribe_unsubscribe(request):
                 encrypted_data = encrypt_to_jwe(json.dumps(data).encode())
 
                 url =  request.build_absolute_uri(f'{sub_url}?d={encrypted_data}')
+                email_body = _('Click on the following URL to confirm your choice: {}').format(url)
 
                 # send email with token to confirm action
                 mail = EmailMessage(
-                    mail_message,
-                    url,
+                    email_subject,
+                    email_body,
                     settings.DEFAULT_FROM_EMAIL,
                     [email],
                 )

@@ -1,0 +1,212 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-09-08 10:14+0200\n"
+"PO-Revision-Date: 2023-09-08 10:23+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: api/views/message.py:178
+msgid "'test' (true/false) param must be passed"
+msgstr "il parametro 'test' (vero/falso) deve essere passato"
+
+#: forms.py:170 forms.py:186
+msgid "Email"
+msgstr ""
+
+#: forms.py:172 forms.py:187
+msgid "HTML version"
+msgstr "Versione HTML"
+
+#: handlers.py:26 handlers.py:129 models.py:97
+#: templates/unicms_newsletters.html:27
+msgid "Newsletter"
+msgstr ""
+
+#: models.py:98
+msgid "Newsletters"
+msgstr "Newsletter"
+
+#: models.py:172
+msgid "Monday"
+msgstr "Lunedì"
+
+#: models.py:173
+msgid "Tuesday"
+msgstr "Martedì"
+
+#: models.py:174
+msgid "Wednesday"
+msgstr "Mercoledì"
+
+#: models.py:175
+msgid "Thursday"
+msgstr "Giovedì"
+
+#: models.py:176
+msgid "Friday"
+msgstr "Venerdì"
+
+#: models.py:177
+msgid "Saturday"
+msgstr "Sabato"
+
+#: models.py:178
+msgid "Sunday"
+msgstr "Domenica"
+
+#: models.py:189
+msgid "in days"
+msgstr "in giorni"
+
+#: models.py:195
+msgid "The sending time value, 0-23 (depends on the cronjob setting)"
+msgstr "L'ora di invio, 0-23 (dipende dalle impostazioni del cronjob)"
+
+#: models.py:476
+msgid "The test message is being sent, try later"
+msgstr "Il messaggio di test è in fase di invio, prova più tardi"
+
+#: models.py:481
+msgid "The message is being sent, try later"
+msgstr "Il messaggio è in fase di invio, prova più tardi"
+
+#: models.py:555
+msgid "Test message sent"
+msgstr "Messaggio di test inviato"
+
+#: models.py:555
+msgid "Message sent"
+msgstr "Messaggio inviato"
+
+#: models.py:560
+msgid "Test message queued for the next submission"
+msgstr "Messaggio di test in coda per il prossimo invio"
+
+#: models.py:562
+msgid "Message queued for the next submission"
+msgstr "Messaggio in coda per il prossimo invio"
+
+#: templates/admin/unicms_newsletter_change_form_preview.html:9
+msgid "Preview"
+msgstr "Anteprima"
+
+#: templates/admin/unicms_newsletter_change_form_preview.html:11
+msgid "Test"
+msgstr ""
+
+#: templates/admin/unicms_newsletter_change_form_preview.html:13
+msgid "Send"
+msgstr "Inviato"
+
+#: templates/newsletter/subscribe.html:13
+msgid "Subscribe"
+msgstr "Iscriviti"
+
+#: templates/newsletter/subscribe_unsubscribe.html:14
+msgid "Unsubscribe"
+msgstr "Disiscriviti"
+
+#: templates/unicms_newsletter.html:84 templates/unicms_newsletter.html:89
+msgid "results"
+msgstr "risultati"
+
+#: templates/unicms_newsletter.html:84
+msgid "pages"
+msgstr "pagine"
+
+#: templates/unicms_newsletter.html:97 templates/unicms_newsletter.html:103
+msgid "Page"
+msgstr "Pagina"
+
+#: templates/unicms_newsletter.html:97
+msgid "Previous"
+msgstr "Precedente"
+
+#: templates/unicms_newsletter.html:103
+msgid "Next"
+msgstr "Successivo"
+
+#: templates/unicms_newsletter.html:118
+msgid "Loading data"
+msgstr "Sto caricando i dati"
+
+#: views.py:30
+msgid "This email address is not registered"
+msgstr "L'indirizzo email non è registrato"
+
+#: views.py:36
+msgid "This subscription is invalid. Contact our support"
+msgstr "La sottoscrizione non è valida. Contatta il nostro supporto"
+
+#: views.py:45
+msgid "You're already unsubscripted from this newsletter"
+msgstr "Non risulti iscritto a questa newsletter"
+
+#: views.py:52
+msgid "You're already subscripted to this newsletter"
+msgstr "Sei già iscritto a questa newsletter"
+
+#: views.py:75 views.py:76 views.py:152 views.py:153 views.py:221 views.py:222
+msgid "This newsletter isn't subscriptable"
+msgstr "La newsletter non è sottoscrivibile"
+
+#: views.py:92
+msgid "Unsubscription from newsletter {}"
+msgstr "Disiscrizione dalla newsletter {}"
+
+#: views.py:93
+msgid "[{}] {} unsubscription request for {}"
+msgstr "[{}] {} richiesta di disiscrizione da {}"
+
+#: views.py:96
+msgid "Subscription to newsletter {}"
+msgstr "Iscrizione alla newsletter {}"
+
+#: views.py:97
+msgid "[{}] {} subscription request for {}"
+msgstr "[{}] {} richiesta di iscrizione a {}"
+
+#: views.py:108
+msgid "Click on the following URL to confirm your choice: {}"
+msgstr "Clicca sul seguente URL per confermare la tua scelta: {}"
+
+#: views.py:125
+msgid "Email sent to {}!"
+msgstr "Email inviata a {}!"
+
+#: views.py:132
+msgid "Can't access to this URL"
+msgstr "Impossibile accedere a questo URL"
+
+#: views.py:142 views.py:211
+msgid "No data submitted"
+msgstr "Nessun dato inserito"
+
+#: views.py:173 views.py:247
+msgid "Token is expired"
+msgstr "Il token è scaduto"
+
+#: views.py:199
+msgid "{} subscription confirmed"
+msgstr "{} iscrizione confermata"
+
+#: views.py:231
+msgid "No subscription for this email"
+msgstr "Nessuna sottoscrizione per questa email"
+
+#: views.py:259
+msgid "{} unsubscription confirmed"
+msgstr "{} disiscrizione confermata"
