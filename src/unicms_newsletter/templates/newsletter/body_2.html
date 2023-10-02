@@ -1,0 +1,695 @@
+{% load i18n %}
+{% load static %}
+{% load unicms_templates %}
+
+{% settings_value "CMS_PATH_PREFIX" as cms_prefix %}
+{% settings_value "MAIN_DOMAIN" as main_domain %}
+{% settings_value "CMS_NEWSLETTER_VIEW_PREFIX_PATH" as cms_newsletter_view_prefix %}
+
+
+<!doctype html><html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml" ><head>
+	<meta charset="utf-8"  />
+	<meta content="width=device-width,initial-scale=1.0" name="viewport"  />
+	<meta content="IE=9;IE=8;IE=7;IE=EDGE" http-equiv="X-UA-Compatible"  />
+	<meta content="noindex,nofollow" name="robots"  />
+	<meta content="telephone=no" name="format-detection"  />
+	<title>Newsletter</title>
+	<meta content="" name="description"  />
+    <style>
+/* CSS reset */
+#outlook a{padding:0;}
+.ReadMsgBody{width:100%;}
+.ExternalClass{width:100%;}
+.yshortcuts,a .yshortcuts,a .yshortcuts:hover,a .yshortcuts:active,a .yshortcuts:focus{background-color:transparent !important;border:none !important;color:inherit !important;}
+body,p{margin:0;padding:0;-ms-text-size-adjust:none;}
+h1,h2,h3,h4,h5,h6{margin:0;padding:0;border:0;}
+img{border:0;outline:none;text-decoration:none;line-height:100%;display:block;height:auto !important;}
+table,tr,td{border-collapse:collapse !important;border-spacing:0;padding:0;}
+span>option{display:none;}
+.backgroundTable,.backgroundTd{width:100% !important;height:100% !important;margin:0;}
+.fixTable{margin:0 auto;}
+.buttonTd{border-collapse:separate !important;}
+.spacer{font-size:0%;line-height:0%;}
+.hidePreheader{display:none;font-size:0%;line-height:0%;}
+/* Template */
+body,.backgroundTable{background-color:#e3e9ec;}
+.contentTableWhite{background-color:#FFFFFF;}
+.contentTableGray{background-color:#9d9d9c;}
+.backgroundTd{padding:0 10px;text-align:center;}
+.colTd{padding:0 18px;}
+.colTd25{padding:0 25px;}
+.colTd30{padding:0 30px;}
+.colTd35{padding:0 35px;}
+.colTd50{padding:0 50px;}
+body,td,a{font-family:Arial,Helvetica,sans-serif;}
+body,td{color:#383838;font-size:14px;line-height:20px;text-align:left;}
+a{color:#b71918;font-size:14px;line-height:20px;font-weight:normal;text-decoration:none;}
+h1,h1 a{font-size:36px;line-height:42px;font-weight:bold;}
+h2,h2 a{font-size:20px;line-height:26px;font-weight:bold;}
+h3,h3 a{font-size:16px;line-height:22px;font-weight:bold;}
+.articleReadmore a{color:#126B92;font-size:14px;line-height:16px;font-weight:bold;}
+.buttonTd td{line-height:17px;background-color:#b71918;border:0px;padding:15px 34px;text-align:center;border-radius:3px;transition-duration:0.2s;}
+.buttonTd a{color:#FFFFFF;font-size:16px;line-height:17px;}
+.buttonTd td:hover{background-color:#383838 !important;}
+.footerTd{color:#FFFFFF;font-size:12px;line-height:18px;text-align:left;}
+.footerTd a{color:#FFFFFF;font-size:12px;line-height:18px;}
+a:hover{text-decoration:underline !important;}
+h1 a:hover,.buttonTd a:hover{text-decoration:none !important;}
+.intext{font-size:18px;line-height: 24px;text-align: center;}
+/*.fixWidth2BlocchiSpecial{background-color:#e2e2e1;}*/
+.showforsmall{display:none;mso-hide:all;}
+.logoFooter {width: 100%;}
+@media screen{*{-webkit-text-size-adjust:none;-webkit-tap-highlight-color:transparent;-moz-tap-highlight-color:transparent;}}
+a[x-apple-data-detectors]{color:inherit !important;text-decoration:none !important;font-size:inherit !important;font-family:inherit !important;font-weight:inherit !important;line-height:inherit !important;}
+.headerTd,.headerTd span{color:#383838;font-size:11px;line-height:13px;text-align:center;}
+.headerTd a{color:#383838;font-size:11px;line-height:13px;}
+#hambMenu[type="checkbox"],.hambMenuClose,.hambMenuOpen{display:none;}
+.hambMenuTable{transition-duration:0.5s;}
+.hambMenuItems{padding:15px 10px;text-align:center;}
+.hambMenuItems a{color:#b71918;font-size:16px;line-height:18px;}
+.fixWidth2Col{width:50%;}
+.paddSocial{padding:10px 20px 10px 0px;}
+.fixWidth2Col.colTdLeft{padding-left:50px;padding-right:25px;}
+.fixWidth2Col.colTdRight{padding-left:25px;padding-right:50px;}
+.fixWidth3Col{width:33.3333333333%;}
+.fixWidth3Col.colTdLeft{padding-left:50px;padding-right:15px;}
+.fixWidth3Col.colTdMid{padding:0 10px;}
+.fixWidth3Col.colTdRight{padding-left:15px;padding-right:50px;}
+.dividerMenu{background-color: #000000;}
+.firmaName,.firmaRole{font-size:16px;line-height:18px;font-weight:bold;}
+	.firmaName{font-style:italic;}
+	.firmaRole{color:#b71918;font-size:14px;}
+	.outlookRemoveSpace {padding-left: 2px;margin-left: -2px;display: block;} /*risolve allineamento testi su outlook*/
+.col2custom65 {border-right: 1px solid #e3e3e3 ;}
+	.col2Custom.col2custom65 .articleImage{padding-bottom:20px;}
+	.col2Custom.col2custom65 .articleTitleCustom{padding-bottom:20px;text-align:left;font-size:20px;line-height:26px;}
+	.colTdRight.col2Custom.col2custom35 {padding-left: 25px;}
+	.col2custom35 .articleDescription{padding-bottom:25px;}
+	.col2custom35 .articleImage{padding-bottom:25px;}
+	.col2custom35 .articleTitleCustom a,.col2custom35 .articleTitleCustom {font-size: 20px;line-height: 26px; font-weight: 300;}
+	.col2custom35 .articleTitleCustom {padding-bottom:20px;}
+	.tdics{padding-top:10px!important;padding-bottom:10px!important;}
+	.foobianco{background-color:#ffffff;}
+	.foogrigio{background-color:#9d9d9c;}
+	.foobisc{background-color:#e3e9ec;}
+	.foobianco .footerTd,.foogrigio .footerTd,.foobisc .footerTd{color:#383838;}
+	.foobianco .footerTd a,.foogrigio .footerTd a,.foobisc .footerTd a{color:#383838;}
+	.foodark{background-color:#383838;}
+	.foodark .footerTd{color:#FFFFFF;}
+	.foodark .footerTd a{color:#FFFFFF;}
+
+.showMobile,.showMobile table{display:none;max-height:0px;overflow:hidden;mso-hide:all;}
+</style>
+<style>
+@media only screen and (max-width:640px){
+.fixTable,.fixImage,.articleImage img{width:100% !important;}
+.fixWidth2BlocchiSpecial{width:100% !important;display:inline-block!important;max-width:none!important;}
+.fixTable35{width:32% !important;}
+.fixTable50{width:48% !important;}
+.fixTable65{width:65% !important;}
+.colTd,.colTd25,.colTd30,.colTd35,.colTd50{padding-left:5% !important;padding-right:5% !important;}
+.fixWidth2BlocchiSpecial .colTd50{padding-left:0px !important;padding-right:0px !important;}
+.fixWidth2BlocchiSpecial {padding-bottom:25px;}
+.fixWidth2BlocchiSpecial .showforsmall {padding-bottom: 25px;}
+.fixWidth2BlocchiSpecial .articleImage img{max-width: 320px!important;}
+.colDonaz{max-width: 300px!important;}
+.hambMenuButton{cursor: pointer !important;margin: 0 auto !important;float: right !important;background-color: #EFEFEF !important;display: block !important;width: 100% !important;text-align: center !important;}
+.hambMenuItems{padding:10px 3% !important;width:94% !important;display:block !important;}
+.hambMenuTable table{width:100% !important;}
+#hambMenu[type="checkbox"]~.hambMenuTable tbody,
+#hambMenu[type="checkbox"]~.hambMenuTable td,
+#hambMenu[type="checkbox"]~.hambMenuTable tr{display: block !important;}
+#hambMenu[type="checkbox"]~.hambMenuTable{display:block !important;max-height:0 !important;overflow:hidden !important;}
+#hambMenu[type="checkbox"]~.hambMenuButton .hambMenuOpen{display:block !important;}
+#hambMenu[type="checkbox"]:checked~.hambMenuButton .hambMenuClose{display:block !important;}
+#hambMenu[type="checkbox"]:checked~.hambMenuButton .hambMenuOpen{display:none !important;}
+#hambMenu[type="checkbox"]:checked~.hambMenuTable{max-height:400px !important;}
+.hambMenuOpen,.hambMenuClose {margin: auto!important;}
+.fixWidth2Col.colTdLeft{padding-left:3% !important;padding-right:1.5% !important;}
+.fixWidth2Col.colTdRight{padding-left:1.5% !important;padding-right:3% !important;}
+.fixWidth3Col.colTdLeft{padding-left:3% !important;padding-right:1% !important;}
+.fixWidth3Col.colTdMid{padding-left:2% !important;padding-right:2% !important;}
+.fixWidth3Col.colTdRight{padding-left:1% !important;padding-right:3% !important;}
+.dividerMenu{background-color: #efefef!important;height: 1px!important;width:100%!important;}
+.logoTable{float: none !important;margin: 0 auto !important;}
+.noBorderRed{border:0px!important;}
+.hideforsmall{display:none!important;}
+.showforsmall{display:table!important;}
+.fixTop0{padding-top:0px !important;}
+.fixTop10{padding-top:10px !important;}
+.fixTop15{padding-top:15px !important;}
+.fixTop20{padding-top:20px !important;}
+.fixTop25{padding-top:25px !important;}
+.fixBottom0{padding-bottom:0px !important;}
+.fixBottom10{padding-bottom:10px !important;}
+.fixBottom15{padding-bottom:15px !important;}
+.fixBottom20{padding-bottom:20px !important;}
+.fixBottom25{padding-bottom:25px !important;}
+.col2custom65 {border-right: 0px!important;}
+.tabeleics{width: auto!important;}
+}
+@media only screen and (max-width:480px){
+.col2custom35 .articleImage img, .col2custom65 .articleImage img {width: 100% !important;max-width: none !important;display: block !important;}
+.backgroundTd{padding:0 !important;}.colDonaz{max-width: 320px!important;}
+.colTdRight.col2Custom.col2custom35 {padding-left: 0px!important;}
+.col2custom65, .col2custom35 {width: 100%!important;display: block!important;max-width:225px!important;margin:auto!important;}
+.sectionTable {width: 100%!important;}
+.fixWidth2Col,.fixWidth3Col{width:94% !important;}
+.fixWidth2Col{max-width: 225px!important;margin: auto!important;}
+.articleImage img{width:auto !important;}
+.fixTable50,.fixTable35,.fixTable65,.articleImage .fixImage{width:100% !important;}
+.fixWidth2Col.colTdLeft,.fixWidth2Col.colTdRight,
+.fixWidth3Col.colTdLeft,.fixWidth3Col.colTdMid,.fixWidth3Col.colTdRight{display:block !important;padding-left:3% !important;padding-right:3% !important;}
+.fixWidth3Col {max-width: 225px!important;margin: auto!important;}
+.fixTd{display:block !important;width:100% !important;}
+.fixCenter,.fixCenter img,.fixCenter table,.fixCenter td{margin:0 auto !important;text-align:center !important;float:none !important;}
+.borderLeft{border-left:0px!important;}
+.colTd50.footerColTdFix {display: block!important;width:90%!important;margin:auto!important;border:0px!important;}
+tr.socialBlock {display: inline-block!important;width: 110px!important;}
+.paddSocial{padding:10px 10px 10px 0px!important;}
+.tdService.tdServiceFirst{display: none!important;}
+.tdService {padding-right: 3% !important;padding-left: 3%!important;}
+.tdics{padding-top:0px!important;padding-bottom:20px!important;}
+.tabeleicsimg{width: 90px!important;margin-right: 10px!important;}
+.fixTable351, .fixTable651 {width: 100% !important;display: block !important;max-width: 225px !important;margin: auto !important;float:none!important;}
+.fixTable351 .articleImage img{width:100%!important;max-width:225px!important;}
+
+.showMobile,.showMobile table{display:table !important;max-height:none !important;overflow:auto !important;}
+.showDesktop,.showDesktop table{display:none !important;width:0px !important;height:0px !important;max-width:0px !important;max-height:0px !important;overflow:hidden !important;mso-hide:all !important;line-height:0px;font-size:0px;visibility:hidden;padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;}
+}
+@media only screen and (max-width:375px){
+.fixWidth2BlocchiSpecial .articleImage img{max-width: 100%!important;}
+}
+</style>
+    <!--[if gte mso 9]><xml>
+    <o:OfficeDocumentSettings>
+        <o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+    </xml><![endif]-->
+<meta content="article" property="og:type"  /></head>
+	<body bgcolor="bgcolorbody" leftmargin="0" marginheight="0" marginwidth="0" offset="0" topmargin="0" ><!--[if !gte mso 9]><!----><span id ="mn-preheader" style="display:none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;">Rispondi al questionario per aiutarci a fare sempre meglio&zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; </span><!--<![endif]-->
+
+		<table class="backgroundTable" style="background-color:#e3e9ec;" width="100%" >
+			<tbody><tr>
+				<td align="center" class="backgroundTd" style="padding-top: 15px;" valign="top" >
+
+						<table class="contentTableWhite fixTable" width="800" >
+							<tbody><tr>
+								<td class="colTdHeader colTd25" style="padding-top:25px;padding-bottom:25px;" valign="top" >
+									<table width="100%" >
+										<tbody><tr>
+											<td class="fixTd fixCenter" valign="middle" >
+												<table align="center" >
+													<tbody><tr>
+														<td valign="top" >
+                                                            {% if banner_url %}
+                                                            <a target="_blank" href="{{ banner_url }}">
+                                                            {% endif %}
+                                                            <img align="center" border="0" src="http://{{ newsletter.site.domain }}{{ banner }}" alt="{{ newsletter.name }}" title="{{ newsletter.name }}" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;" width="800" class="v-src-width v-src-max-width"/>
+                                                            {% if banner_url %}
+                                                            </a>
+                                                            {% endif %}
+														</td>
+													</tr>
+												</tbody></table>
+											</td>
+										</tr>
+									</tbody></table>
+								</td>
+							</tr>
+						</tbody></table>
+
+
+                        </tr>
+                    </tbody>
+                    </table>
+                    <table class="backgroundTable" style="background-color:#e3e9ec;" width="100%" >
+			<tbody><tr>
+				<td align="center" class="backgroundTd" style="padding-top: 15px;" valign="top" >
+						<table bgcolor="#ffffff" class="fixTable" width="800" >
+							<tbody><tr>
+                                <table bgcolor="#FFFFFF" class="fixTable" width="800" >
+							<tbody><tr>
+                                    <td class="spacer" height="25" ></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                        {% if intro_text or content %}
+						<table bgcolor="#ffffff" class="fixTable" width="800" >
+							<tbody><tr>
+								<td class="colTd50" valign="top" >
+									<table width="100%" >
+										<tbody><tr>
+											<td valign="top" >
+												<div style="text-align: left;">
+                                                    <span style="color: #000000; font-size: 14px; line-height: 20px; font-family: arial, 'helvetica neue', helvetica, sans-serif;">
+                                                        {{ intro_text|safe }}
+                                                        {% if content and intro_text %}
+                                                        <br>
+                                                        {% endif %}
+                                                        {{ content|safe }}
+                                                    </span>
+                                                </div>
+											</td>
+										</tr></tbody></table>
+								</td>
+							</tr>
+						</tbody></table>
+                        {% endif %}
+
+						{% if publications %}
+
+                        {% if intro_text or content %}
+                        <table bgcolor="#FFFFFF" class="fixTable" width="800" >
+							<tbody><tr>
+                                    <td class="spacer" height="25" ></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                    <table class="backgroundTable" style="background-color:#e3e9ec;" width="100%" >
+			<tbody><tr>
+				<td align="center" class="backgroundTd" style="padding-top: 15px;" valign="top" >
+						<table bgcolor="#ffffff" class="fixTable" width="800" >
+							<tbody><tr>
+                                <table bgcolor="#FFFFFF" class="fixTable" width="800" >
+							<tbody><tr>
+                                    <td class="spacer" height="25" ></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        {% endif %}
+
+                        <table bgcolor="#ffffff" class="fixTable" width="800" >
+							<tbody><tr>
+								<td class="colTd50" valign="top" >
+									<table width="100%" >
+										<tbody><tr>
+											<td valign="top" >
+												<div style="text-align: left;">
+                                                    <span style="color: #000000; font-size: 14px; line-height: 20px; font-family: arial, 'helvetica neue', helvetica, sans-serif;">
+                                                         {% for publication in publications %}
+                                                             {% if forloop.counter0 %}
+                                                                <table border="0" width="100%" cellpadding="0" cellspacing="0">
+                                                                  <tr>
+                                                                    <td style="background:none; border-bottom: 1px solid #ccc; height:1px; width:100%; margin:0px 0px 0px 0px;">&nbsp;</td>
+                                                                  </tr>
+                                                                </table>
+                                                                <br>
+                                                              {% endif %}
+                                                            <h2 style="margin-top: 0">
+                                                                {{ publication.title }}
+                                                            </h2>
+                                                            {% if publication.subheading %}
+                                                                <p style="margin: 16px 0">
+                                                                    <i>{{ publication.subheading }}</i>
+                                                                </p>
+                                                            {% endif %}
+
+                                                            {% if publication.image_url %}
+                                                                {% if publication.presentation_image %}
+                                                                <div style="padding-bottom: 16px">
+                                                                    <img src="http://{{ main_domain }}{{ publication.image_url }}"
+                                                                         title="{{ publication.presentation_image.title }}"
+                                                                         alt="{{ publication.presentation_image.description }}"
+                                                                         style="width: 100%">
+                                                                </div>
+                                                                {% elif publication.preview_image %}
+                                                                <div style="margin-bottom: 16px; padding-right: 16px; padding-top: 10px; float: left; width: 50%; max-width: 100%">
+                                                                    <img src="http://{{ main_domain }}{{ publication.image_url }}"
+                                                                         title="{{ publication.preview_image.title }}"
+                                                                         alt="{{ publication.preview_image.description }}"
+                                                                         style="width: 100%">
+                                                                </div>
+                                                                {% endif %}
+                                                            {% endif %}
+
+                                                            {% if publication.content %}
+                                                                {{ publication.content|safe }}
+                                                            {% endif %}
+                                                         {% endfor %}
+                                                    </span>
+                                                </div>
+											</td>
+										</tr></tbody></table>
+								</td>
+							</tr>
+						</tbody></table>
+                        {% endif %}
+
+                        {% if news_in_evidence %}
+
+                        {% if intro_text or content or publications %}
+                        <table bgcolor="#FFFFFF" class="fixTable" width="800" >
+							<tbody><tr>
+                                    <td class="spacer" height="25" ></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                    <table class="backgroundTable" style="background-color:#e3e9ec;" width="100%" >
+			<tbody><tr>
+				<td align="center" class="backgroundTd" style="padding-top: 15px;" valign="top" >
+						<table bgcolor="#ffffff" class="fixTable" width="800" >
+							<tbody><tr>
+                                <table bgcolor="#FFFFFF" class="fixTable" width="800" >
+							<tbody><tr>
+                                    <td class="spacer" height="25" ></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        {% endif %}
+
+                        <table bgcolor="#ffffff" class="fixTable" width="800" >
+							<tbody><tr>
+								<td class="colTd50" valign="top" >
+									<table width="100%" >
+										<tbody><tr>
+											<td valign="top" >
+												<div style="text-align: left;">
+                                                    <span style="color: #000000; font-size: 14px; line-height: 20px; font-family: arial, 'helvetica neue', helvetica, sans-serif;">
+                                                        <h2 style="margin-top: 0">
+                                                            In evidenza
+                                                        </h2>
+                                                        <ul style="list-style: none; padding-left: 0; line-height: 20px; margin-bottom: 0;">
+                                                        {% for single_new in news_in_evidence %}
+
+                                                            <li style="margin-left: 0;">
+                                                                <div style="display: inline-block; width: 100%">
+                                                                    {% if single_new.publication.image_url %}
+                                                                    <!--[if (!mso)]><!-- -->
+                                                                    <div style="width: 18%; display: inline-block; margin-top: 4px;">
+                                                                        {% if single_new.publication.preview_image %}
+                                                                        <img src="http://{{ main_domain }}{{ single_new.publication.image_url }}"
+                                                                             title="{{ single_new.publication.preview_image.title }}"
+                                                                             alt="{{ single_new.publication.preview_image.description }}"
+                                                                             style="width: 90%; height: auto;"/>
+                                                                        {% elif single_new.publication.presentation_image %}
+                                                                        <img src="http://{{ main_domain }}{{ single_new.publication.image_url }}"
+                                                                             title="{{ single_new.publication.presentation_image.title }}"
+                                                                             alt="{{ single_new.publication.presentation_image.description }}"
+                                                                             style="width: 90%; height: auto;"/>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div style="width: 80%; display: inline-block; vertical-align: top;">
+                                                                    <!--<![endif]-->
+                                                                    <!--[if (mso)]>
+                                                                    </div>
+                                                                    <![endif]-->
+                                                                    {% else %}
+                                                                    <div>
+                                                                    {% endif %}
+                                                                        <a target="_blank" style="color: #383838; cursor: pointer;" href="http://{{ single_new.webpath.site.domain }}{{ single_new.url }}">
+                                                                            <b>{{ single_new.publication.title }}</b>
+                                                                        </a>
+
+                                                                        {% if single_new.publication.subheading %}
+                                                                        <p style="margin-bottom: 0">
+                                                                            {{ single_new.publication.subheading }}
+                                                                        </p>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        {% endfor %}
+                                                        </ul>
+                                                    </span>
+                                                </div>
+											</td>
+										</tr></tbody></table>
+								</td>
+							</tr>
+						</tbody></table>
+
+                        {% endif %}
+
+
+                        {% if single_news %}
+
+                        {% if intro_text or content or publications or news_in_evidence %}
+                        <table bgcolor="#FFFFFF" class="fixTable" width="800" >
+							<tbody><tr>
+                                    <td class="spacer" height="25" ></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                    <table class="backgroundTable" style="background-color:#e3e9ec;" width="100%" >
+			<tbody><tr>
+				<td align="center" class="backgroundTd" style="padding-top: 15px;" valign="top" >
+						<table bgcolor="#ffffff" class="fixTable" width="800" >
+							<tbody><tr>
+                                <table bgcolor="#FFFFFF" class="fixTable" width="800" >
+							<tbody><tr>
+                                    <td class="spacer" height="25" ></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        {% endif %}
+
+                        <table bgcolor="#ffffff" class="fixTable" width="800" >
+							<tbody><tr>
+								<td class="colTd50" valign="top" >
+									<table width="100%" >
+										<tbody><tr>
+											<td valign="top" >
+												<div style="text-align: left;">
+                                                    <span style="color: #000000; font-size: 14px; line-height: 20px; font-family: arial, 'helvetica neue', helvetica, sans-serif;">
+                                                        <h2 style="margin-top: 0">
+                                                            News
+                                                        </h2>
+                                                        <ul style="list-style: none; padding-left: 0; line-height: 20px; margin-bottom: 0;">
+                                                        {% for single_new in single_news %}
+                                                            <li style="margin-left: 0;">
+                                                                -
+                                                                <a target="_blank" style="color: #383838; cursor: pointer;" href="http://{{ single_new.webpath.site.domain }}{{ single_new.url }}">
+                                                                    {{ single_new.publication.title }}
+                                                                </a>
+                                                            </li>
+                                                        {% endfor %}
+                                                        </ul>
+                                                    </span>
+                                                </div>
+											</td>
+										</tr></tbody></table>
+								</td>
+							</tr>
+						</tbody></table>
+                        {% endif %}
+
+
+                        {% if webpath_news %}
+
+                        {% if intro_text or content or publications or news_in_evidence or single_news %}
+                        <table bgcolor="#FFFFFF" class="fixTable" width="800" >
+							<tbody><tr>
+                                    <td class="spacer" height="25" ></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                    <table class="backgroundTable" style="background-color:#e3e9ec;" width="100%" >
+			<tbody><tr>
+				<td align="center" class="backgroundTd" style="padding-top: 15px;" valign="top" >
+						<table bgcolor="#ffffff" class="fixTable" width="800" >
+							<tbody><tr>
+                                <table bgcolor="#FFFFFF" class="fixTable" width="800" >
+							<tbody><tr>
+                                    <td class="spacer" height="25" ></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        {% endif %}
+
+                        <table bgcolor="#ffffff" class="fixTable" width="800" >
+							<tbody><tr>
+								<td class="colTd50" valign="top" >
+									<table width="100%" >
+										<tbody><tr>
+											<td valign="top" >
+												<div style="text-align: left;">
+                                                    <span style="color: #000000; font-size: 14px; line-height: 20px; font-family: arial, 'helvetica neue', helvetica, sans-serif;">
+                                                        {% if group_by_categories %}
+                                                        {% for cat,news in webpath_news.items %}
+                                                            <h2 style="margin-bottom: 25px;{% if not forloop.counter0 %}margin-top: 0;{% else %}margin-top: 25px;{% endif %}">
+                                                                {{ cat.name }}
+                                                            </h2>
+                                                            <ul style="list-style: none; padding-left: 0; line-height: 20px; margin-bottom: 0;">
+                                                            {% for new in news %}
+                                                                <li style="margin-left: 0; margin-bottom: 10px">
+                                                                    <div style="display: inline-block; width: 100%">
+                                                                        <!--[if (!mso)]><!-- -->
+                                                                        <div style="display: inline-block; width: 8%; margin-top: 4px;">
+                                                                            {% if new.publication.preview_image %}
+                                                                            <img src="http://{{ main_domain }}{{ new.publication.image_url }}"
+                                                                                 title="{{ new.publication.preview_image.title }}"
+                                                                                 alt="{{ new.publication.preview_image.description }}"
+                                                                                 style="max-width: 85%; height: auto;"/>
+                                                                            {% elif new.publication.presentation_image %}
+                                                                            <img src="http://{{ main_domain }}{{ new.publication.image_url }}"
+                                                                                 title="{{ new.publication.presentation_image.title }}"
+                                                                                 alt="{{ new.publication.presentation_image.description }}"
+                                                                                 style="max-width: 85%; height: auto;"/>
+                                                                            {% else %}
+                                                                            -
+                                                                            {% endif %}
+                                                                        </div>
+                                                                        <div style="display: inline-block; vertical-align: top; width: 90%">
+                                                                        <!--<![endif]-->
+                                                                        <!--[if (mso)]>
+                                                                        <div style="display: inline-block; vertical-align: top; width: 100%">
+                                                                        <![endif]-->
+                                                                            <a target="_blank" style="color: #383838; cursor: pointer;" href="http://{{ new.webpath.site.domain }}{{ new.url }}">
+                                                                                {{ new.publication.title }}
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            {% endfor %}
+                                                            </ul>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        <ul style="list-style: none; padding-left: 0; line-height: 20px; margin-bottom: 0;">
+                                                        {% for new in webpath_news %}
+                                                            <li style="margin-left: 0; margin-bottom: 10px">
+                                                                <div style="display: inline-block; width: 100%">
+                                                                    <!--[if (!mso)]><!-- -->
+                                                                    <div style="display: inline-block; width: 8%; margin-top: 4px;">
+                                                                        {% if new.publication.preview_image %}
+                                                                        <img src="http://{{ main_domain }}{{ new.publication.image_url }}"
+                                                                             title="{{ new.publication.preview_image.title }}"
+                                                                             alt="{{ new.publication.preview_image.description }}"
+                                                                             style="max-width: 85%; height: auto;"/>
+                                                                        {% elif new.publication.presentation_image %}
+                                                                        <img src="http://{{ main_domain }}{{ new.publication.image_url }}"
+                                                                             title="{{ new.publication.presentation_image.title }}"
+                                                                             alt="{{ new.publication.presentation_image.description }}"
+                                                                             style="max-width: 85%; height: auto;"/>
+                                                                        {% else %}
+                                                                        -
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div style="display: inline-block; vertical-align: top; width: 90%">
+                                                                    <!--<![endif]-->
+                                                                    <!--[if (mso)]>
+                                                                    <div style="display: inline-block; vertical-align: top; width: 100%">
+                                                                    <![endif]-->
+                                                                        <a target="_blank" style="color: #383838; cursor: pointer;" href="http://{{ new.webpath.site.domain }}{{ new.url }}">
+                                                                            {{ new.publication.title }}
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        {% endfor %}
+                                                        </ul>
+                                                        {% endif %}
+                                                    </span>
+                                                </div>
+											</td>
+										</tr></tbody></table>
+								</td>
+							</tr>
+						</tbody></table>
+                        {% endif %}
+
+
+                        {% if footer_text %}
+						<table bgcolor="#FFFFFF" class="fixTable" width="800" >
+							<tbody><tr>
+                                    <td class="spacer" height="25" ></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                    <table class="backgroundTable" style="background-color:#e3e9ec;" width="100%" >
+			<tbody><tr>
+				<td align="center" class="backgroundTd" style="padding-top: 15px;" valign="top" >
+						<table bgcolor="#ffffff" class="fixTable" width="800" >
+							<tbody><tr>
+                                <table bgcolor="#FFFFFF" class="fixTable" width="800" >
+							<tbody><tr>
+                                    <td class="spacer" height="25" ></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+						<table bgcolor="#ffffff" class="fixTable" width="800" >
+							<tbody><tr>
+								<td class="colTd50" valign="top" >
+									<table width="100%" >
+										<tbody><tr>
+											<td valign="top" >
+												<div style="text-align: left;"><span style="color: #000000; font-size: 14px; line-height: 20px; font-family: arial, 'helvetica neue', helvetica, sans-serif;">
+                                                {{ footer_text|safe }}
+                                                </span></div>
+											</td>
+										</tr></tbody></table>
+								</td>
+							</tr>
+						</tbody></table>
+                        {% endif %}
+
+
+						<table bgcolor="#FFFFFF" class="fixTable" width="800" >
+							<tbody><tr>
+                                    <td class="spacer" height="25" ></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                    <table class="backgroundTable" style="background-color:#e3e9ec;" width="100%" >
+			<tbody><tr>
+				<td align="center" class="backgroundTd" style="padding-top: 15px;" valign="top" >
+
+                        <table class="fixTable foodark" width="800" >
+							<tbody><tr>
+								<td class="footerTd colTd50" style="text-align: center;padding-top:25px;padding-bottom: 25px;" >
+                                    Università della Calabria<br>
+                                    Via Pietro Bucci, 87036 Rende CS<br>
+                                    <a href="https://www.unical.it/pec/" target="_blank" rel="noopener noreferrer">
+                                        Posta certificata
+                                    </a>
+                                    <br>
+                                    C.F. 80003950781 / P.I. 00419160783
+                                </td>
+							</tr>
+						</tbody></table>
+                        {% if newsletter.is_subscriptable %}
+						<table class="fixTable foodark" width="800" >
+							<tbody><tr>
+								<td class="footerTd colTd50" style="text-align: center;padding-bottom: 25px;">
+                                    Se non vuoi più ricevere comunicazioni di questo tipo
+                                    <span style="text-decoration: underline;">
+                                        <a target="_blank" title="Unsubscribe"href="http://{{ newsletter.site.domain }}/{{ cms_prefix }}{{ cms_newsletter_view_prefix }}/{{ newsletter.slug }}" rel="noopener"><span style="text-decoration: underline;" mn-tiny-utils="">clicca qui</span></a></span>.</td>
+							</tr>
+						</tbody></table>
+                        {% endif %}
+
+
+				</td>
+			</tr>
+		</tbody></table>
+
+
+</body></html>
