@@ -32,6 +32,7 @@ span>option{display:none;}
 .spacer{font-size:0%;line-height:0%;}
 .hidePreheader{display:none;font-size:0%;line-height:0%;}
 /* Template */
+/* Template */
 body,.backgroundTable{background-color:#e3e9ec;}
 .contentTableWhite{background-color:#FFFFFF;}
 .contentTableGray{background-color:#9d9d9c;}
@@ -44,6 +45,7 @@ body,.backgroundTable{background-color:#e3e9ec;}
 body,td,a{font-family:Arial,Helvetica,sans-serif;}
 body,td{color:#383838;font-size:14px;line-height:20px;text-align:left;}
 a{color:#b71918;font-size:14px;line-height:20px;font-weight:normal;text-decoration:none;}
+.publication_content a{color:#b71918;}
 h1,h1 a{font-size:36px;line-height:42px;font-weight:bold;}
 h2,h2 a{font-size:20px;line-height:26px;font-weight:bold;}
 h3,h3 a{font-size:16px;line-height:22px;font-weight:bold;}
@@ -187,12 +189,20 @@ tr.socialBlock {display: inline-block!important;width: 110px!important;}
     </o:OfficeDocumentSettings>
     </xml><![endif]-->
 <meta content="article" property="og:type"  /></head>
-	<body bgcolor="bgcolorbody" leftmargin="0" marginheight="0" marginwidth="0" offset="0" topmargin="0" ><!--[if !gte mso 9]><!----><span id ="mn-preheader" style="display:none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;">Rispondi al questionario per aiutarci a fare sempre meglio&zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; </span><!--<![endif]-->
-
+	<body bgcolor="bgcolorbody" leftmargin="0" marginheight="0" marginwidth="0" offset="0" topmargin="0" >
 		<table class="backgroundTable" style="background-color:#e3e9ec;" width="100%" >
 			<tbody>
                 <tr>
                     <td align="center" class="backgroundTd" style="padding-top: 15px;" valign="top" >
+                        {% if test %}
+                        <table bgcolor="red" class="fixTable" width="800" style="margin-bottom:15px">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center;color:#fff"><b>TEST MODE</b></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        {% endif %}
 						<table class="contentTableWhite fixTable" width="800" >
 							<tbody>
                                 <tr>
@@ -348,7 +358,9 @@ tr.socialBlock {display: inline-block!important;width: 110px!important;}
                                                                                         {% endif %}
 
                                                                                         {% if publication.content %}
-                                                                                            {{ publication.content|safe }}
+                                                                                            <div class="publication_content">
+                                                                                                {{ publication.content|safe }}
+                                                                                            </div>
                                                                                         {% endif %}
                                                                                      {% endfor %}
                                                                                     </span>
@@ -400,12 +412,20 @@ tr.socialBlock {display: inline-block!important;width: 110px!important;}
                                                         {% if group_by_categories %}
 
                                                         {% for cat,news in news_in_evidence.items %}
+                                                        {% if forloop.counter0 %}
+                                                        <table border="0" width="100%" cellpadding="0" cellspacing="0">
+                                                            <tr>
+                                                                <td style="background:none; border-bottom: 1px solid #ccc; height:1px; width:100%; margin:0px 0px 0px 0px;">&nbsp;</td>
+                                                            </tr>
+                                                        </table>
+                                                        <br>
+                                                        {% endif %}
                                                         <h2 style="margin-top: 0">
                                                             {{ cat.name }}
                                                         </h2>
                                                         <ul style="list-style: none; padding-left: 0; line-height: 20px; margin-bottom: 0;">
                                                         {% for single_new in news %}
-                                                            <li style="margin-left: 0;">
+                                                            <li style="margin-left: 0;{% if not forloop.last %}margin-bottom:20px{% endif %}">
                                                                 <div style="display: inline-block; width: 100%">
                                                                     {% if single_new.publication.publication.image_url %}
                                                                     <!--[if (!mso)]><!-- -->
@@ -430,7 +450,7 @@ tr.socialBlock {display: inline-block!important;width: 110px!important;}
                                                                     {% else %}
                                                                     <div>
                                                                     {% endif %}
-                                                                        <a target="_blank" style="color: #383838; cursor: pointer;" href="http://{{ single_new.webpath.site.domain }}{{ single_new.url }}">
+                                                                        <a target="_blank" style="color: #383838; cursor: pointer;" href="http://{{ single_new.publication.webpath.site.domain }}{{ single_new.publication.url }}">
                                                                             <b>{{ single_new.publication.publication.title }}</b>
                                                                         </a>
 
@@ -455,7 +475,7 @@ tr.socialBlock {display: inline-block!important;width: 110px!important;}
                                                         <ul style="list-style: none; padding-left: 0; line-height: 20px; margin-bottom: 0;">
                                                         {% for single_new in news_in_evidence %}
 
-                                                            <li style="margin-left: 0;">
+                                                            <li style="margin-left: 0;{% if not forloop.last %}margin-bottom:20px{% endif %}">
                                                                 <div style="display: inline-block; width: 100%">
                                                                     {% if single_new.publication.publication.image_url %}
                                                                     <!--[if (!mso)]><!-- -->
@@ -480,7 +500,7 @@ tr.socialBlock {display: inline-block!important;width: 110px!important;}
                                                                     {% else %}
                                                                     <div>
                                                                     {% endif %}
-                                                                        <a target="_blank" style="color: #383838; cursor: pointer;" href="http://{{ single_new.webpath.site.domain }}{{ single_new.url }}">
+                                                                        <a target="_blank" style="color: #383838; cursor: pointer;" href="http://{{ single_new.publication.webpath.site.domain }}{{ single_new.publication.url }}">
                                                                             <b>{{ single_new.publication.publication.title }}</b>
                                                                         </a>
 
@@ -543,6 +563,14 @@ tr.socialBlock {display: inline-block!important;width: 110px!important;}
                                                         {% if group_by_categories %}
 
                                                         {% for cat,news in single_news.items %}
+                                                            {% if forloop.counter0 %}
+                                                            <table border="0" width="100%" cellpadding="0" cellspacing="0">
+                                                                <tr>
+                                                                    <td style="background:none; border-bottom: 1px solid #ccc; height:1px; width:100%; margin:0px 0px 0px 0px;">&nbsp;</td>
+                                                                </tr>
+                                                            </table>
+                                                            <br>
+                                                            {% endif %}
                                                             <h2 style="margin-top: 0">
                                                                 {{ cat.name }}
                                                             </h2>
@@ -550,7 +578,7 @@ tr.socialBlock {display: inline-block!important;width: 110px!important;}
                                                             {% for single_new in news %}
                                                                 <li style="margin-left: 0;">
                                                                     -
-                                                                    <a target="_blank" style="color: #383838; cursor: pointer;" href="http://{{ single_new.webpath.site.domain }}{{ single_new.url }}">
+                                                                    <a target="_blank" style="color: #383838; cursor: pointer;" href="http://{{ single_new.publication.webpath.site.domain }}{{ single_new.publication.url }}">
                                                                         {{ single_new.publication.publication.title }}
                                                                     </a>
                                                                 </li>
@@ -567,7 +595,7 @@ tr.socialBlock {display: inline-block!important;width: 110px!important;}
                                                         {% for single_new in single_news %}
                                                             <li style="margin-left: 0;">
                                                                 -
-                                                                <a target="_blank" style="color: #383838; cursor: pointer;" href="http://{{ single_new.webpath.site.domain }}{{ single_new.url }}">
+                                                                <a target="_blank" style="color: #383838; cursor: pointer;" href="http://{{ single_new.publication.webpath.site.domain }}{{ single_new.publication.url }}">
                                                                     {{ single_new.publication.publication.title }}
                                                                 </a>
                                                             </li>

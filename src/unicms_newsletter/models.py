@@ -280,8 +280,9 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
             return Category.objects.all()
         cat_list = []
         for cat in categories:
-            cat_list.append(cat.category)
-        return set(cat_list)
+            if cat.category not in cat_list:
+                cat_list.append(cat.category)
+        return cat_list
 
     def get_webpaths(self):
         return MessageWebpath.objects.filter(message=self, is_active=True)
@@ -335,6 +336,12 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
     def get_attachments(self):
         return MessageAttachment.objects.filter(message=self, is_active=True)
 
+    @staticmethod
+    def build_news_dict(d, news, category):
+        n = news.filter(publication__publication__category=category)
+        if n.exists():
+            d[category] = n
+
     def prepare_data(self, test=False):
         now = timezone.localtime()
 
@@ -356,20 +363,23 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
             news_webpath = {}
             news_in_evidence = {}
             news_single = {}
+
             for category in categories:
                 pubs = webpath_news.filter(publication__category=category)\
                                    [0:NEWSLETTER_MAX_ITEMS_IN_CATEGORY]
                 if pubs.exists():
                     news_webpath[category] = pubs
 
-            for cat in Category.objects.all():
-                en = evidence_news.filter(publication__publication__category=cat)
-                if en.exists():
-                    news_in_evidence[cat] = en
+                Message.build_news_dict(news_in_evidence, evidence_news, category)
+                Message.build_news_dict(news_single, single_news, category)
 
-                sn = single_news.filter(publication__publication__category=cat)
-                if sn.exists():
-                    news_single[cat] = sn
+            # if categories are chosen manually
+            # get other categories
+            if isinstance(categories, list):
+                categories_id = [c.pk for c in categories]
+                for category in Category.objects.all().exclude(pk__in=categories_id):
+                    Message.build_news_dict(news_in_evidence, evidence_news, category)
+                    Message.build_news_dict(news_single, single_news, category)
         else:
             news_webpath = webpath_news[0:NEWSLETTER_MAX_FREE_ITEMS]
             news_in_evidence = evidence_news
