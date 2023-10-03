@@ -190,157 +190,178 @@ tr.socialBlock {display: inline-block!important;width: 110px!important;}
 	<body bgcolor="bgcolorbody" leftmargin="0" marginheight="0" marginwidth="0" offset="0" topmargin="0" ><!--[if !gte mso 9]><!----><span id ="mn-preheader" style="display:none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;">Rispondi al questionario per aiutarci a fare sempre meglio&zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; </span><!--<![endif]-->
 
 		<table class="backgroundTable" style="background-color:#e3e9ec;" width="100%" >
-			<tbody><tr>
-				<td align="center" class="backgroundTd" style="padding-top: 15px;" valign="top" >
-
+			<tbody>
+                <tr>
+                    <td align="center" class="backgroundTd" style="padding-top: 15px;" valign="top" >
 						<table class="contentTableWhite fixTable" width="800" >
-							<tbody><tr>
-								<td class="colTdHeader colTd25" style="padding-top:25px;padding-bottom:25px;" valign="top" >
-									<table width="100%" >
-										<tbody><tr>
-											<td class="fixTd fixCenter" valign="middle" >
-												<table align="center" >
-													<tbody><tr>
-														<td valign="top" >
-                                                            {% if banner_url %}
-                                                            <a target="_blank" href="{{ banner_url }}">
-                                                            {% endif %}
-                                                            <img align="center" border="0" src="http://{{ newsletter.site.domain }}{{ banner }}" alt="{{ newsletter.name }}" title="{{ newsletter.name }}" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;" width="800" class="v-src-width v-src-max-width"/>
-                                                            {% if banner_url %}
-                                                            </a>
-                                                            {% endif %}
-														</td>
-													</tr>
-												</tbody></table>
-											</td>
-										</tr>
-									</tbody></table>
-								</td>
-							</tr>
-						</tbody></table>
-
-
-                        </tr>
-                    </tbody>
-                    </table>
-                    <table class="backgroundTable" style="background-color:#e3e9ec;" width="100%" >
-			<tbody><tr>
-				<td align="center" class="backgroundTd" style="padding-top: 15px;" valign="top" >
-						<table bgcolor="#ffffff" class="fixTable" width="800" >
-							<tbody><tr>
-                                <table bgcolor="#FFFFFF" class="fixTable" width="800" >
-							<tbody><tr>
-                                    <td class="spacer" height="25" ></td>
+							<tbody>
+                                <tr>
+                                    <td class="colTdHeader colTd25" style="padding-top:25px;padding-bottom:25px;" valign="top" >
+                                        <table width="100%" >
+                                            <tbody>
+                                                <tr>
+                                                    <td class="fixTd fixCenter" valign="middle" >
+                                                        <table align="center" >
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td valign="top" >
+                                                                        {% if banner_url %}
+                                                                        <a target="_blank" href="{{ banner_url }}">
+                                                                        {% endif %}
+                                                                        <img align="center" border="0" src="http://{{ newsletter.site.domain }}{{ banner }}" alt="{{ newsletter.name }}" title="{{ newsletter.name }}" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;" width="800" class="v-src-width v-src-max-width"/>
+                                                                        {% if banner_url %}
+                                                                        </a>
+                                                                        {% endif %}
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
-
-
-                        {% if intro_text or content %}
-						<table bgcolor="#ffffff" class="fixTable" width="800" >
-							<tbody><tr>
-								<td class="colTd50" valign="top" >
-									<table width="100%" >
-										<tbody><tr>
-											<td valign="top" >
-												<div style="text-align: left;">
-                                                    <span style="color: #000000; font-size: 14px; line-height: 20px; font-family: arial, 'helvetica neue', helvetica, sans-serif;">
-                                                        {{ intro_text|safe }}
-                                                        {% if content and intro_text %}
-                                                        <br>
-                                                        {% endif %}
-                                                        {{ content|safe }}
-                                                    </span>
-                                                </div>
-											</td>
-										</tr></tbody></table>
-								</td>
-							</tr>
-						</tbody></table>
-                        {% endif %}
-
-						{% if publications %}
-
-                        {% if intro_text or content %}
-                        <table bgcolor="#FFFFFF" class="fixTable" width="800" >
-							<tbody><tr>
-                                    <td class="spacer" height="25" ></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        </td>
-                        </tr>
-                    </tbody>
-                    </table>
-                    <table class="backgroundTable" style="background-color:#e3e9ec;" width="100%" >
-			<tbody><tr>
-				<td align="center" class="backgroundTd" style="padding-top: 15px;" valign="top" >
-						<table bgcolor="#ffffff" class="fixTable" width="800" >
-							<tbody><tr>
-                                <table bgcolor="#FFFFFF" class="fixTable" width="800" >
-							<tbody><tr>
-                                    <td class="spacer" height="25" ></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        {% endif %}
-
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="backgroundTable" style="background-color:#e3e9ec;" width="100%" >
+			<tbody>
+                <tr>
+                    <td align="center" class="backgroundTd" style="padding-top: 15px;" valign="top" >
                         <table bgcolor="#ffffff" class="fixTable" width="800" >
-							<tbody><tr>
-								<td class="colTd50" valign="top" >
-									<table width="100%" >
-										<tbody><tr>
-											<td valign="top" >
-												<div style="text-align: left;">
-                                                    <span style="color: #000000; font-size: 14px; line-height: 20px; font-family: arial, 'helvetica neue', helvetica, sans-serif;">
-                                                         {% for publication in publications %}
-                                                             {% if forloop.counter0 %}
-                                                                <table border="0" width="100%" cellpadding="0" cellspacing="0">
-                                                                  <tr>
-                                                                    <td style="background:none; border-bottom: 1px solid #ccc; height:1px; width:100%; margin:0px 0px 0px 0px;">&nbsp;</td>
-                                                                  </tr>
+                            <tbody>
+                                <tr>
+                                    <table bgcolor="#FFFFFF" class="fixTable" width="800" >
+                                        <tbody>
+                                            <tr>
+                                                <td class="spacer" height="25" ></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    {% if intro_text or content %}
+                                    <table bgcolor="#ffffff" class="fixTable" width="800" >
+                                        <tbody>
+                                            <tr>
+                                                <td class="colTd50" valign="top" >
+                                                    <table width="100%" >
+                                                        <tbody>
+                                                            <tr>
+                                                                <td valign="top" >
+                                                                    <div style="text-align: left;">
+                                                                        <span style="color: #000000; font-size: 14px; line-height: 20px; font-family: arial, 'helvetica neue', helvetica, sans-serif;">
+                                                                            {{ intro_text|safe }}
+                                                                            {% if content and intro_text %}
+                                                                            <br>
+                                                                            {% endif %}
+                                                                            {{ content|safe }}
+                                                                        </span>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    {% endif %}
+
+                                    {% if publications %}
+
+                                    {% if intro_text or content %}
+                                    <table bgcolor="#FFFFFF" class="fixTable" width="800" >
+                                        <tbody>
+                                            <tr>
+                                                <td class="spacer" height="25" ></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="backgroundTable" style="background-color:#e3e9ec;" width="100%" >
+                        <tbody>
+                            <tr>
+                                <td align="center" class="backgroundTd" style="padding-top: 15px;" valign="top" >
+                                    <table bgcolor="#ffffff" class="fixTable" width="800" >
+                                        <tbody>
+                                            <tr>
+                                                <table bgcolor="#FFFFFF" class="fixTable" width="800" >
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="spacer" height="25" ></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                        {% endif %}
+
+                                                <table bgcolor="#ffffff" class="fixTable" width="800" >
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="colTd50" valign="top" >
+                                                                <table width="100%" >
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td valign="top" >
+                                                                                <div style="text-align: left;">
+                                                                                    <span style="color: #000000; font-size: 14px; line-height: 20px; font-family: arial, 'helvetica neue', helvetica, sans-serif;">
+                                                                                    {% for publication in publications %}
+                                                                                        {% if forloop.counter0 %}
+                                                                                        <table border="0" width="100%" cellpadding="0" cellspacing="0">
+                                                                                            <tr>
+                                                                                                <td style="background:none; border-bottom: 1px solid #ccc; height:1px; width:100%; margin:0px 0px 0px 0px;">&nbsp;</td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                        <br>
+                                                                                        {% endif %}
+                                                                                        <h2 style="margin-top: 0">
+                                                                                            {{ publication.title }}
+                                                                                        </h2>
+                                                                                        {% if publication.subheading %}
+                                                                                        <p style="margin: 16px 0">
+                                                                                            <i>{{ publication.subheading }}</i>
+                                                                                        </p>
+                                                                                        {% endif %}
+
+                                                                                        {% if publication.image_url %}
+                                                                                            {% if publication.presentation_image %}
+                                                                                            <div style="padding-bottom: 16px">
+                                                                                                <img src="http://{{ main_domain }}{{ publication.image_url }}"
+                                                                                                     title="{{ publication.presentation_image.title }}"
+                                                                                                     alt="{{ publication.presentation_image.description }}"
+                                                                                                     style="width: 100%">
+                                                                                            </div>
+                                                                                            {% elif publication.preview_image %}
+                                                                                            <div style="margin-bottom: 16px; padding-right: 16px; padding-top: 10px; float: left; width: 50%; max-width: 100%">
+                                                                                                <img src="http://{{ main_domain }}{{ publication.image_url }}"
+                                                                                                     title="{{ publication.preview_image.title }}"
+                                                                                                     alt="{{ publication.preview_image.description }}"
+                                                                                                     style="width: 100%">
+                                                                                            </div>
+                                                                                            {% endif %}
+                                                                                        {% endif %}
+
+                                                                                        {% if publication.content %}
+                                                                                            {{ publication.content|safe }}
+                                                                                        {% endif %}
+                                                                                     {% endfor %}
+                                                                                    </span>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
                                                                 </table>
-                                                                <br>
-                                                              {% endif %}
-                                                            <h2 style="margin-top: 0">
-                                                                {{ publication.title }}
-                                                            </h2>
-                                                            {% if publication.subheading %}
-                                                                <p style="margin: 16px 0">
-                                                                    <i>{{ publication.subheading }}</i>
-                                                                </p>
-                                                            {% endif %}
-
-                                                            {% if publication.image_url %}
-                                                                {% if publication.presentation_image %}
-                                                                <div style="padding-bottom: 16px">
-                                                                    <img src="http://{{ main_domain }}{{ publication.image_url }}"
-                                                                         title="{{ publication.presentation_image.title }}"
-                                                                         alt="{{ publication.presentation_image.description }}"
-                                                                         style="width: 100%">
-                                                                </div>
-                                                                {% elif publication.preview_image %}
-                                                                <div style="margin-bottom: 16px; padding-right: 16px; padding-top: 10px; float: left; width: 50%; max-width: 100%">
-                                                                    <img src="http://{{ main_domain }}{{ publication.image_url }}"
-                                                                         title="{{ publication.preview_image.title }}"
-                                                                         alt="{{ publication.preview_image.description }}"
-                                                                         style="width: 100%">
-                                                                </div>
-                                                                {% endif %}
-                                                            {% endif %}
-
-                                                            {% if publication.content %}
-                                                                {{ publication.content|safe }}
-                                                            {% endif %}
-                                                         {% endfor %}
-                                                    </span>
-                                                </div>
-											</td>
-										</tr></tbody></table>
-								</td>
-							</tr>
-						</tbody></table>
-                        {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                {% endif %}
 
                         {% if news_in_evidence %}
 
@@ -376,26 +397,28 @@ tr.socialBlock {display: inline-block!important;width: 110px!important;}
 											<td valign="top" >
 												<div style="text-align: left;">
                                                     <span style="color: #000000; font-size: 14px; line-height: 20px; font-family: arial, 'helvetica neue', helvetica, sans-serif;">
+                                                        {% if group_by_categories %}
+
+                                                        {% for cat,news in news_in_evidence.items %}
                                                         <h2 style="margin-top: 0">
-                                                            In evidenza
+                                                            {{ cat.name }}
                                                         </h2>
                                                         <ul style="list-style: none; padding-left: 0; line-height: 20px; margin-bottom: 0;">
-                                                        {% for single_new in news_in_evidence %}
-
+                                                        {% for single_new in news %}
                                                             <li style="margin-left: 0;">
                                                                 <div style="display: inline-block; width: 100%">
-                                                                    {% if single_new.publication.image_url %}
+                                                                    {% if single_new.publication.publication.image_url %}
                                                                     <!--[if (!mso)]><!-- -->
                                                                     <div style="width: 18%; display: inline-block; margin-top: 4px;">
-                                                                        {% if single_new.publication.preview_image %}
-                                                                        <img src="http://{{ main_domain }}{{ single_new.publication.image_url }}"
-                                                                             title="{{ single_new.publication.preview_image.title }}"
-                                                                             alt="{{ single_new.publication.preview_image.description }}"
+                                                                        {% if single_new.publication.publication.preview_image %}
+                                                                        <img src="http://{{ main_domain }}{{ single_new.publication.publication.image_url }}"
+                                                                             title="{{ single_new.publication.publication.preview_image.title }}"
+                                                                             alt="{{ single_new.publication.publication.preview_image.description }}"
                                                                              style="width: 90%; height: auto;"/>
-                                                                        {% elif single_new.publication.presentation_image %}
-                                                                        <img src="http://{{ main_domain }}{{ single_new.publication.image_url }}"
-                                                                             title="{{ single_new.publication.presentation_image.title }}"
-                                                                             alt="{{ single_new.publication.presentation_image.description }}"
+                                                                        {% elif single_new.publication.publication.presentation_image %}
+                                                                        <img src="http://{{ main_domain }}{{ single_new.publication.publication.image_url }}"
+                                                                             title="{{ single_new.publication.publication.presentation_image.title }}"
+                                                                             alt="{{ single_new.publication.publication.presentation_image.description }}"
                                                                              style="width: 90%; height: auto;"/>
                                                                         {% endif %}
                                                                     </div>
@@ -408,12 +431,12 @@ tr.socialBlock {display: inline-block!important;width: 110px!important;}
                                                                     <div>
                                                                     {% endif %}
                                                                         <a target="_blank" style="color: #383838; cursor: pointer;" href="http://{{ single_new.webpath.site.domain }}{{ single_new.url }}">
-                                                                            <b>{{ single_new.publication.title }}</b>
+                                                                            <b>{{ single_new.publication.publication.title }}</b>
                                                                         </a>
 
-                                                                        {% if single_new.publication.subheading %}
+                                                                        {% if single_new.publication.publication.subheading %}
                                                                         <p style="margin-bottom: 0">
-                                                                            {{ single_new.publication.subheading }}
+                                                                            {{ single_new.publication.publication.subheading }}
                                                                         </p>
                                                                         {% endif %}
                                                                     </div>
@@ -421,6 +444,57 @@ tr.socialBlock {display: inline-block!important;width: 110px!important;}
                                                             </li>
                                                         {% endfor %}
                                                         </ul>
+
+                                                        {% endfor %}
+
+                                                        {% else %}
+
+                                                        <h2 style="margin-top: 0">
+                                                            In evidenza
+                                                        </h2>
+                                                        <ul style="list-style: none; padding-left: 0; line-height: 20px; margin-bottom: 0;">
+                                                        {% for single_new in news_in_evidence %}
+
+                                                            <li style="margin-left: 0;">
+                                                                <div style="display: inline-block; width: 100%">
+                                                                    {% if single_new.publication.publication.image_url %}
+                                                                    <!--[if (!mso)]><!-- -->
+                                                                    <div style="width: 18%; display: inline-block; margin-top: 4px;">
+                                                                        {% if single_new.publication.publication.preview_image %}
+                                                                        <img src="http://{{ main_domain }}{{ single_new.publication.publication.image_url }}"
+                                                                             title="{{ single_new.publication.publication.preview_image.title }}"
+                                                                             alt="{{ single_new.publication.publication.preview_image.description }}"
+                                                                             style="width: 90%; height: auto;"/>
+                                                                        {% elif single_new.publication.publication.presentation_image %}
+                                                                        <img src="http://{{ main_domain }}{{ single_new.publication.publication.image_url }}"
+                                                                             title="{{ single_new.publication.publication.presentation_image.title }}"
+                                                                             alt="{{ single_new.publication.publication.presentation_image.description }}"
+                                                                             style="width: 90%; height: auto;"/>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div style="width: 80%; display: inline-block; vertical-align: top;">
+                                                                    <!--<![endif]-->
+                                                                    <!--[if (mso)]>
+                                                                    </div>
+                                                                    <![endif]-->
+                                                                    {% else %}
+                                                                    <div>
+                                                                    {% endif %}
+                                                                        <a target="_blank" style="color: #383838; cursor: pointer;" href="http://{{ single_new.webpath.site.domain }}{{ single_new.url }}">
+                                                                            <b>{{ single_new.publication.publication.title }}</b>
+                                                                        </a>
+
+                                                                        {% if single_new.publication.publication.subheading %}
+                                                                        <p style="margin-bottom: 0">
+                                                                            {{ single_new.publication.publication.subheading }}
+                                                                        </p>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        {% endfor %}
+                                                        </ul>
+                                                        {% endif %}
                                                     </span>
                                                 </div>
 											</td>
@@ -466,6 +540,26 @@ tr.socialBlock {display: inline-block!important;width: 110px!important;}
 											<td valign="top" >
 												<div style="text-align: left;">
                                                     <span style="color: #000000; font-size: 14px; line-height: 20px; font-family: arial, 'helvetica neue', helvetica, sans-serif;">
+                                                        {% if group_by_categories %}
+
+                                                        {% for cat,news in single_news.items %}
+                                                            <h2 style="margin-top: 0">
+                                                                {{ cat.name }}
+                                                            </h2>
+                                                            <ul style="list-style: none; padding-left: 0; line-height: 20px; margin-bottom: 0;">
+                                                            {% for single_new in news %}
+                                                                <li style="margin-left: 0;">
+                                                                    -
+                                                                    <a target="_blank" style="color: #383838; cursor: pointer;" href="http://{{ single_new.webpath.site.domain }}{{ single_new.url }}">
+                                                                        {{ single_new.publication.publication.title }}
+                                                                    </a>
+                                                                </li>
+                                                            {% endfor %}
+                                                            </ul>
+
+                                                        {% endfor %}
+
+                                                        {% else %}
                                                         <h2 style="margin-top: 0">
                                                             News
                                                         </h2>
@@ -474,11 +568,12 @@ tr.socialBlock {display: inline-block!important;width: 110px!important;}
                                                             <li style="margin-left: 0;">
                                                                 -
                                                                 <a target="_blank" style="color: #383838; cursor: pointer;" href="http://{{ single_new.webpath.site.domain }}{{ single_new.url }}">
-                                                                    {{ single_new.publication.title }}
+                                                                    {{ single_new.publication.publication.title }}
                                                                 </a>
                                                             </li>
                                                         {% endfor %}
                                                         </ul>
+                                                        {% endif %}
                                                     </span>
                                                 </div>
 											</td>
@@ -607,46 +702,6 @@ tr.socialBlock {display: inline-block!important;width: 110px!important;}
                         {% endif %}
 
 
-                        {% if footer_text %}
-						<table bgcolor="#FFFFFF" class="fixTable" width="800" >
-							<tbody><tr>
-                                    <td class="spacer" height="25" ></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        </td>
-                        </tr>
-                    </tbody>
-                    </table>
-                    <table class="backgroundTable" style="background-color:#e3e9ec;" width="100%" >
-			<tbody><tr>
-				<td align="center" class="backgroundTd" style="padding-top: 15px;" valign="top" >
-						<table bgcolor="#ffffff" class="fixTable" width="800" >
-							<tbody><tr>
-                                <table bgcolor="#FFFFFF" class="fixTable" width="800" >
-							<tbody><tr>
-                                    <td class="spacer" height="25" ></td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-
-						<table bgcolor="#ffffff" class="fixTable" width="800" >
-							<tbody><tr>
-								<td class="colTd50" valign="top" >
-									<table width="100%" >
-										<tbody><tr>
-											<td valign="top" >
-												<div style="text-align: left;"><span style="color: #000000; font-size: 14px; line-height: 20px; font-family: arial, 'helvetica neue', helvetica, sans-serif;">
-                                                {{ footer_text|safe }}
-                                                </span></div>
-											</td>
-										</tr></tbody></table>
-								</td>
-							</tr>
-						</tbody></table>
-                        {% endif %}
-
 
 						<table bgcolor="#FFFFFF" class="fixTable" width="800" >
 							<tbody><tr>
@@ -665,13 +720,17 @@ tr.socialBlock {display: inline-block!important;width: 110px!important;}
                         <table class="fixTable foodark" width="800" >
 							<tbody><tr>
 								<td class="footerTd colTd50" style="text-align: center;padding-top:25px;padding-bottom: 25px;" >
-                                    Università della Calabria<br>
-                                    Via Pietro Bucci, 87036 Rende CS<br>
-                                    <a href="https://www.unical.it/pec/" target="_blank" rel="noopener noreferrer">
-                                        Posta certificata
-                                    </a>
-                                    <br>
-                                    C.F. 80003950781 / P.I. 00419160783
+                                    {% if footer_text %}
+                                        {{ footer_text|safe }}
+                                    {% else %}
+                                        Università della Calabria<br>
+                                        Via Pietro Bucci, 87036 Rende CS<br>
+                                        <a href="https://www.unical.it/pec/" target="_blank" rel="noopener noreferrer">
+                                            Posta certificata
+                                        </a>
+                                        <br>
+                                        C.F. 80003950781 / P.I. 00419160783
+                                    {% endif %}
                                 </td>
 							</tr>
 						</tbody></table>

@@ -273,20 +273,18 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         return now >= next_sending
 
     def get_categories(self):
-        mcat = MessagePublicationCategory.objects\
+        categories = MessagePublicationCategory.objects\
                                           .filter(message=self, is_active=True)\
                                           .select_related('category')
-        categories = []
-        for item in mcat:
-            categories.append(item.category)
-        return categories
+        if not categories.exists():
+            return Category.objects.all()
+        cat_list = []
+        for cat in categories:
+            cat_list.append(cat.category)
+        return set(cat_list)
 
     def get_webpaths(self):
-        # return MessageWebpath.objects\
-                             # .filter(message=self, is_active=True)\
-                             # .values_list('webpath__pk', flat=True)
-        return MessageWebpath.objects.filter(message=self,
-                                             is_active=True)
+        return MessageWebpath.objects.filter(message=self, is_active=True)
 
     def get_webpath_news(self, message_webpath):
         if not message_webpath or not message_webpath.webpath.is_active:
@@ -332,13 +330,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                                                 is_active=True,
                                                 in_evidence=in_evidence)\
                                         .select_related('publication')
-        publications = []
-        for item in mpub:
-            publications.append(item.publication)
-        return publications
-
-    def get_publicationcontexts_in_evidence(self):
-        return self.get_publicationcontexts(in_evidence=True)
+        return mpub
 
     def get_attachments(self):
         return MessageAttachment.objects.filter(message=self, is_active=True)
@@ -350,53 +342,40 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         message_webpaths = self.get_webpaths()
         publications = self.get_publications()
         single_news = self.get_publicationcontexts()
-        news_in_evidence = self.get_publicationcontexts_in_evidence()
-
-        # list of single publications id, to exclude from webpath news
-        publications_id = list(map(lambda pub: pub.pk, single_news))
-
-        news = {}
+        evidence_news = self.get_publicationcontexts(in_evidence=True)
         webpath_news = PublicationContext.objects.none()
 
         for message_webpath in message_webpaths:
-            # webpath_news = webpath_news.union(self.get_webpath_news(message_webpath))
             webpath_news = webpath_news | self.get_webpath_news(message_webpath)
 
-        # webpath_news_query = Q(webpath__pk__in=webpaths,
-                               # webpath__is_active=True,
-                               # date_start__lte=now,
-                               # date_end__gt=now,
-                               # is_active=True,
-                               # publication__is_active=True)
+        # list of single publications id, to exclude from webpath news
+        # publications_id = list(map(lambda pub: pub.pk, single_news))
+        # webpath_news = webpath_news.exclude(pk__in=publications_id)
 
-        if not categories:
-            news = webpath_news.exclude(pk__in=publications_id)\
-                               [0:NEWSLETTER_MAX_FREE_ITEMS]
+        if self.group_by_categories:
+            news_webpath = {}
+            news_in_evidence = {}
+            news_single = {}
+            for category in categories:
+                pubs = webpath_news.filter(publication__category=category)\
+                                   [0:NEWSLETTER_MAX_ITEMS_IN_CATEGORY]
+                if pubs.exists():
+                    news_webpath[category] = pubs
+
+            for cat in Category.objects.all():
+                en = evidence_news.filter(publication__publication__category=cat)
+                if en.exists():
+                    news_in_evidence[cat] = en
+
+                sn = single_news.filter(publication__publication__category=cat)
+                if sn.exists():
+                    news_single[cat] = sn
         else:
-            if self.group_by_categories:
-                for category in categories:
-                    # pubs = PublicationContext.objects\
-                                             # .filter(webpath_news_query,
-                                                     # publication__category=category)\
-                                             # .exclude(pk__in=publications_id)\
-                                             # [0:NEWSLETTER_MAX_ITEMS_IN_CATEGORY]
-                    # if pubs: news[category] = pubs
-                    pubs = webpath_news.filter(publication__category=category)\
-                                       .exclude(pk__in=publications_id)\
-                                       [0:NEWSLETTER_MAX_ITEMS_IN_CATEGORY]
-                    if pubs: news[category] = pubs
-            else:
-                # news = PublicationContext.objects\
-                                         # .filter(webpath_news_query,
-                                                 # publication__category__in=categories)\
-                                         # .exclude(pk__in=publications_id)\
-                                         # [0:NEWSLETTER_MAX_FREE_ITEMS]
-                news = webpath_news.filter(publication__category__in=categories)\
-                                   .exclude(pk__in=publications_id)\
-                                   [0:NEWSLETTER_MAX_FREE_ITEMS]
+            news_webpath = webpath_news[0:NEWSLETTER_MAX_FREE_ITEMS]
+            news_in_evidence = evidence_news
+            news_single = single_news
 
-        data = {#'banner': self.banner,
-                'banner': self.banner.url if self.banner else '',
+        data = {'banner': self.banner.url if self.banner else '',
                 'banner_url': self.banner_url,
                 'content': self.content,
                 'intro_text': self.intro_text,
@@ -405,9 +384,9 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                 'news_in_evidence': news_in_evidence,
                 'newsletter': self.newsletter,
                 'publications': publications,
-                'single_news': single_news,
+                'single_news': news_single,
                 'test': test,
-                'webpath_news': news,
+                'webpath_news': news_webpath,
                 }
         return data
 
