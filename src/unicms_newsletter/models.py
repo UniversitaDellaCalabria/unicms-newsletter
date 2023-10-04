@@ -337,9 +337,12 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         return MessageAttachment.objects.filter(message=self, is_active=True)
 
     @staticmethod
-    def build_news_dict(d, news, category):
-        n = news.filter(publication__publication__category=category)
+    def build_news_dict(d, news, category, taken_news=[]):
+        n = news.filter(publication__publication__category=category).exclude(publication__publication__pk__in=taken_news)
         if n.exists():
+            for pub in n:
+                if pub.publication.pk not in taken_news:
+                    taken_news.append(pub.publication.publication.pk)
             d[category] = n
 
     def prepare_data(self, test=False):
@@ -364,22 +367,24 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
             news_in_evidence = {}
             news_single = {}
 
+            taken_news = []
+
             for category in categories:
                 pubs = webpath_news.filter(publication__category=category)\
                                    [0:NEWSLETTER_MAX_ITEMS_IN_CATEGORY]
                 if pubs.exists():
                     news_webpath[category] = pubs
 
-                Message.build_news_dict(news_in_evidence, evidence_news, category)
-                Message.build_news_dict(news_single, single_news, category)
+                Message.build_news_dict(news_in_evidence, evidence_news, category, taken_news)
+                Message.build_news_dict(news_single, single_news, category, taken_news)
 
             # if categories are chosen manually
             # get other categories
             if isinstance(categories, list):
                 categories_id = [c.pk for c in categories]
                 for category in Category.objects.all().exclude(pk__in=categories_id):
-                    Message.build_news_dict(news_in_evidence, evidence_news, category)
-                    Message.build_news_dict(news_single, single_news, category)
+                    Message.build_news_dict(news_in_evidence, evidence_news, category, taken_news)
+                    Message.build_news_dict(news_single, single_news, category, taken_news)
         else:
             news_webpath = webpath_news[0:NEWSLETTER_MAX_FREE_ITEMS]
             news_in_evidence = evidence_news
