@@ -767,10 +767,20 @@ tr.socialBlock {display: inline-block!important;width: 110px!important;}
 											<td valign="top" >
 												<div style="text-align: left;">
                                                     <span style="color: #000000; font-size: 14px; line-height: 20px; font-family: arial, 'helvetica neue', helvetica, sans-serif;">
-                                                        <h2 style="margin-top: 0">
-                                                            Eventi
-                                                        </h2>
                                                         {% for calendar_context,events in calendar_events.items %}
+                                                            <h2 style="margin-top: 0">
+                                                                {% if calendar_events|length > 1 %}
+                                                                    {{ calendar_context.calendar_context.calendar.name }}
+                                                                {% else %}
+                                                                    Eventi
+                                                                {% endif %}
+                                                                {% if calendar_context.events_from %}
+                                                                dal {{ calendar_context.events_from|date:"d/m/Y" }}
+                                                                {% endif %}
+                                                                {% if calendar_context.events_to %}
+                                                                al {{ calendar_context.events_to|date:"d/m/Y" }}
+                                                                {% endif %}
+                                                            </h2>
                                                             {% if calendar_events|length > 1 %}
                                                             <h4 style="margin: 15px 0">{{ calendar_context.calendar_context.calendar.name }}</h4>
                                                             {% endif %}
