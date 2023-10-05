@@ -377,8 +377,8 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                                             events_to_query)
                                             # discard_sent_news_query)
 
-    # def get_attachments(self):
-        # return MessageAttachment.objects.filter(message=self, is_active=True)
+    def get_attachments(self):
+        return MessageAttachment.objects.filter(message=self, is_active=True)
 
     @staticmethod
     def build_news_dict(d, news, category, taken_news=[]):
