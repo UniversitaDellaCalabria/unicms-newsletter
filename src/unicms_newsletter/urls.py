@@ -5,7 +5,7 @@ from cms.api.urls import eb_prefix
 from . views import *
 from . api.views import (message, message_attachment, message_publication,
                          message_publication_context, message_category,
-                         message_webpath, newsletter,)
+                         message_webpath, newsletter, message_calendar_context)
 
 
 app_name="unicms_newsletter"
@@ -77,3 +77,9 @@ nmweb = f'{newsletter_prefix}/<int:newsletter_id>/messages/<int:message_id>/webp
 urlpatterns += path(f'{nmweb}/', message_webpath.MessageWebpathList.as_view(), name='newsletter-message-webpaths'),
 urlpatterns += path(f'{nmweb}/<int:pk>/', message_webpath.MessageWebpathView.as_view(), name='newsletter-message-webpath'),
 urlpatterns += path(f'{nmweb}/form/', message_webpath.MessageWebpathFormView.as_view(), name='newsletter-message-webpath-form'),
+
+# message calendar contexts
+nmcal = f'{newsletter_prefix}/<int:newsletter_id>/messages/<int:message_id>/calendars'
+urlpatterns += path(f'{nmcal}/', message_calendar_context.MessageCalendarContextList.as_view(), name='newsletter-message-calendar-contexts'),
+urlpatterns += path(f'{nmcal}/<int:pk>/', message_calendar_context.MessageCalendarContextView.as_view(), name='newsletter-message-calendar-context'),
+urlpatterns += path(f'{nmcal}/form/', message_calendar_context.MessageCalendarContextFormView.as_view(), name='newsletter-message-calendar-context-form'),

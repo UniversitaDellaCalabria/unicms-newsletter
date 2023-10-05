@@ -40,7 +40,6 @@ class MessageCategoryAdminInline(admin.TabularInline):
     # raw_id_fields = ('category',)
 
 
-
 class MessageWebpathAdminInline(admin.TabularInline):
     model = MessageWebpath
     extra = 0
@@ -63,6 +62,14 @@ class MessagePublicationContextAdminInline(admin.TabularInline):
     # classes = ['collapse']
     readonly_fields = ('created_by', 'modified_by')
     raw_id_fields = ('publication',)
+
+
+class MessageCalendarContextAdminInline(admin.TabularInline):
+    model = MessageCalendarContext
+    extra = 0
+    # classes = ['collapse']
+    readonly_fields = ('created_by', 'modified_by')
+    raw_id_fields = ('calendar_context',)
 
 
 class MessageAttachmentAdminInline(admin.TabularInline):

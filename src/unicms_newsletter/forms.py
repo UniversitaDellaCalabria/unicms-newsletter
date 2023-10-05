@@ -142,7 +142,24 @@ class MessageWebpathForm(forms.ModelForm):
     class Meta:
         model = MessageWebpath
         fields = ['message', 'webpath',
-                  'news_from', 'news_to', 'is_active'] #'order', 'is_active']
+                  'news_from', 'news_to', 'is_active']
+
+
+class MessageCalendarContextForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        message_id = kwargs.pop('message_id', None)
+        super().__init__(*args, **kwargs)
+        if message_id:
+            self.fields['message'].queryset = Message.objects.filter(pk=message_id)
+        setattr(self.fields['calendar_context'],
+                FORM_SOURCE_LABEL,
+                reverse('unicms_calendar:api-context-calendars-all-options'))
+
+    class Meta:
+        model = MessageCalendarContext
+        fields = ['message', 'calendar_context',
+                  'events_from', 'events_to', 'is_active']
 
 
 class MessagePublicationContextForm(forms.ModelForm):

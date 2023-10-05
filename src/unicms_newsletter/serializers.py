@@ -138,6 +138,21 @@ class MessageWebpathSerializer(UniCMSCreateUpdateSerializer,
         read_only_fields = ('created_by', 'modified_by')
 
 
+class MessageCalendarContextSerializer(UniCMSCreateUpdateSerializer,
+                                       UniCMSContentTypeClass):
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        if instance.calendar_context:
+            data['calendar_data'] = instance.calendar_context.__str__()
+        return data
+
+    class Meta:
+        model = MessageCalendarContext
+        fields = '__all__'
+        read_only_fields = ('created_by', 'modified_by')
+
+
 class MessageSendingSerializer(UniCMSCreateUpdateSerializer,
                                UniCMSContentTypeClass):
 

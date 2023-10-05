@@ -28,6 +28,7 @@ class MessageAdmin(AbstractPreviewableAdmin):
                MessageCategoryAdminInline,
                MessagePublicationAdminInline,
                MessagePublicationContextAdminInline,
+               MessageCalendarContextAdminInline,
                MessageAttachmentAdminInline,
                MessageSendingAdminInline
                )

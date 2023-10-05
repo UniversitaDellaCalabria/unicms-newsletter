@@ -341,6 +341,7 @@ tr.socialBlock {display: inline-block!important;width: 110px!important;}
 
                                                                                         {% if publication.image_url %}
                                                                                             {% if publication.presentation_image %}
+                                                                                            <!--[if (!mso)]><!-- -->
                                                                                             <div style="padding-bottom: 16px">
                                                                                                 <img src="http://{{ main_domain }}{{ publication.image_url }}"
                                                                                                      title="{{ publication.presentation_image.title }}"
@@ -354,6 +355,10 @@ tr.socialBlock {display: inline-block!important;width: 110px!important;}
                                                                                                      alt="{{ publication.preview_image.description }}"
                                                                                                      style="width: 100%">
                                                                                             </div>
+                                                                                            <!--<![endif]-->
+                                                                                            <!--[if (mso)]>
+                                                                                            </div>
+                                                                                            <![endif]-->
                                                                                             {% endif %}
                                                                                         {% endif %}
 
@@ -729,6 +734,98 @@ tr.socialBlock {display: inline-block!important;width: 110px!important;}
 						</tbody></table>
                         {% endif %}
 
+                        {% if calendar_events %}
+                        {% if intro_text or content or publications or news_in_evidence or single_news or webpath_news %}
+                        <table bgcolor="#FFFFFF" class="fixTable" width="800" >
+							<tbody><tr>
+                                    <td class="spacer" height="25" ></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                    <table class="backgroundTable" style="background-color:#e3e9ec;" width="100%" >
+			<tbody><tr>
+				<td align="center" class="backgroundTd" style="padding-top: 15px;" valign="top" >
+						<table bgcolor="#ffffff" class="fixTable" width="800" >
+							<tbody><tr>
+                                <table bgcolor="#FFFFFF" class="fixTable" width="800" >
+							<tbody><tr>
+                                    <td class="spacer" height="25" ></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        {% endif %}
+
+                        <table bgcolor="#ffffff" class="fixTable" width="800" >
+							<tbody><tr>
+								<td class="colTd50" valign="top" >
+									<table width="100%" >
+										<tbody><tr>
+											<td valign="top" >
+												<div style="text-align: left;">
+                                                    <span style="color: #000000; font-size: 14px; line-height: 20px; font-family: arial, 'helvetica neue', helvetica, sans-serif;">
+                                                        <h2 style="margin-top: 0">
+                                                            Eventi
+                                                        </h2>
+                                                        {% for calendar_context,events in calendar_events.items %}
+                                                            {% if calendar_events|length > 1 %}
+                                                            <h4 style="margin: 15px 0">{{ calendar_context.calendar_context.calendar.name }}</h4>
+                                                            {% endif %}
+
+                                                            <ul style="list-style: none; padding-left: 0; line-height: 20px; margin-bottom: 0;">
+                                                                {% for event in events %}
+                                                                <li style="margin-left: 0;{% if not forloop.last %}margin-bottom:20px{% endif %}">
+                                                                    <div style="display: inline-block; width: 100%">
+                                                                        {% if event.event.publication.image_url %}
+                                                                        <!--[if (!mso)]><!-- -->
+                                                                        <div style="width: 18%; display: inline-block; margin-top: 4px;">
+                                                                            {% if event.event.publication.preview_image %}
+                                                                            <img src="http://{{ main_domain }}{{ event.event.publication.image_url }}"
+                                                                                 title="{{ event.event.publication.preview_image.title }}"
+                                                                                 alt="{{ event.event.publication.preview_image.description }}"
+                                                                                 style="width: 90%; height: auto;"/>
+                                                                            {% elif event.event.publication.presentation_image %}
+                                                                            <img src="http://{{ main_domain }}{{ event.event.publication.image_url }}"
+                                                                                 title="{{ event.event.publication.presentation_image.title }}"
+                                                                                 alt="{{ event.event.publication.presentation_image.description }}"
+                                                                                 style="width: 90%; height: auto;"/>
+                                                                            {% endif %}
+                                                                        </div>
+                                                                        <div style="width: 80%; display: inline-block; vertical-align: top;">
+                                                                        <!--<![endif]-->
+                                                                        <!--[if (mso)]>
+                                                                        </div>
+                                                                        <![endif]-->
+                                                                        {% else %}
+                                                                        <div>
+                                                                        {% endif %}
+                                                                            <div style="margin-bottom:5px"><i>{{ event.event.date_start }}</i></div>
+                                                                            <a target="_blank" style="color: #383838; cursor: pointer;" href="http://{{ calendar_context.calendar_context.webpath.site.domain }}{{ calendar_context.calendar_context.get_absolute_url }}{{ event.event.pk }}">
+                                                                                <b>{{ event.event.publication.title }}</b>
+                                                                            </a>
+
+                                                                            {% if event.event.publication.subheading %}
+                                                                            <p style="margin-bottom: 0">
+                                                                                {{ event.event.publication.subheading }}
+                                                                            </p>
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        {% endfor %}
+                                                    </span>
+                                                </div>
+											</td>
+										</tr></tbody></table>
+								</td>
+							</tr>
+						</tbody></table>
+                        {% endif %}
 
 
 						<table bgcolor="#FFFFFF" class="fixTable" width="800" >

@@ -29,6 +29,8 @@ from cms.templates.models import (ActivableModel,
                                   SortableModel,
                                   TimeStampedModel)
 
+from unicms_calendar.models import *
+
 from . settings import *
 
 
@@ -284,8 +286,15 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                 cat_list.append(cat.category)
         return cat_list
 
+    def get_calendar_contexts(self):
+        return MessageCalendarContext.objects\
+                                     .filter(message=self, is_active=True)\
+                                     .select_related('calendar_context')
+
     def get_webpaths(self):
-        return MessageWebpath.objects.filter(message=self, is_active=True)
+        return MessageWebpath.objects\
+                             .filter(message=self, is_active=True)\
+                             .select_related('webpath')
 
     def get_webpath_news(self, message_webpath):
         if not message_webpath or not message_webpath.webpath.is_active:
@@ -333,8 +342,43 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
                                         .select_related('publication')
         return mpub
 
-    def get_attachments(self):
-        return MessageAttachment.objects.filter(message=self, is_active=True)
+    def get_calendar_events(self, calendar_context):
+        q_empty = MessageCalendarContext.objects.none()
+        if not calendar_context: return q_empty
+        if not calendar_context.is_active: return q_empty
+        if not calendar_context.calendar_context.is_active: return q_empty
+        if not calendar_context.calendar_context.webpath.is_active: return q_empty
+        if not calendar_context.calendar_context.calendar.is_active: return q_empty
+
+        now = timezone.localtime()
+        events_from = calendar_context.events_from
+        events_to = calendar_context.events_to
+        events_from_query = Q()
+        events_to_query = Q()
+
+        # discard_sent_events_query = Q()
+
+        events_query = Q(calendar=calendar_context.calendar_context.calendar,
+                         # event__date_start__lte=now,
+                         event__date_end__gt=now,
+                         is_active=True,
+                         event__publication__is_active=True)
+        if events_from:
+            events_from_query = Q(event__date_end__gte=events_from)
+        if events_to:
+            events_to_query = Q(event__date_start__lte=events_to)
+        # if self.discard_sent_news:
+            # get most recent sending
+            # last_sending = MessageSending.objects.filter(message=self).first()
+            # if last_sending:
+                # discard_sent_news_query = Q(date_start__gt=last_sending.date)
+        return CalendarEvent.objects.filter(events_query,
+                                            events_from_query,
+                                            events_to_query)
+                                            # discard_sent_news_query)
+
+    # def get_attachments(self):
+        # return MessageAttachment.objects.filter(message=self, is_active=True)
 
     @staticmethod
     def build_news_dict(d, news, category, taken_news=[]):
@@ -349,14 +393,19 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
         now = timezone.localtime()
 
         categories = self.get_categories()
+        message_calendar_contexts = self.get_calendar_contexts()
         message_webpaths = self.get_webpaths()
         publications = self.get_publications()
         single_news = self.get_publicationcontexts()
         evidence_news = self.get_publicationcontexts(in_evidence=True)
         webpath_news = PublicationContext.objects.none()
+        calendar_events = {}
 
         for message_webpath in message_webpaths:
             webpath_news = webpath_news | self.get_webpath_news(message_webpath)
+
+        for calendar in message_calendar_contexts:
+            calendar_events[calendar] = self.get_calendar_events(calendar)
 
         # list of single publications id, to exclude from webpath news
         # publications_id = list(map(lambda pub: pub.pk, single_news))
@@ -392,6 +441,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
 
         data = {'banner': self.banner.url if self.banner else '',
                 'banner_url': self.banner_url,
+                'calendar_events': calendar_events,
                 'content': self.content,
                 'intro_text': self.intro_text,
                 'footer_text': self.footer_text,
@@ -632,6 +682,25 @@ class MessagePublication(ActivableModel, TimeStampedModel,
 
     def __str__(self):
         return f'{self.message} - {self.publication}'
+
+
+class MessageCalendarContext(ActivableModel, TimeStampedModel, CreatedModifiedBy):
+    message = models.ForeignKey(Message, on_delete=models.CASCADE)
+    calendar_context = models.ForeignKey(CalendarContext, on_delete=models.CASCADE)
+    events_from = models.DateTimeField(blank=True, null=True)
+    events_to = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        unique_together = ('message', 'calendar_context')
+        ordering = ('calendar_context',)
+
+    def is_lockable_by(self, user):
+        item = self.message.newsletter
+        permission = check_user_permission_on_object(user=user, obj=item)
+        return permission['granted']
+
+    def __str__(self):
+        return f'{self.message} - {self.calendar_context}'
 
 
 class MessageAttachment(ActivableModel, TimeStampedModel,
