@@ -348,7 +348,9 @@ tr.socialBlock {display: inline-block!important;width: 110px!important;}
                                                                                                      alt="{{ publication.presentation_image.description }}"
                                                                                                      style="width: 100%">
                                                                                             </div>
+                                                                                            <!--<![endif]-->
                                                                                             {% elif publication.preview_image %}
+                                                                                            <!--[if (!mso)]><!-- -->
                                                                                             <div style="margin-bottom: 16px; padding-right: 16px; padding-top: 10px; float: left; width: 50%; max-width: 100%">
                                                                                                 <img src="http://{{ main_domain }}{{ publication.image_url }}"
                                                                                                      title="{{ publication.preview_image.title }}"

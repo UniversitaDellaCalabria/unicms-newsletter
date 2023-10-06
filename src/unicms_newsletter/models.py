@@ -417,7 +417,6 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
             news_single = {}
 
             taken_news = []
-
             for category in categories:
                 pubs = webpath_news.filter(publication__category=category)\
                                    [0:NEWSLETTER_MAX_ITEMS_IN_CATEGORY]
