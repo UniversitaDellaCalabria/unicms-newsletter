@@ -305,19 +305,23 @@
 
                                                                                     {% if publication.image_url %}
                                                                                         {% if publication.presentation_image %}
+                                                                                        <!--[if (!mso)]><!-- -->
                                                                                         <div style="padding-bottom: 16px">
                                                                                             <img src="http://{{ main_domain }}{{ publication.image_url }}"
                                                                                                  title="{{ publication.presentation_image.title }}"
                                                                                                  alt="{{ publication.presentation_image.description }}"
                                                                                                  style="width: 100%">
                                                                                         </div>
+                                                                                        <!--<![endif]-->
                                                                                         {% elif publication.preview_image %}
+                                                                                        <!--[if (!mso)]><!-- -->
                                                                                         <div style="margin-bottom: 16px; padding-right: 16px; padding-top: 10px; float: left; width: 50%; max-width: 100%">
                                                                                             <img src="http://{{ main_domain }}{{ publication.image_url }}"
                                                                                                  title="{{ publication.preview_image.title }}"
                                                                                                  alt="{{ publication.preview_image.description }}"
                                                                                                  style="width: 100%">
                                                                                         </div>
+                                                                                        <!--<![endif]-->
                                                                                         {% endif %}
                                                                                     {% endif %}
 
@@ -400,8 +404,8 @@
                                                                                 </table>
                                                                                 <br>
                                                                                 {% endif %}
-                                                                                <li{% if not forloop.last %} style="margin-bottom:20px"{% endif %}>
-                                                                                    <div style="display: inline-block; width: 100%">
+                                                                                <li{% if not forloop.last %} style="margin-bottom:20px;"{% endif %}>
+                                                                                    <div style="display:inline-block;width:100%;{% if not forloop.last %}padding-bottom:20px;border-bottom:1px solid #ddd;{% endif %}">
                                                                                         {% if single_new.publication.image_url %}
                                                                                         <!--[if (!mso)]><!-- -->
                                                                                         <div style="width: 18%; display: inline-block; margin-top: 4px;">
@@ -458,8 +462,8 @@
                                                                         </table>
                                                                         <br>
                                                                         {% endif %}
-                                                                        <li{% if not forloop.last %} style="margin-bottom:20px"{% endif %}>
-                                                                            <div style="display: inline-block; width: 100%">
+                                                                        <li{% if not forloop.last %} style="margin-bottom:20px;"{% endif %}>
+                                                                            <div style="display:inline-block;width:100%;{% if not forloop.last %}padding-bottom:20px;border-bottom:1px solid #ddd;{% endif %}">
                                                                                 {% if single_new.publication.image_url %}
                                                                                 <!--[if (!mso)]><!-- -->
                                                                                 <div style="width: 18%; display: inline-block; margin-top: 4px;">
@@ -771,8 +775,8 @@
                                                                         </h2>
                                                                         <ul style="list-style: none; padding-left: 0; line-height: 20px; margin-bottom: 0;">
                                                                             {% for event in events %}
-                                                                            <li{% if not forloop.last %} style="margin-bottom:20px"{% endif %}>
-                                                                                <div style="display: inline-block; width: 100%">
+                                                                            <li{% if not forloop.last %} style="margin-bottom:20px;"{% endif %}>
+                                                                                <div style="display:inline-block;width:100%;{% if not forloop.last %}padding-bottom:20px;border-bottom:1px solid #ddd;{% endif %}">
                                                                                     {% if event.event.publication.image_url %}
                                                                                     <!--[if (!mso)]><!-- -->
                                                                                     <div style="width: 18%; display: inline-block; margin-top: 4px;">
