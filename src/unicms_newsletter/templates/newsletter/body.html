@@ -406,15 +406,15 @@
                                                                                 {% endif %}
                                                                                 <li{% if not forloop.last %} style="margin-bottom:20px;"{% endif %}>
                                                                                     <div style="display:inline-block;width:100%;{% if not forloop.last %}padding-bottom:20px;border-bottom:1px solid #ddd;{% endif %}">
-                                                                                        {% if single_new.publication.image_url %}
+                                                                                        {% if single_new.publication.publication.image_url %}
                                                                                         <!--[if (!mso)]><!-- -->
                                                                                         <div style="width: 18%; display: inline-block; margin-top: 4px;">
-                                                                                            {% if single_new.publication.preview_image %}
+                                                                                            {% if single_new.publication.publication.preview_image %}
                                                                                             <img src="http://{{ main_domain }}{{ single_new.publication.publication.image_url }}"
                                                                                                  title="{{ single_new.publication.publication.preview_image.title }}"
                                                                                                  alt="{{ single_new.publication.publication.preview_image.description }}"
                                                                                                  style="width: 90%; height: auto;"/>
-                                                                                            {% elif single_new.publication.presentation_image %}
+                                                                                            {% elif single_new.publication.publication.presentation_image %}
                                                                                             <img src="http://{{ main_domain }}{{ single_new.publication.publication.image_url }}"
                                                                                                  title="{{ single_new.publication.publication.presentation_image.title }}"
                                                                                                  alt="{{ single_new.publication.publication.presentation_image.description }}"
@@ -454,28 +454,20 @@
                                                                 </h2>
                                                                 <ul style="list-style: none; padding-left: 0; line-height: 20px; margin-bottom: 0;">
                                                                     {% for single_new in news_in_evidence %}
-                                                                        {% if forloop.counter0 %}
-                                                                        <table border="0" width="100%" cellpadding="0" cellspacing="0">
-                                                                            <tr>
-                                                                                <td style="background:none; border-bottom: 1px solid #eeeeee; height:1px; width:100%; margin:0px 0px 0px 0px;">&nbsp;</td>
-                                                                            </tr>
-                                                                        </table>
-                                                                        <br>
-                                                                        {% endif %}
                                                                         <li{% if not forloop.last %} style="margin-bottom:20px;"{% endif %}>
                                                                             <div style="display:inline-block;width:100%;{% if not forloop.last %}padding-bottom:20px;border-bottom:1px solid #ddd;{% endif %}">
-                                                                                {% if single_new.publication.image_url %}
+                                                                                {% if single_new.publication.publication.image_url %}
                                                                                 <!--[if (!mso)]><!-- -->
                                                                                 <div style="width: 18%; display: inline-block; margin-top: 4px;">
-                                                                                    {% if single_new.publication.preview_image %}
-                                                                                    <img src="http://{{ main_domain }}{{ single_new.publication.image_url }}"
-                                                                                         title="{{ single_new.publication.preview_image.title }}"
-                                                                                         alt="{{ single_new.publication.preview_image.description }}"
+                                                                                    {% if single_new.publication.publication.preview_image %}
+                                                                                    <img src="http://{{ main_domain }}{{ single_new.publication.publication.image_url }}"
+                                                                                         title="{{ single_new.publication.publication.preview_image.title }}"
+                                                                                         alt="{{ single_new.publication.publication.preview_image.description }}"
                                                                                          style="width: 90%; height: auto;"/>
-                                                                                    {% elif single_new.publication.presentation_image %}
-                                                                                    <img src="http://{{ main_domain }}{{ single_new.publication.image_url }}"
-                                                                                         title="{{ single_new.publication.presentation_image.title }}"
-                                                                                         alt="{{ single_new.publication.presentation_image.description }}"
+                                                                                    {% elif single_new.publication.publication.presentation_image %}
+                                                                                    <img src="http://{{ main_domain }}{{ single_new.publication.publication.image_url }}"
+                                                                                         title="{{ single_new.publication.publication.presentation_image.title }}"
+                                                                                         alt="{{ single_new.publication.publication.presentation_image.description }}"
                                                                                          style="width: 90%; height: auto;"/>
                                                                                     {% endif %}
                                                                                 </div>
@@ -487,13 +479,13 @@
                                                                                 {% else %}
                                                                                 <div>
                                                                                 {% endif %}
-                                                                                    <a target="_blank" style="color: #383838; cursor: pointer;" href="http://{{ single_new.webpath.site.domain }}{{ single_new.url }}">
-                                                                                        <b>{{ single_new.publication.title }}</b>
+                                                                                    <a target="_blank" style="color: #383838; cursor: pointer;" href="http://{{ single_new.publication.webpath.site.domain }}{{ single_new.publication.url }}">
+                                                                                        <b>{{ single_new.publication.publication.title }}</b>
                                                                                     </a>
 
-                                                                                    {% if single_new.publication.subheading %}
+                                                                                    {% if single_new.publication.publication.subheading %}
                                                                                     <p style="margin-bottom: 0">
-                                                                                        {{ single_new.publication.subheading }}
+                                                                                        {{ single_new.publication.publication.subheading }}
                                                                                     </p>
                                                                                     {% endif %}
                                                                                 </div>
