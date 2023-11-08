@@ -229,7 +229,7 @@
 		<tbody>
 			<tr>
 				<td>
-                    <!--[if (!mso)]><!-- -->
+                    <!--[if !mso]><!-->
                     <table class="row row-4" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 						<tbody>
 							<tr>
@@ -268,7 +268,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <!--[if (!mso)]><!-- -->
+                    <!--[if !mso]><!-->
                     <table class="row row-4" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 						<tbody>
 							<tr>
@@ -312,7 +312,7 @@
 							</tr>
 						</tbody>
 					</table>
-                    <!--[if (!mso)]><!-- -->
+                    <!--[if !mso]><!-->
                     <table class="row row-4" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 						<tbody>
 							<tr>
@@ -416,7 +416,7 @@
                     {% if publications %}
 
                     {% if intro_text or content %}
-                    <!--[if (!mso)]><!-- -->
+                    <!--[if !mso]><!-->
                     <table class="row row-4" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 						<tbody>
 							<tr>
@@ -484,7 +484,7 @@
                                                                         {% endif %}
                                                                         {% if publication.image_url %}
                                                                         {% if publication.presentation_image %}
-                                                                        <!--[if (!mso)]><!-- -->
+                                                                        <!--[if !mso]><!-->
                                                                         <div style="padding-bottom: 16px">
                                                                             <img src="http://{{ main_domain }}{{ publication.image_url }}"
                                                                                  title="{{ publication.presentation_image.title }}"
@@ -493,7 +493,7 @@
                                                                         </div>
                                                                         <!--<![endif]-->
                                                                         {% elif publication.preview_image %}
-                                                                        <!--[if (!mso)]><!-- -->
+                                                                        <!--[if !mso]><!-->
                                                                         <div style="margin-bottom: 16px; padding-right: 16px; padding-top: 10px; float: left; width: 50%; max-width: 100%">
                                                                             <img src="http://{{ main_domain }}{{ publication.image_url }}"
                                                                                  title="{{ publication.preview_image.title }}"
@@ -521,7 +521,7 @@
 						</tbody>
 					</table>
                     {% if not forloop.last %}
-                    <!--[if (!mso)]><!-- -->
+                    <!--[if !mso]><!-->
                     <table class="row row-4" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 						<tbody>
 							<tr>
@@ -563,7 +563,7 @@
 
                     {% if news_in_evidence %}
                     {% if intro_text or content or publications %}
-                    <!--[if (!mso)]><!-- -->
+                    <!--[if !mso]><!-->
                     <table class="row row-4" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 						<tbody>
 							<tr>
@@ -628,7 +628,7 @@
                                         <tbody>
                                             <tr>
                                                 {% if single_new.publication.publication.preview_image %}
-                                                <!--[if (!mso)]><!-- -->
+                                                <!--[if !mso]><!-->
                                                 <td class="column column-1" width="15%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 20px; padding-left: 20px; padding-right: 20px; padding-top: 0px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
                                                     <table class="image_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                                                         <tr>
@@ -646,7 +646,7 @@
                                                 <td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 20px; padding-left: 20px; padding-right: 20px; padding-top: 20px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
                                                 <![endif]-->
                                                 {% elif single_new.publication.presentation_image %}
-                                                <!--[if (!mso)]><!-- -->
+                                                <!--[if !mso]><!-->
                                                 <td class="column column-1" width="15%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 20px; padding-left: 20px; padding-right: 20px; padding-top: 0px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
                                                     <table class="image_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                                                         <tr>
@@ -693,7 +693,7 @@
                         </tbody>
                     </table>
                     {% if not forloop.last %}
-                    <!--[if (!mso)]><!-- -->
+                    <!--[if !mso]><!-->
                     <table class="row row-4" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 						<tbody>
 							<tr>
@@ -758,7 +758,7 @@
                                         <tbody>
                                             <tr>
                                                 {% if single_new.publication.publication.preview_image %}
-                                                <!--[if (!mso)]><!-- -->
+                                                <!--[if !mso]><!-->
                                                 <td class="column column-1" width="15%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 20px; padding-left: 20px; padding-right: 20px; padding-top: 0px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
                                                     <table class="image_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                                                         <tr>
@@ -776,7 +776,7 @@
                                                 <td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 20px; padding-left: 20px; padding-right: 20px; padding-top: 20px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
                                                 <![endif]-->
                                                 {% elif single_new.publication.publication.presentation_image %}
-                                                <!--[if (!mso)]><!-- -->
+                                                <!--[if !mso]><!-->
                                                 <td class="column column-1" width="15%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 20px; padding-left: 20px; padding-right: 20px; padding-top: 0px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
                                                     <table class="image_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                                                         <tr>
@@ -823,7 +823,7 @@
                         </tbody>
                     </table>
                     {% if not forloop.last %}
-                    <!--[if (!mso)]><!-- -->
+                    <!--[if !mso]><!-->
                     <table class="row row-4" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 						<tbody>
 							<tr>
@@ -873,7 +873,7 @@
 
                     {% if single_news %}
                     {% if intro_text or content or publications or news_in_evidence %}
-                    <!--[if (!mso)]><!-- -->
+                    <!--[if !mso]><!-->
                     <table class="row row-4" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 						<tbody>
 							<tr>
@@ -938,7 +938,7 @@
                                         <tbody>
                                             <tr>
                                                 {% if single_new.publication.publication.preview_image %}
-                                                <!--[if (!mso)]><!-- -->
+                                                <!--[if !mso]><!-->
                                                 <td class="column column-1" width="30%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 20px; padding-left: 20px; padding-right: 20px; padding-top: 0px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
                                                     <table class="image_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                                                         <tr>
@@ -956,7 +956,7 @@
                                                 <td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 20px; padding-left: 20px; padding-right: 20px; padding-top: 20px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
                                                 <![endif]-->
                                                 {% elif single_new.publication.publication.presentation_image %}
-                                                <!--[if (!mso)]><!-- -->
+                                                <!--[if !mso]><!-->
                                                 <td class="column column-1" width="30%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 20px; padding-left: 20px; padding-right: 20px; padding-top: 0px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
                                                     <table class="image_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                                                         <tr>
@@ -1003,7 +1003,7 @@
                         </tbody>
                     </table>
                     {% if not forloop.last %}
-                    <!--[if (!mso)]><!-- -->
+                    <!--[if !mso]><!-->
                     <table class="row row-4" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 						<tbody>
 							<tr>
@@ -1068,7 +1068,7 @@
                                         <tbody>
                                             <tr>
                                                 {% if single_new.publication.publication.preview_image %}
-                                                <!--[if (!mso)]><!-- -->
+                                                <!--[if !mso]><!-->
                                                 <td class="column column-1" width="30%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 20px; padding-left: 20px; padding-right: 20px; padding-top: 0px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
                                                     <table class="image_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                                                         <tr>
@@ -1086,7 +1086,7 @@
                                                 <td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 20px; padding-left: 20px; padding-right: 20px; padding-top: 20px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
                                                 <![endif]-->
                                                 {% elif single_new.publication.presentation_image %}
-                                                <!--[if (!mso)]><!-- -->
+                                                <!--[if !mso]><!-->
                                                 <td class="column column-1" width="30%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 20px; padding-left: 20px; padding-right: 20px; padding-top: 0px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
                                                     <table class="image_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                                                         <tr>
@@ -1133,7 +1133,7 @@
                         </tbody>
                     </table>
                     {% if not forloop.last %}
-                    <!--[if (!mso)]><!-- -->
+                    <!--[if !mso]><!-->
                     <table class="row row-4" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 						<tbody>
 							<tr>
@@ -1182,7 +1182,7 @@
 
                     {% if webpath_news %}
                     {% if intro_text or content or publications or news_in_evidence or single_news %}
-                    <!--[if (!mso)]><!-- -->
+                    <!--[if !mso]><!-->
                     <table class="row row-4" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 						<tbody>
 							<tr>
@@ -1247,7 +1247,7 @@
                                         <tbody>
                                             <tr>
                                                 {% if single_new.publication.preview_image %}
-                                                <!--[if (!mso)]><!-- -->
+                                                <!--[if !mso]><!-->
                                                 <td class="column column-1" width="15%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 20px; padding-left: 20px; padding-right: 20px; padding-top: 0px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
                                                     <table class="image_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                                                         <tr>
@@ -1265,7 +1265,7 @@
                                                 <td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 20px; padding-left: 20px; padding-right: 20px; padding-top: 20px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
                                                 <![endif]-->
                                                 {% elif single_new.publication.presentation_image %}
-                                                <!--[if (!mso)]><!-- -->
+                                                <!--[if !mso]><!-->
                                                 <td class="column column-1" width="15%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 20px; padding-left: 20px; padding-right: 20px; padding-top: 0px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
                                                     <table class="image_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                                                         <tr>
@@ -1307,7 +1307,7 @@
                         </tbody>
                     </table>
                     {% if not forloop.last %}
-                    <!--[if (!mso)]><!-- -->
+                    <!--[if !mso]><!-->
                     <table class="row row-4" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 						<tbody>
 							<tr>
@@ -1422,7 +1422,7 @@
                         </tbody>
                     </table>
                     {% if not forloop.last %}
-                    <!--[if (!mso)]><!-- -->
+                    <!--[if !mso]><!-->
                     <table class="row row-4" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 						<tbody>
 							<tr>
@@ -1472,7 +1472,7 @@
 
                     {% if calendar_events %}
                     {% if intro_text or content or publications or news_in_evidence or single_news or webpath_news %}
-                    <!--[if (!mso)]><!-- -->
+                    <!--[if !mso]><!-->
                     <table class="row row-4" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 						<tbody>
 							<tr>
@@ -1548,7 +1548,7 @@
                                         <tbody>
                                             <tr>
                                                 {% if event.event.publication.image_url %}
-                                                <!--[if (!mso)]><!-- -->
+                                                <!--[if !mso]><!-->
                                                 <td class="column column-1" width="30%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 20px; padding-left: 20px; padding-right: 20px; padding-top: 0px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
                                                     <table class="image_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                                                         <tr>
@@ -1566,7 +1566,7 @@
                                                 <td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 20px; padding-left: 20px; padding-right: 20px; padding-top: 20px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
                                                 <![endif]-->
                                                 {% elif event.event.publication.presentation_image %}
-                                                <!--[if (!mso)]><!-- -->
+                                                <!--[if !mso]><!-->
                                                 <td class="column column-1" width="30%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 20px; padding-left: 20px; padding-right: 20px; padding-top: 0px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
                                                     <table class="image_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                                                         <tr>
@@ -1614,7 +1614,7 @@
                         </tbody>
                     </table>
                     {% if not forloop.last %}
-                    <!--[if (!mso)]><!-- -->
+                    <!--[if !mso]><!-->
                     <table class="row row-4" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 						<tbody>
 							<tr>
@@ -1660,7 +1660,7 @@
                         </tbody>
                     </table>
                     {% endif %}
-                    <!--[if (!mso)]><!-- -->
+                    <!--[if !mso]><!-->
                     <table class="row row-4" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 						<tbody>
 							<tr>
@@ -1725,7 +1725,7 @@
 							</tr>
 						</tbody>
 					</table>
-                    <!--[if (!mso)]><!-- -->
+                    <!--[if !mso]><!-->
                     <table class="row row-4" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 						<tbody>
 							<tr>
