@@ -1589,7 +1589,18 @@
                                                     <table class="paragraph_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
                                                         <tr>
                                                             <td class="pad" style="padding-left:20px;padding-right:20px;">
-                                                                <p class="mobile-center-align" style="margin-top: 0px; margin-bottom: 5px"><i style="margin-bottom: 10px">{{ event.event.date_start|date:"l d F" }}, ore {{ event.event.date_start|date:"H:i" }}</i></p>
+                                                                <p class="mobile-center-align" style="margin-top: 0px; margin-bottom: 5px">
+                                                                    <i style="margin-bottom: 10px">
+                                                                        {{ event.event.date_start|date:"l d F" }}, ore {{ event.event.date_start|date:"H:i" }}
+                                                                    </i>
+                                                                </p>
+                                                                {% if event.event.location %}
+                                                                <p class="mobile-center-align" style="margin-top: 5px; margin-bottom: 5px">
+                                                                    <i style="margin-bottom: 10px">
+                                                                        {{ event.event.location }}
+                                                                    </i>
+                                                                </p>
+                                                                {% endif %}
                                                                 <div style="direction:ltr;font-family:Helvetica Neue, Helvetica, Arial, sans-serif;font-size:20px;font-weight:700;letter-spacing:0px;line-height:150%;text-align:left;mso-line-height-alt:30px;">
                                                                     <p class="mobile-center-align" style="margin: 0;">
                                                                         <a href="http://{{ calendar_context.calendar_context.webpath.site.domain }}{{ calendar_context.calendar_context.get_absolute_url }}{{ event.event.pk }}" target="_blank" style="text-decoration: none; color: #383838;" rel="noopener">

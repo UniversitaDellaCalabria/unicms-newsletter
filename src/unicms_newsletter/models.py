@@ -80,7 +80,7 @@ def message_banner_path(instance, filename): # pragma: no cover
 
 class Newsletter(ActivableModel, TimeStampedModel, CreatedModifiedBy,
                  AbstractLockable):
-    name = models.CharField(max_length=254)
+    name = models.CharField(max_length=255)
     slug = models.SlugField()
     description = models.TextField(max_length=2048,
                                    blank=True,
@@ -126,8 +126,8 @@ class Newsletter(ActivableModel, TimeStampedModel, CreatedModifiedBy,
 
 class AbstractNewsletterSubscription(ActivableModel, CreatedModifiedBy):
     newsletter = models.ForeignKey(Newsletter, on_delete=models.CASCADE)
-    first_name = models.CharField(default='', blank=True, max_length=254)
-    last_name = models.CharField(default='', blank=True, max_length=254)
+    first_name = models.CharField(default='', blank=True, max_length=255)
+    last_name = models.CharField(default='', blank=True, max_length=255)
     email = models.EmailField()
     html = models.BooleanField(default=True)
 
@@ -181,7 +181,7 @@ WEEK_DAYS = (
     )
 
 class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
-    name = models.CharField(max_length=254)
+    name = models.CharField(max_length=255)
     newsletter = models.ForeignKey(Newsletter, on_delete=models.CASCADE)
     group_by_categories = models.BooleanField(default=True)
     date_start = models.DateTimeField(null=True, blank=True)
@@ -206,7 +206,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
     intro_text = models.TextField(default='', blank=True)
     content = models.TextField(default='', blank=True)
     footer_text = models.TextField(default='', blank=True)
-    template = models.CharField(max_length=254,
+    template = models.CharField(max_length=255,
                                 blank=True,
                                 default='',
                                 help_text=DEFAULT_TEMPLATE)
@@ -214,7 +214,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
     sending_test = models.BooleanField(default=False)
     queued = models.BooleanField(default=False)
     sending = models.BooleanField(default=False)
-    week_day = models.CharField(max_length=254, default='', blank=True)
+    week_day = models.CharField(max_length=255, default='', blank=True)
     discard_sent_news = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
