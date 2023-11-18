@@ -456,7 +456,8 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
 
     def check_data(self, test=False):
         keys = ['content', 'intro_text', 'news_in_evidence',
-                'publications', 'single_news', 'webpath_news']
+                'publications', 'single_news', 'webpath_news',
+                'calendar_events']
         data = self.prepare_data(test=test)
         for key in keys:
             if data[key]: return data
