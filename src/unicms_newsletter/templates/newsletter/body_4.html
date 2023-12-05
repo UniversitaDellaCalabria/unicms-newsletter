@@ -433,7 +433,7 @@
                                         <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                                 <tr>
-                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 5%;" align="left">
+                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:0 5% 33px;" align="left">
 
                                                         <div style="font-size: 14px; line-height: 160%; word-wrap: break-word;">
                                                             {% if single_new.publication.publication.preview_image or single_new.publication.publication.presentation_image %}
@@ -730,91 +730,23 @@
                                             </tbody>
                                         </table>
 
-                                        {% for single_new in news %}
                                         <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                                 <tr>
-                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 5%;" align="left">
-
-                                                        <div style="font-size: 14px; line-height: 160%; word-wrap: break-word;">
-                                                            {% if single_new.publication.publication.preview_image or single_new.publication.publication.presentation_image %}
-                                                            <!--[if (!mso)&(!IE)]><!-->
-                                                            <div class="u-col u-col-33p33" style="max-width: 320px;min-width: 200px;display: table-cell;vertical-align: top;">
-                                                                <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-
-                                                                    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <td style="overflow-wrap:break-word;word-break:break-word;padding:padding:20px 10px" align="left">
-
-                                                                                    <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
-                                                                                        <a href="http://{{ single_new.publication.webpath.site.domain }}{{ single_new.publication.url }}" target="_blank" style="text-decoration: none; color: #383838;" rel="noopener">
-                                                                                            {% if single_new.publication.publication.preview_image %}
-                                                                                            <img src="http://{{ main_domain }}{{ single_new.publication.publication.image_url }}" style="display: block; height: auto; border: 0; width: 100%;" width="320" alt="{{ single_new.publication.publication.preview_image.description }}" title="{{ single_new.publication.publication.preview_image.title }}">
-                                                                                            {% elif single_new.publication.publication.presentation_image %}
-                                                                                            <img src="http://{{ main_domain }}{{ single_new.publication.publication.image_url }}" style="display: block; height: auto; border: 0; width: 100%;" width="320" alt="{{ single_new.publication.publication.presentation_image.description }}" title="{{ single_new.publication.publication.presentation_image.title }}">
-                                                                                            {% endif %}
-                                                                                        </a>
-                                                                                    </div>
-
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-
-                                                                </div>
-                                                            </div>
-                                                            <!--<![endif]-->
-                                                            <!--[if (!mso)&(!IE)]><!-->
-                                                            <div class="u-col u-col-66p67" style="max-width: 320px;min-width: 400px;display: table-cell;vertical-align: top;">
-                                                            <!--<![endif]-->
-                                                            <!--[if (mso)|(IE)]><!-->
-                                                            <div class="u-col u-col-100" style="max-width: 100%;min-width: 100%;display: table-cell;vertical-align: top;">
-                                                            <!--<![endif]-->
-                                                            {% else %}
-                                                            <div class="u-col u-col-100" style="max-width: 100%;min-width: 100%;display: table-cell;vertical-align: top;">
-                                                            {% endif %}
-
-                                                            <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-                                                                    <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-
-                                                                <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 10px;" align="left">
-
-                                                                                <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
-                                                                                    <p style="line-height: 140%;">
-                                                                                        <h3>
-                                                                                            <a href="http://{{ single_new.publication.webpath.site.domain }}{{ single_new.publication.url }}" target="_blank" style="text-decoration: none; color: #383838;" rel="noopener">
-                                                                                                {{ single_new.publication.publication.title }}
-                                                                                            </a>
-                                                                                        </h3>
-                                                                                        {% if single_new.publication.publication.subheading %}
-                                                                                        {{ single_new.publication.publication.subheading }}
-                                                                                        {% endif %}
-                                                                                    </p>
-                                                                                </div>
-
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-
-                                                                <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-                                                            </div>
-                                                        <!--[if (!mso)&(!IE)]><!-->
-                                                        </div>
-                                                        <!--<![endif]-->
-                                                        <!--[if (mso)|(IE)]><!-->
-                                                        </div>
-                                                        <!--<![endif]-->
-                                                        </div>
+                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:0 5% 33px;" align="left">
+                                                        <ul>
+                                                            {% for single_new in news %}
+                                                            <li>
+                                                                <a href="http://{{ single_new.publication.webpath.site.domain }}{{ single_new.publication.url }}" target="_blank" style="text-decoration: none; color: #383838;" rel="noopener">
+                                                                    {{ single_new.publication.publication.title }}
+                                                                </a>
+                                                            </li>
+                                                            {% endfor %}
+                                                        </ul>
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
-
 
                                         {% if not forloop.last %}
                                         <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
@@ -837,125 +769,28 @@
                                             </tbody>
                                         </table>
                                         {% endif %}
-
-
-                                        {% endfor %}
                                         {% endfor %}
 
                                         {% else %}
-                                        {% for single_new in single_news %}
                                         <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                                 <tr>
                                                     <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 5%;" align="left">
-
-                                                        <div style="font-size: 14px; line-height: 160%; word-wrap: break-word;">
-                                                            {% if single_new.publication.publication.preview_image or single_new.publication.publication.presentation_image %}
-                                                            <!--[if (!mso)&(!IE)]><!-->
-                                                            <div class="u-col u-col-33p33" style="max-width: 320px;min-width: 200px;display: table-cell;vertical-align: top;">
-                                                                <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-
-                                                                    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 10px;" align="left">
-
-                                                                                    <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
-                                                                                        <a href="http://{{ single_new.publication.webpath.site.domain }}{{ single_new.publication.url }}" target="_blank" style="text-decoration: none; color: #383838;" rel="noopener">
-                                                                                            {% if single_new.publication.publication.preview_image %}
-                                                                                            <img src="http://{{ main_domain }}{{ single_new.publication.publication.image_url }}" style="display: block; height: auto; border: 0; width: 100%;" width="320" alt="{{ single_new.publication.publication.preview_image.description }}" title="{{ single_new.publication.publication.preview_image.title }}">
-                                                                                            {% elif single_new.publication.publication.presentation_image %}
-                                                                                            <img src="http://{{ main_domain }}{{ single_new.publication.publication.image_url }}" style="display: block; height: auto; border: 0; width: 100%;" width="320" alt="{{ single_new.publication.publication.presentation_image.description }}" title="{{ single_new.publication.publication.presentation_image.title }}">
-                                                                                            {% endif %}
-                                                                                        </a>
-                                                                                    </div>
-
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-
-                                                                </div>
-                                                            </div>
-                                                            <!--<![endif]-->
-                                                            <!--[if (!mso)&(!IE)]><!-->
-                                                            <div class="u-col u-col-66p67" style="max-width: 320px;min-width: 400px;display: table-cell;vertical-align: top;">
-                                                            <!--<![endif]-->
-                                                            <!--[if (mso)|(IE)]><!-->
-                                                            <div class="u-col u-col-100" style="max-width: 100%;min-width: 100%;display: table-cell;vertical-align: top;">
-                                                            <!--<![endif]-->
-                                                            {% else %}
-                                                            <div class="u-col u-col-100" style="max-width: 100%;min-width: 100%;display: table-cell;vertical-align: top;">
-                                                            {% endif %}
-
-                                                            <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-                                                            <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-
-                                                            <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-                                                              <tbody>
-                                                                <tr>
-                                                                  <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 10px;" align="left">
-
-                                                              <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
-                                                                <p style="line-height: 140%;">
-                                                                    <h3>
-                                                                        <a href="http://{{ single_new.publication.webpath.site.domain }}{{ single_new.publication.url }}" target="_blank" style="text-decoration: none; color: #383838;" rel="noopener">
-                                                                            {{ single_new.publication.publication.title }}
-                                                                        </a>
-                                                                    </h3>
-                                                                    {% if single_new.publication.publication.subheading %}
-                                                                    {{ single_new.publication.publication.subheading }}
-                                                                    {% endif %}
-                                                                </p>
-                                                              </div>
-
-                                                                  </td>
-                                                                </tr>
-                                                              </tbody>
-                                                            </table>
-
-                                                              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-                                                              </div>
-                                                            <!--[if (!mso)&(!IE)]><!-->
-                                                        </div>
-                                                        <!--<![endif]-->
-                                                        <!--[if (mso)|(IE)]><!-->
-                                                        </div>
-                                                        <!--<![endif]-->
-
-                                                            </div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-
-
-                                              {% if not forloop.last %}
-                                              <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-                                                <tbody>
-                                                  <tr>
-                                                                                                                                                                                     <td style="overflow-wrap:break-word;word-break:break-word;padding:10px 30%;" align="left">
-
-                                                      <table height="0px" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;border-top: 1px solid #BBBBBB;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
-                                                        <tbody>
-                                                          <tr style="vertical-align: top">
-                                                            <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top;font-size: 0px;line-height: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
-                                                              <span>&#160;</span>
-                                                            </td>
-                                                          </tr>
-                                                        </tbody>
-                                                      </table>
-
+                                                        <ul>
+                                                            {% for single_new in single_news %}
+                                                            <li>
+                                                                <a href="http://{{ single_new.publication.webpath.site.domain }}{{ single_new.publication.url }}" target="_blank" style="text-decoration: none; color: #383838;" rel="noopener">
+                                                                    {{ single_new.publication.publication.title }}
+                                                                </a>
+                                                            </li>
+                                                            {% endfor %}
+                                                        </ul>
                                                     </td>
-                                                  </tr>
-                                                </tbody>
-                                              </table>
-                                              {% endif %}
-
-
-                                              {% endfor %}
-                                              {% endif %}
-                                              <!--[if (!mso)&(!IE)]><!-->
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        {% endif %}
+                                        <!--[if (!mso)&(!IE)]><!-->
                                     </div>
                                     <!--<![endif]-->
                                     </div>
@@ -1034,92 +869,23 @@
                                             </tbody>
                                         </table>
 
-                                        {% for single_new in news %}
                                         <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                                 <tr>
-                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 5%;" align="left">
-
-                                                        <div style="font-size: 14px; line-height: 160%; word-wrap: break-word;">
-                                                            {% if single_new.publication.preview_image or single_new.publication.presentation_image %}
-                                                            <!--[if (!mso)&(!IE)]><!-->
-                                                            <div class="u-col u-col-33p33" style="max-width: 320px;min-width: 200px;display: table-cell;vertical-align: top;">
-                                                                <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-
-                                                                    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 10px;" align="left">
-
-                                                                                    <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
-                                                                                        <a href="http://{{ single_new.webpath.site.domain }}{{ single_new.url }}" target="_blank" style="text-decoration: none; color: #383838;" rel="noopener">
-                                                                                            {% if single_new.publication.preview_image %}
-                                                                                            <img src="http://{{ main_domain }}{{ single_new.publication.image_url }}" style="display: block; height: auto; border: 0; width: 100%;" width="320" alt="{{ single_new.publication.preview_image.description }}" title="{{ single_new.publication.preview_image.title }}">
-                                                                                            {% elif single_new.publication.presentation_image %}
-                                                                                            <img src="http://{{ main_domain }}{{ single_new.publication.image_url }}" style="display: block; height: auto; border: 0; width: 100%;" width="320" alt="{{ single_new.publication.presentation_image.description }}" title="{{ single_new.publication.presentation_image.title }}">
-                                                                                            {% endif %}
-                                                                                        </a>
-                                                                                    </div>
-
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-
-                                                                </div>
-                                                            </div>
-                                                            <!--<![endif]-->
-                                                            <!--[if (!mso)&(!IE)]><!-->
-                                                            <div class="u-col u-col-66p67" style="max-width: 320px;min-width: 400px;display: table-cell;vertical-align: top;">
-                                                            <!--<![endif]-->
-                                                            <!--[if (mso)|(IE)]><!-->
-                                                            <div class="u-col u-col-100" style="max-width: 100%;min-width: 100%;display: table-cell;vertical-align: top;">
-                                                            <!--<![endif]-->
-                                                            {% else %}
-                                                            <div class="u-col u-col-100" style="max-width: 100%;min-width: 100%;display: table-cell;vertical-align: top;">
-                                                            {% endif %}
-
-                                                            <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-                                                                    <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-
-                                                                <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 10px;" align="left">
-
-                                                                                <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
-                                                                                    <p style="line-height: 140%;">
-                                                                                        <h3>
-                                                                                            <a href="http://{{ single_new.webpath.site.domain }}{{ single_new.url }}" target="_blank" style="text-decoration: none; color: #383838;" rel="noopener">
-                                                                                                {{ single_new.publication.title }}
-                                                                                            </a>
-                                                                                        </h3>
-                                                                                        {% if single_new.publication.subheading %}
-                                                                                        {{ single_new.publication.subheading }}
-                                                                                        {% endif %}
-                                                                                    </p>
-                                                                                </div>
-
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-
-                                                                <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-                                                            </div>
-                                                        <!--[if (!mso)&(!IE)]><!-->
-                                                        </div>
-                                                        <!--<![endif]-->
-                                                        <!--[if (mso)|(IE)]><!-->
-                                                        </div>
-                                                        <!--<![endif]-->
-                                                        </div>
+                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:0 5% 33px;" align="left">
+                                                        <ul>
+                                                            {% for single_new in news %}
+                                                            <li>
+                                                                <a href="http://{{ single_new.webpath.site.domain }}{{ single_new.url }}" target="_blank" style="text-decoration: none; color: #383838;" rel="noopener">
+                                                                    {{ single_new.publication.title }}
+                                                                </a>
+                                                            </li>
+                                                            {% endfor %}
+                                                        </ul>
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
-
-
                                         {% if not forloop.last %}
                                         <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
@@ -1141,124 +907,27 @@
                                             </tbody>
                                         </table>
                                         {% endif %}
-
-
-                                        {% endfor %}
                                         {% endfor %}
 
                                         {% else %}
-                                        {% for single_new in webpath_news %}
                                         <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                                 <tr>
                                                     <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 5%;" align="left">
-
-                                                        <div style="font-size: 14px; line-height: 160%; word-wrap: break-word;">
-                                                            {% if single_new.publication.preview_image or single_new.publication.presentation_image %}
-                                                            <!--[if (!mso)&(!IE)]><!-->
-                                                            <div class="u-col u-col-33p33" style="max-width: 320px;min-width: 200px;display: table-cell;vertical-align: top;">
-                                                                <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-
-                                                                    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 20 20px 0;" align="left">
-
-                                                                                    <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
-                                                                                        <a href="http://{{ single_new.webpath.site.domain }}{{ single_new.url }}" target="_blank" style="text-decoration: none; color: #383838;" rel="noopener">
-                                                                                            {% if single_new.publication.preview_image %}
-                                                                                            <img src="http://{{ main_domain }}{{ single_new.publication.image_url }}" style="display: block; height: auto; border: 0; width: 100%;" width="320" alt="{{ single_new.publication.preview_image.description }}" title="{{ single_new.publication.preview_image.title }}">
-                                                                                            {% elif single_new.publication.presentation_image %}
-                                                                                            <img src="http://{{ main_domain }}{{ single_new.publication.image_url }}" style="display: block; height: auto; border: 0; width: 100%;" width="320" alt="{{ single_new.publication.presentation_image.description }}" title="{{ single_new.publication.presentation_image.title }}">
-                                                                                            {% endif %}
-                                                                                        </a>
-                                                                                    </div>
-
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-
-                                                                </div>
-                                                            </div>
-                                                            <!--<![endif]-->
-                                                            <!--[if (!mso)&(!IE)]><!-->
-                                                            <div class="u-col u-col-66p67" style="max-width: 320px;min-width: 400px;display: table-cell;vertical-align: top;">
-                                                            <!--<![endif]-->
-                                                            <!--[if (mso)|(IE)]><!-->
-                                                            <div class="u-col u-col-100" style="max-width: 100%;min-width: 100%;display: table-cell;vertical-align: top;">
-                                                            <!--<![endif]-->
-                                                            {% else %}
-                                                            <div class="u-col u-col-100" style="max-width: 100%;min-width: 100%;display: table-cell;vertical-align: top;">
-                                                            {% endif %}
-
-                                                            <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-                                                              <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-
-                                                            <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-                                                              <tbody>
-                                                                <tr>
-                                                                  <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 10px;" align="left">
-
-                                                              <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
-                                                                <p style="line-height: 140%;">
-                                                                    <h3>
-                                                                        <a href="http://{{ single_new.webpath.site.domain }}{{ single_new.url }}" target="_blank" style="text-decoration: none; color: #383838;" rel="noopener">
-                                                                            {{ single_new.publication.title }}
-                                                                        </a>
-                                                                    </h3>
-                                                                    {% if single_new.publication.subheading %}
-                                                                    {{ single_new.publication.subheading }}
-                                                                    {% endif %}
-                                                                </p>
-                                                              </div>
-
-                                                                  </td>
-                                                                </tr>
-                                                              </tbody>
-                                                            </table>
-
-                                                              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-                                                              </div>
-                                                            <!--[if (!mso)&(!IE)]><!-->
-                                                        </div>
-                                                        <!--<![endif]-->
-                                                        <!--[if (mso)|(IE)]><!-->
-                                                        </div>
-                                                        <!--<![endif]-->
-                                                        </div>
-
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-
-
-                                              {% if not forloop.last %}
-                                              <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-                                                <tbody>
-                                                  <tr>
-                                                                                                                                                                                     <td style="overflow-wrap:break-word;word-break:break-word;padding:10px 30%;" align="left">
-
-                                                      <table height="0px" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;border-top: 1px solid #BBBBBB;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
-                                                        <tbody>
-                                                          <tr style="vertical-align: top">
-                                                            <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top;font-size: 0px;line-height: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
-                                                              <span>&#160;</span>
-                                                            </td>
-                                                          </tr>
-                                                        </tbody>
-                                                      </table>
-
+                                                        <ul>
+                                                            {% for single_new in webpath_news %}
+                                                            <li>
+                                                                <a href="http://{{ single_new.webpath.site.domain }}{{ single_new.url }}" target="_blank" style="text-decoration: none; color: #383838;" rel="noopener">
+                                                                    {{ single_new.publication.title }}
+                                                                </a>
+                                                            </li>
+                                                            {% endfor %}
+                                                        </ul>
                                                     </td>
-                                                  </tr>
-                                                </tbody>
-                                              </table>
-                                              {% endif %}
-
-
-                                              {% endfor %}
-                                              {% endif %}
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        {% endif %}
                                               <!--[if (!mso)&(!IE)]><!-->
                                     </div>
                                     <!--<![endif]-->
