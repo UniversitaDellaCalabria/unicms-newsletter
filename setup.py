@@ -49,6 +49,5 @@ setup(
     ],
     install_requires=[
         'cryptojwt',
-        'minify-html'
     ],
 )

@@ -29,8 +29,6 @@ from cms.templates.models import (ActivableModel,
                                   SortableModel,
                                   TimeStampedModel)
 
-from minify_html import minify
-
 from unicms_calendar.models import *
 
 from . settings import *
@@ -472,10 +470,7 @@ class Message(ActivableModel, TimeStampedModel, CreatedModifiedBy):
     def prepare_html(self, test=False, data={}):
         data = data or self.prepare_data(test=test)
         html_content = get_template(self.template or DEFAULT_TEMPLATE)
-        return minify(code=html_content.render(data),
-                      keep_comments=True,
-                      minify_js=True,
-                      minify_css=True)
+        return html_content.render(data)
 
     def register_sending(self, recipients, html_text):
         # create newsletter sending html file
