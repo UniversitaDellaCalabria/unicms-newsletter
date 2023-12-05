@@ -128,7 +128,7 @@
                                         <div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;">
                                     <!--<![endif]-->
 
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                                 <tr>
                                                     <td style="overflow-wrap:break-word;word-break:break-word;padding:20px;" align="left">
@@ -168,7 +168,7 @@
                                         <div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;">
                                         <!--<![endif]-->
 
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                                 <tr>
                                                     <td style="overflow-wrap:break-word;word-break:break-word;padding:0px;" align="left">
@@ -217,10 +217,10 @@
                                         <div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;">
                                         <!--<![endif]-->
 
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                                 <tr>
-                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 55px;" align="left">
+                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 5%;" align="left">
                                                         <div style="font-size: 14px; line-height: 160%; word-wrap: break-word;">
                                                             <p style="font-size: 14px; line-height: 160%;">
                                                                 {{ intro_text|safe }}
@@ -259,7 +259,7 @@
                                         <div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;">
                                         <!--<![endif]-->
                                         {% if intro_text or content %}
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                                 <tr>
                                                     <td style="overflow-wrap:break-word;word-break:break-word;padding:20px;" align="left">
@@ -279,10 +279,10 @@
                                         {% endif %}
 
                                         {% for publication in publications %}
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                                 <tr>
-                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 55px;" align="left">
+                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 5%;" align="left">
 
                                                         <div style="font-size: 14px; line-height: 160%; word-wrap: break-word;">
                                                             <h3>
@@ -325,7 +325,7 @@
                                             </tbody>
                                         </table>
                                         {% if not forloop.last %}
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                                 <tr>
                                                     <td style="overflow-wrap:break-word;word-break:break-word;padding:10px 30%;" align="left">
@@ -373,7 +373,7 @@
                                         <!--<![endif]-->
 
                                         {% if intro_text or content or publications %}
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                               <tr>
                                                 <td style="overflow-wrap:break-word;word-break:break-word;padding:20px;" align="left">
@@ -394,10 +394,10 @@
                                         </table>
                                         {% endif %}
 
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                                 <tr>
-                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 55px 10px;" align="left">
+                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 5% 10px;" align="left">
 
                                                         <div style="font-size: 14px; line-height: 160%; word-wrap: break-word;text-align:center">
                                                             <h1>In evidenza</h1>
@@ -411,10 +411,10 @@
                                         {% if group_by_categories %}
 
                                         {% for cat,news in news_in_evidence.items %}
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                               <tr>
-                                                <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 55px 0px;" align="left">
+                                                <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 5% 0px;" align="left">
 
                                                   <div style="font-size: 14px; line-height: 160%; word-wrap: break-word;">
                                                     <h2><span style="color:#b71918">[</span> {{ cat.name }} <span style="color:#b71918">]</span></h2>
@@ -426,10 +426,10 @@
                                         </table>
 
                                         {% for single_new in news %}
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                                 <tr>
-                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 55px;" align="left">
+                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 5%;" align="left">
 
                                                         <div style="font-size: 14px; line-height: 160%; word-wrap: break-word;">
                                                             {% if single_new.publication.publication.preview_image or single_new.publication.publication.presentation_image %}
@@ -437,7 +437,7 @@
                                                             <div class="u-col u-col-33p33" style="max-width: 320px;min-width: 200px;display: table-cell;vertical-align: top;">
                                                                 <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
 
-                                                                    <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                                                    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                                                         <tbody>
                                                                             <tr>
                                                                                 <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 20px 20px 0;" align="left">
@@ -471,7 +471,7 @@
                                                             <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
                                                                     <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
 
-                                                                <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                                                <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                                                     <tbody>
                                                                         <tr>
                                                                             <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 0;" align="left">
@@ -505,7 +505,7 @@
 
 
                                         {% if not forloop.last %}
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                                 <tr>
                                                     <td style="overflow-wrap:break-word;word-break:break-word;padding:10px 30%;" align="left">
@@ -532,10 +532,10 @@
 
                                         {% else %}
                                         {% for single_new in news_in_evidence %}
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                                 <tr>
-                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 55px;" align="left">
+                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 5%;" align="left">
 
                                                         <div style="font-size: 14px; line-height: 160%; word-wrap: break-word;">
                                                             {% if single_new.publication.publication.preview_image or single_new.publication.publication.presentation_image %}
@@ -543,7 +543,7 @@
                                                             <div class="u-col u-col-33p33" style="max-width: 320px;min-width: 200px;display: table-cell;vertical-align: top;">
                                                                 <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
 
-                                                                    <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                                                    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                                                         <tbody>
                                                                             <tr>
                                                                                 <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 20px 20px 0;" align="left">
@@ -577,7 +577,7 @@
                                                             <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
                                                             <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
 
-                                                            <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                                            <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                                               <tbody>
                                                                 <tr>
                                                                   <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 0;" align="left">
@@ -612,7 +612,7 @@
 
 
                                               {% if not forloop.last %}
-                                              <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                              <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                                 <tbody>
                                                   <tr>
                                                                                                                                                                                      <td style="overflow-wrap:break-word;word-break:break-word;padding:10px 30%;" align="left">
@@ -662,7 +662,7 @@
                                         <!--<![endif]-->
 
                                         {% if intro_text or content or publications or news_in_evidence %}
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                               <tr>
                                                 <td style="overflow-wrap:break-word;word-break:break-word;padding:20px;" align="left">
@@ -683,10 +683,10 @@
                                         </table>
                                         {% endif %}
 
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                                 <tr>
-                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 55px 10px" align="left">
+                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 5% 10px" align="left">
 
                                                         <div style="font-size: 14px; line-height: 160%; word-wrap: break-word;text-align:center">
                                                             <h1>News scelte</h1>
@@ -700,10 +700,10 @@
                                         {% if group_by_categories %}
 
                                         {% for cat,news in single_news.items %}
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                               <tr>
-                                                <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 55px 0px;" align="left">
+                                                <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 5% 0px;" align="left">
 
                                                   <div style="font-size: 14px; line-height: 160%; word-wrap: break-word;">
                                                     <h2><span style="color:#b71918">[</span> {{ cat.name }} <span style="color:#b71918">]</span></h2>
@@ -715,10 +715,10 @@
                                         </table>
 
                                         {% for single_new in news %}
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                                 <tr>
-                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 55px;" align="left">
+                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 5%;" align="left">
 
                                                         <div style="font-size: 14px; line-height: 160%; word-wrap: break-word;">
                                                             {% if single_new.publication.publication.preview_image or single_new.publication.publication.presentation_image %}
@@ -726,7 +726,7 @@
                                                             <div class="u-col u-col-33p33" style="max-width: 320px;min-width: 200px;display: table-cell;vertical-align: top;">
                                                                 <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
 
-                                                                    <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                                                    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                                                         <tbody>
                                                                             <tr>
                                                                                 <td style="overflow-wrap:break-word;word-break:break-word;padding:padding:20px 20px 20px 0" align="left">
@@ -760,7 +760,7 @@
                                                             <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
                                                                     <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
 
-                                                                <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                                                <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                                                     <tbody>
                                                                         <tr>
                                                                             <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 0;" align="left">
@@ -794,7 +794,7 @@
 
 
                                         {% if not forloop.last %}
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                                 <tr>
                                                     <td style="overflow-wrap:break-word;word-break:break-word;padding:10px 30%;" align="left">
@@ -821,10 +821,10 @@
 
                                         {% else %}
                                         {% for single_new in single_news %}
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                                 <tr>
-                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 55px;" align="left">
+                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 5%;" align="left">
 
                                                         <div style="font-size: 14px; line-height: 160%; word-wrap: break-word;">
                                                             {% if single_new.publication.publication.preview_image or single_new.publication.publication.presentation_image %}
@@ -832,7 +832,7 @@
                                                             <div class="u-col u-col-33p33" style="max-width: 320px;min-width: 200px;display: table-cell;vertical-align: top;">
                                                                 <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
 
-                                                                    <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                                                    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                                                         <tbody>
                                                                             <tr>
                                                                                 <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 20px 20px 0;" align="left">
@@ -866,7 +866,7 @@
                                                             <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
                                                             <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
 
-                                                            <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                                            <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                                               <tbody>
                                                                 <tr>
                                                                   <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 0;" align="left">
@@ -901,7 +901,7 @@
 
 
                                               {% if not forloop.last %}
-                                              <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                              <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                                 <tbody>
                                                   <tr>
                                                                                                                                                                                      <td style="overflow-wrap:break-word;word-break:break-word;padding:10px 30%;" align="left">
@@ -952,7 +952,7 @@
                                         <!--<![endif]-->
 
                                         {% if intro_text or content or publications or news_in_evience or single_news %}
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                               <tr>
                                                 <td style="overflow-wrap:break-word;word-break:break-word;padding:20px;" align="left">
@@ -973,10 +973,10 @@
                                         </table>
                                         {% endif %}
 
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                                 <tr>
-                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 55px 10px" align="left">
+                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 5% 10px" align="left">
 
                                                         <div style="font-size: 14px; line-height: 160%; word-wrap: break-word;text-align:center">
                                                             <h1>Dal portale</h1>
@@ -990,10 +990,10 @@
                                         {% if group_by_categories %}
 
                                         {% for cat,news in webpath_news.items %}
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                               <tr>
-                                                <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 55px 0px;" align="left">
+                                                <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 5% 0px;" align="left">
 
                                                   <div style="font-size: 14px; line-height: 160%; word-wrap: break-word;">
                                                     <h2><span style="color:#b71918">[</span> {{ cat.name }} <span style="color:#b71918">]</span></h2>
@@ -1005,10 +1005,10 @@
                                         </table>
 
                                         {% for single_new in news %}
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                                 <tr>
-                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 55px;" align="left">
+                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 5%;" align="left">
 
                                                         <div style="font-size: 14px; line-height: 160%; word-wrap: break-word;">
                                                             {% if single_new.publication.preview_image or single_new.publication.presentation_image %}
@@ -1016,7 +1016,7 @@
                                                             <div class="u-col u-col-33p33" style="max-width: 320px;min-width: 200px;display: table-cell;vertical-align: top;">
                                                                 <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
 
-                                                                    <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                                                    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                                                         <tbody>
                                                                             <tr>
                                                                                 <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 20px 20px 0;" align="left">
@@ -1050,7 +1050,7 @@
                                                             <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
                                                                     <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
 
-                                                                <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                                                <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                                                     <tbody>
                                                                         <tr>
                                                                             <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 0;" align="left">
@@ -1084,7 +1084,7 @@
 
 
                                         {% if not forloop.last %}
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                                 <tr>
                                                     <td style="overflow-wrap:break-word;word-break:break-word;padding:10px 30%;" align="left">
@@ -1111,10 +1111,10 @@
 
                                         {% else %}
                                         {% for single_new in webpath_news %}
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                                 <tr>
-                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 55px;" align="left">
+                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 5%;" align="left">
 
                                                         <div style="font-size: 14px; line-height: 160%; word-wrap: break-word;">
                                                             {% if single_new.publication.preview_image or single_new.publication.presentation_image %}
@@ -1122,7 +1122,7 @@
                                                             <div class="u-col u-col-33p33" style="max-width: 320px;min-width: 200px;display: table-cell;vertical-align: top;">
                                                                 <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
 
-                                                                    <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                                                    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                                                         <tbody>
                                                                             <tr>
                                                                                 <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 20 20px 0;" align="left">
@@ -1156,7 +1156,7 @@
                                                             <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
                                                               <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
 
-                                                            <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                                            <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                                               <tbody>
                                                                 <tr>
                                                                   <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 0;" align="left">
@@ -1191,7 +1191,7 @@
 
 
                                               {% if not forloop.last %}
-                                              <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                              <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                                 <tbody>
                                                   <tr>
                                                                                                                                                                                      <td style="overflow-wrap:break-word;word-break:break-word;padding:10px 30%;" align="left">
@@ -1241,7 +1241,7 @@
                                         <!--<![endif]-->
 
                                         {% if intro_text or content or publications or news_in_evidence or single_news or webpath_news %}
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                               <tr>
                                                 <td style="overflow-wrap:break-word;word-break:break-word;padding:20px;" align="left">
@@ -1263,10 +1263,10 @@
                                         {% endif %}
 
                                         {% for calendar_context,events in calendar_events.items %}
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                               <tr>
-                                                <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 55px 10px;" align="left">
+                                                <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 5% 10px;" align="left">
 
                                                   <div style="font-size: 14px; line-height: 160%; word-wrap: break-word;text-align: center;">
                                                     <h1>
@@ -1290,10 +1290,10 @@
                                         </table>
 
                                         {% for event in events %}
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                                 <tr>
-                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 55px 10px;" align="left">
+                                                    <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 5% 10px;" align="left">
 
                                                         <div style="font-size: 14px; line-height: 160%; word-wrap: break-word;">
                                                             {% if event.event.publication.preview_image or event.event.publication.presentation_image %}
@@ -1301,7 +1301,7 @@
                                                             <div class="u-col u-col-33p33" style="max-width: 320px;min-width: 200px;display: table-cell;vertical-align: top;">
                                                                 <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
 
-                                                                    <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                                                    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                                                         <tbody>
                                                                             <tr>
                                                                                 <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 20px 20px 0;" align="left">
@@ -1335,7 +1335,7 @@
                                                             <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
                                                                     <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
 
-                                                                <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                                                <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                                                     <tbody>
                                                                         <tr>
                                                                             <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 0;" align="left">
@@ -1385,7 +1385,7 @@
 
 
                                         {% if not forloop.last %}
-                                        <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                                             <tbody>
                                                 <tr>
                                                     <td style="overflow-wrap:break-word;word-break:break-word;padding:10px 30%;" align="left">
@@ -1447,7 +1447,7 @@
                     <div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;">
                       <!--<![endif]-->
 
-                      <table style="" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                      <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
                         <tbody>
                           <tr>
                             <td style="overflow-wrap:break-word;word-break:break-word;padding:20px 10px;" align="left">
